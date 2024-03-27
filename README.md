@@ -16,7 +16,7 @@ Node.js (version 14.18 or higher) installed on your system. You can verify your 
 
 ### Navigate to the project directory:
 
-`cd <frontend>`
+`cd frontend`
 
 ## 2. Install dependencies:
 
@@ -26,7 +26,7 @@ Node.js (version 14.18 or higher) installed on your system. You can verify your 
 
 ### Start the development server:
 
-`npm run dev`
+`npm start`
 This will launch Vite's development server, typically accessible at http://localhost:5173/ in your web browser. You should see your React application running.
 
 # Hot Module Replacement (HMR):
