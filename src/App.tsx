@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from "./redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import {
   decrement,
   increment,
   incrementByAmount,
-} from "./redux/app/features/counterSlice";
+} from "./redux/features/counterSlice";
 import { useRef } from "react";
 
 function App() {

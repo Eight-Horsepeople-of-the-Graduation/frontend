@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 // ? import authReducer from authSlice
 import authReducer from "./features/users/authSlice";
+import counterReducer from "./features/counterSlice";
 import { booksApi } from "./services/books/booksApi";
 
 export const store = configureStore({
   reducer: {
     // ? Add the authReducer to the reducer object
     authUser: authReducer,
+    counter: counterReducer,
+
+    // API
     [booksApi.reducerPath]: booksApi.reducer,
   },
   devTools: import.meta.env.NODE_ENV !== "production",
