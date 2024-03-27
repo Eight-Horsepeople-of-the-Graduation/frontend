@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Book } from "../../../Types/bookTypes";
 import { baseUrl } from "../../config";
+import { Book } from "../../../../Types/bookTypes";
 
 export const booksApi = createApi({
   reducerPath: "bookApi",
