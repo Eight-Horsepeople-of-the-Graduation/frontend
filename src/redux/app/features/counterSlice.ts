@@ -8,7 +8,7 @@ const initialState: CounterState = {
   value: 0,
 }; // Define the initial state of the slice
 
-export const counterSlice = createSlice({
+const counterSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
@@ -17,7 +17,7 @@ export const counterSlice = createSlice({
       state.value += 1;
     },
     decrement: (state) => {
-      state.value -= 1;
+      if (state.value > 0) state.value -= 1;
     },
     incrementByAmount: (state, action: { payload: number }) => {
       state.value += action.payload;
@@ -25,5 +25,6 @@ export const counterSlice = createSlice({
   },
 });
 
+export default counterSlice.reducer; // I exported the reducer as default to be able to use it in the store
 // we should export the actions to be able to use them in the components
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
