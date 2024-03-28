@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // This slice is just an example, we will add more slices later when needed in the application.
 
-type CounterState = { value: number }; // Define the initial type state of the slice
+interface CounterState { value: number } // Define the initial type state of the slice
 
 const initialState: CounterState = {
   value: 0,
