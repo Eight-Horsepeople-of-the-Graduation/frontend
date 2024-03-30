@@ -19,8 +19,8 @@
   --large-border-radius: 12px;
   --small-border-radius: 8px;
   --border: 1px solid var(--gray-color);
-  --shadow-near: 0 4px 6px var(--gray-color);
-  --shadow-far: 0 15px 35px var(--gray-color);
+  --shadow-near: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-far: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 * {
