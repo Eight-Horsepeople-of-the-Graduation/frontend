@@ -1,43 +1,40 @@
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-} from "./redux/features/counterSlice";
-import { useRef } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/Home/Home";
+import ListsPage from "./pages/Lists/Lists";
+import ProfilePage from "./pages/Profile/Profile";
+import MyBooksPage from "./pages/MyBooks/MyBooks";
+import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBook";
+import SingleListPage from "./pages/Lists/SingleList/SingleList";
+import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
+import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingPage/CurrentlyReadingPage";
+import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
+import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const numberInputRef = useRef<HTMLInputElement>(null);
-  const counter = useAppSelector((state) => state.counter.value);
-
-  const increaseCounter = () => dispatch(increment());
-  const decreaseCounter = () => dispatch(decrement());
-  const addAmount = () => {
-    if (numberInputRef.current) {
-      const amount = parseInt(numberInputRef.current.value);
-      if (amount) {
-        dispatch(incrementByAmount(amount));
-      }
-    }
-  };
-
   return (
-    <>
-      <div>
-        <div>
-          <span>Counter: {counter}</span>
-        </div>
-        <div>
-          <button onClick={increaseCounter}>Increment</button>
-          <button onClick={decreaseCounter}>Decrement</button>
-        </div>
-        <div>
-          <input type="number" ref={numberInputRef} />
-          <button onClick={addAmount}>Add Amount</button>
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<HomePage />} path="/" />
+
+        <Route element={<ListsPage />} path="/lists" />
+
+        <Route element={<SingleListPage />} path="/lists/:listId" />
+
+        <Route element={<CurrentlyReadingPage />} path="/lists/current" />
+
+        <Route element={<WantToReadPage />} path="/lists/to-read" />
+
+        <Route element={<DoneReadingPage />} path="/lists/done" />
+
+        <Route element={<MyBooksPage />} path="/books" />
+
+        <Route element={<SingleBookPage />} path="/books/:bookId" />
+
+        <Route element={<ProfilePage />} path="/profile/:username" />
+
+        <Route path="/*" element={<PageNotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
