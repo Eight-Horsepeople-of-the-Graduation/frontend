@@ -1,6 +1,9 @@
 import { useState } from "react";
 import CustomModal from "./components/UI/CustomModal/CustomModal";
+
 import { Button, Container, Grid } from "@mui/material";
+
+
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,6 +12,7 @@ function App() {
 
   return (
     <>
+
       <Container
         style={{
           display: "flex",
@@ -35,6 +39,15 @@ function App() {
           </Grid>
         </Grid>
       </Container>
+
+      <CustomModal isModalOpen={isModalOpen} closeModal={closeModal}>
+        <h1>Modal Content</h1>
+        <p>This is a modal content</p>
+      </CustomModal>
+      <p>Test</p>
+      <button onClick={openModal}>Open Modal</button>
+      <button onClick={closeModal}>Close Modal</button>
+
     </>
   );
 }
