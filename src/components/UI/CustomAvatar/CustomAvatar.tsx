@@ -1,9 +1,10 @@
 import React from "react";
 import { Avatar } from "@mui/material";
 import classes from "./CustomAvatar.module.css";
+import { User } from "../../../Types/userTypes";
 
 interface CustomAvatarProps {
-  user: { name: string; username: string; image: string };
+  user: User;
   size?: "s" | "m" | "l";
 }
 
@@ -39,14 +40,14 @@ function stringAvatar(name: string) {
   };
 }
 
-const CustomAvatar = ({ user: { name, image }, size }: CustomAvatarProps) => {
+const CustomAvatar = ({ user, size }: CustomAvatarProps) => {
   return (
     <Avatar
-      {...stringAvatar(name)}
+      {...stringAvatar(user.name)}
       sx={{ width: avatarSizes[size ?? "m"], height: avatarSizes[size ?? "m"] }}
       className={classes.avatar}
-      alt={name}
-      src={image}
+      alt={user.name}
+      src={user.image}
     />
   );
 };

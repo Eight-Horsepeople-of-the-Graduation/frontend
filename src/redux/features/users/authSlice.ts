@@ -6,7 +6,14 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: {
+    id: 1,
+    name: "Test User",
+    username: "test_user",
+    email: "test_user@gmail.com",
+    role: "user",
+    image: "https://avatars.githubusercontent.com/u/56196724?v=4",
+  },
 };
 
 export const authSlice = createSlice({

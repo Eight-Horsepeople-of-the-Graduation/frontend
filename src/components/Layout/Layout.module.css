@@ -1,11 +1,12 @@
 .layout {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
 .content {
   height: 100%;
+  width: calc(100% - 480px);
 }
 
 .sidePannelContainer {
@@ -13,4 +14,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 480px;
 }

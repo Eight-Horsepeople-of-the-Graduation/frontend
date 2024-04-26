@@ -35,3 +35,26 @@ body {
   font-family: "Noto Sans", sans-serif;
   color: var(--dark-primary-color);
 }
+
+/* width */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: var(--gray-color);
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: var(--dark-gray-color);
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  transition: all 0.3s;
+
+  background: var(--primary-color);
+}

@@ -50,11 +50,106 @@
   margin-bottom: 48px;
 }
 
-.progressInfo {
+.progressInfo,
+.myListsTop {
   padding: 0 24px;
   margin-bottom: 8px;
   color: var(--dark-gray-color);
   font-size: 12px;
   display: flex;
   justify-content: space-between;
+}
+
+.Navigator {
+  width: 100%;
+  margin-bottom: 32px;
+}
+.Navigator li {
+  list-style: none;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 48px;
+}
+
+.Navigator li:hover {
+  background-color: var(--gray-color);
+  transition: all 0.3s;
+}
+
+.Navigator a {
+  text-decoration: none;
+  color: var(--dark-primary-color);
+  font-size: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.Navigator a p {
+  margin-left: 12px;
+}
+
+.myListsTop button {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--dark-gray-color);
+}
+
+.myListsTop button:hover {
+  background-color: var(--gray-color);
+  color: var(--dark-primary-color);
+  transition: all 0.3s;
+}
+.myLists hr {
+  margin: 0 24px 4px;
+  border: 0.5px solid var(--dark-gray-color);
+}
+
+.lists {
+  width: 336px;
+  margin: 0 24px;
+  height: 350px;
+  overflow-y: hidden;
+}
+
+.lists:hover {
+  overflow-y: scroll;
+}
+.lists li {
+  list-style: none;
+  padding: 0 8px;
+  margin: 2px 0;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 32px;
+  border-radius: var(--small-border-radius);
+}
+
+.lists li:hover {
+  background-color: var(--gray-color);
+  transition: all 0.3s;
+}
+
+.lists a {
+  text-decoration: none;
+  color: var(--dark-primary-color);
+  font-size: 16px;
+  /* font-weight: regular; */
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: nowrap;
 }
