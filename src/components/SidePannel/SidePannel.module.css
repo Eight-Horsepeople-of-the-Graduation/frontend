@@ -118,7 +118,7 @@
 .lists {
   width: 336px;
   margin: 0 24px;
-  height: 350px;
+  max-height: 350px;
   overflow-y: hidden;
 }
 
