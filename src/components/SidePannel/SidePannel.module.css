@@ -147,7 +147,6 @@
   text-decoration: none;
   color: var(--dark-primary-color);
   font-size: 16px;
-  /* font-weight: regular; */
   display: flex;
   justify-content: start;
   align-items: center;

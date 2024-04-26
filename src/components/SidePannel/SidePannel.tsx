@@ -8,6 +8,7 @@ import {
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../../redux/hooks";
+import { Link } from "react-router-dom";
 
 const SidePannel = () => {
   const user = useAppSelector((state) => state.authUser.user);
@@ -42,7 +43,7 @@ const SidePannel = () => {
         </div>
         <div className={classes.info}>
           <h2>{user.name}</h2>
-          <a href={`/profile/${user.username}`}>@{user.username}</a>
+          <Link to={`/profile/${user.username}`}>@{user.username}</Link>
         </div>
       </div>
 
@@ -78,7 +79,7 @@ const SidePannel = () => {
         <ul className={classes.lists}>
           {lists.map((list) => (
             <li key={list.id}>
-              <a href={`lists/${list.id}`}>{list.name}</a>
+              <Link to={`/lists/${list.id}`}>{list.name}</Link>
             </li>
           ))}
         </ul>
