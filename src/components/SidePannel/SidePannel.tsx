@@ -6,6 +6,7 @@ import {
   faBookOpen,
   faBook,
   faCircleCheck,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
@@ -19,6 +20,7 @@ const SidePannel = () => {
   const total = 240;
 
   const navItems = [
+    { icon: faHome, text: "Home", link: "/" },
     { icon: faBookOpen, text: "Currently reading", link: "/lists/current" },
     { icon: faBook, text: "Want to read", link: "/lists/to-read" },
     { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
