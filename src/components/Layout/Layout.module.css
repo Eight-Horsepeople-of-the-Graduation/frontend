@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.content {
+  height: 100%;
+}
+
+.sidePannelContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
