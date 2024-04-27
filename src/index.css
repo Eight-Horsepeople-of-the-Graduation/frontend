@@ -43,23 +43,23 @@ body {
 
 /* Track */
 *::-webkit-scrollbar-track {
-  background: white;
+  background: var(--light-gray-color);
 }
 
 /* Handle */
 *::-webkit-scrollbar-thumb {
-  background: var(--light-gray-color);
+  background: var(--gray-color);
   border-radius: 20px;
 }
 
 /* Handle on hover */
 *::-webkit-scrollbar-thumb:hover {
   transition: all 0.3s;
-  background: var(--gray-color);
+  background: var(--dark-gray-color);
 }
 
 /*Handle on Active*/
 
 *::-webkit-scrollbar-thumb:active {
-  background: var(--dark-gray-color);
+  background: var(--primary-color);
 }
