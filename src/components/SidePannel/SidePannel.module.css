@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: start;
   width: 384px;
-  height: 850px;
+  height: 768px;
   background-color: #fff;
   border: var(--border);
   border-radius: var(--large-border-radius);
@@ -16,7 +16,7 @@
   display: flex;
   width: 100%;
   height: fit-content;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 .info {
   display: flex;
@@ -47,7 +47,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .progressInfo,
@@ -118,7 +118,7 @@
 .lists {
   width: 336px;
   margin: 0 24px;
-  max-height: 350px;
+  max-height: 256px;
   overflow-y: hidden;
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import SidePannel from "../SidePannel/SidePannel";
 import classes from "./Layout.module.css";
+import Header from "../Header/Header";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,12 +9,15 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className={classes.layout}>
-      <div className={classes.content}>{children}</div>
-      <div className={classes.sidePannelContainer}>
-        <SidePannel />
+    <>
+      <Header />
+      <div className={classes.layout}>
+        <div className={classes.content}>{children}</div>
+        <div className={classes.sidePannelContainer}>
+          <SidePannel />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
