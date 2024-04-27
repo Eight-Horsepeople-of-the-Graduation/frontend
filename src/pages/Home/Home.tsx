@@ -1,13 +1,10 @@
 import React from "react";
+import Layout from "../../components/Layout/Layout";
 
 const HomePage = () => {
   document.title = "Readify | Home";
 
-  return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
-  );
+  return <Layout>Home</Layout>;
 };
 
 export default HomePage;

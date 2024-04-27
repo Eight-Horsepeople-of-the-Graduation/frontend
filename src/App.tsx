@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/Home";
 import ListsPage from "./pages/Lists/Lists";
@@ -36,7 +35,6 @@ function App() {
         <Route path="/*" element={<PageNotFoundPage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
-
 export default App;
