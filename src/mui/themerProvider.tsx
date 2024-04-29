@@ -37,6 +37,85 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Noto Sans", "sans-serif"].join(","),
   },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          sx: { borderRadius: "var(--large-border-radius)" },
+        }
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: "var(--large-border-radius)",
+        }
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          borderRadius: "var(--large-border-radius)",
+        },
+      },
+      defaultProps: {
+        MenuProps: {
+          PaperProps: {
+            sx: {
+              borderRadius: "var(--large-border-radius)",
+              marginTop: "8px"
+            },
+
+          },
+        }
+      }
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          width: "98%",
+          margin: "8px auto",
+          borderRadius: "var(--small-border-radius)",
+          color: "var(--dark-primary-color)",
+          fontWeight: 600,
+
+          "&:first-child": {
+            marginTop: 0
+          },
+          "&:last-child": {
+            marginBottom: 0
+          },
+
+          "&:hover": {
+            backgroundColor: "var(--gray-color)"
+          },
+          "&:focus": {
+            backgroundColor: "var(--primary-color) !important",
+            color: "white"
+          },
+        },
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          width: "128px",
+          height: "42px",
+          borderRadius: "var(--large-border-radius)",
+          fontSize: "20px",
+          fontWeight: 700,
+          "&.MuiButton-textError": {
+            color: "var(--dark-gray-color)",
+          },
+          "&.MuiButton-textError:hover": {
+            color: "#da2d2d",
+            textDecoration: "underline"
+
+          }
+        }
+      }
+    }
+  }
+
 });
 
 const ThemerProvider = ({ children }: { children: React.ReactNode }) => {

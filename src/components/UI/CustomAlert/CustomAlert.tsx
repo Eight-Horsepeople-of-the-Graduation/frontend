@@ -25,6 +25,7 @@ const CustomAlert = () => {
         <Alert
             onClick={() => dispatch(clearAlert())}
             sx={{
+                zIndex: 10,
                 backgroundColor: `var(--${severity}-color)`,
                 color: `var(--dark-${severity}-color)`,
                 maxWidth: "384px",
