@@ -10,6 +10,8 @@ import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/Currentl
 import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
 import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
+import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
+import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
 
 function App() {
   return (
@@ -34,6 +36,12 @@ function App() {
           <Route element={<SingleBookPage />} path="/books/:bookId" />
 
           <Route element={<ProfilePage />} path="/profile/:username" />
+
+          <Route element={<AllChallengesPage />} path="/challenges" />
+          <Route
+            element={<SingleChallengePage />}
+            path="/challenges/:challengeId"
+          />
 
           <Route path="/*" element={<PageNotFoundPage />} />
         </Routes>
