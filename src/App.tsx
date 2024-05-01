@@ -12,16 +12,27 @@ import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPa
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
 import { useAppDispatch } from "./redux/hooks";
 import { showAlert } from "./redux/features/alerts/alertsSlice";
+import { useState } from "react";
+import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
 
 function App() {
   const dispatch = useAppDispatch();
+  const [isCreatingList, sitIsCreatingList] = useState(false);
+
+  const createNewList = () => sitIsCreatingList(true);
+  const closeCreateListModal = () => sitIsCreatingList(false);
 
   return (
     <>
+
+      <CustomAlert />
+      <CreateListModal isCreatingList={isCreatingList} closeCreateListModal={closeCreateListModal} />
+
+
       <button onClick={() => {
         dispatch(showAlert({ message: "Test", severity: "success" }))
       }}>Add alert</button>
-      <CustomAlert />
+      <button onClick={createNewList}>Create new list</button>
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />
