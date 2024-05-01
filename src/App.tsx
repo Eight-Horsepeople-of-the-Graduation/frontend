@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/Home";
 import ListsPage from "./pages/Lists/Lists";
 import ProfilePage from "./pages/Profile/Profile";
-import MyBooksPage from "./pages/MyBooks/MyBooks";
+import LibraryPage from "./pages/MyBooks/LibraryPage";
 import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBook";
 import SingleListPage from "./pages/Lists/SingleList/SingleList";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
@@ -26,7 +26,7 @@ function App() {
 
         <Route element={<DoneReadingPage />} path="/lists/done" />
 
-        <Route element={<MyBooksPage />} path="/books" />
+        <Route element={<LibraryPage />} path="/library" />
 
         <Route element={<SingleBookPage />} path="/books/:bookId" />
 

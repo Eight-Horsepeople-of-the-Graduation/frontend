@@ -1,7 +1,10 @@
 .Header {
   height: 64px;
-  display: flex;
+  width: 100vw;
   border-bottom: var(--gray-color) 1px solid;
+  position: sticky;
+  top: 0;
+  left: 0;
   padding: 0 48px;
-  align-items: center;
+  /* border: 1px solid green; */
 }
