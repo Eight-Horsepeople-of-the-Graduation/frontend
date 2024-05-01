@@ -2,6 +2,7 @@ import { SetStateAction } from "react";
 import { Challenge } from "../../../../Types/readingChallengeTypes";
 import classes from "./ReadingChallengeSelector.module.css";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
+import { Button } from "@mui/material";
 
 interface ReadingChallengeSelectorProps {
   challenges: Challenge[];
@@ -35,6 +36,18 @@ const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
           onClickAction={() => handleSelectChallenge(challenge.id)}
         />
       ))}
+
+      <Button
+        variant="contained"
+        fullWidth
+        onClick={() => props.setIsSelectingChallenge(false)}
+        sx={{
+          width: "calc(100% - 24px)",
+          marginLeft: "12px",
+        }}
+      >
+        Create new challenge
+      </Button>
     </div>
   );
 };

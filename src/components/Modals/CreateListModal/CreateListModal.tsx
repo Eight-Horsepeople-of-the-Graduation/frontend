@@ -74,6 +74,11 @@ const CreateListModal = ({
     }
   };
 
+  const buttonSx = {
+    width: "128px",
+    height: "42px",
+  };
+
   return (
     <CustomModal isModalOpen={isCreatingList} closeModal={closeCreateListModal}>
       <div className={classes.CreateListModal}>
@@ -111,10 +116,20 @@ const CreateListModal = ({
             justifyContent="flex-end"
             alignItems="flex-end"
           >
-            <Button variant="contained" type="submit" color="primary">
+            <Button
+              sx={buttonSx}
+              variant="contained"
+              type="submit"
+              color="primary"
+            >
               Create
             </Button>
-            <Button onClick={closeCreateListModal} variant="text" color="error">
+            <Button
+              sx={buttonSx}
+              onClick={closeCreateListModal}
+              variant="text"
+              color="error"
+            >
               Cancel
             </Button>
           </Box>
