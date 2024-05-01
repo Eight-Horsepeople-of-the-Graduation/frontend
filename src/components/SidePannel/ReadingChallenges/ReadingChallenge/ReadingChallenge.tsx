@@ -11,6 +11,7 @@ const challenges: Challenge[] = [
     progress: 90,
     type: "yearly",
     period: "2024",
+    userId: 1,
   },
   {
     id: 2,
@@ -18,13 +19,7 @@ const challenges: Challenge[] = [
     progress: 6,
     type: "monthly",
     period: "april",
-  },
-  {
-    id: 3,
-    goal: 2,
-    progress: 1,
-    type: "weekly",
-    period: "week 32",
+    userId: 1,
   },
 ];
 const ReadingChallenge = () => {

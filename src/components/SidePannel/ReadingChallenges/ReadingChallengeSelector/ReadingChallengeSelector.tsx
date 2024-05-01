@@ -1,8 +1,9 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { Challenge } from "../../../../Types/readingChallengeTypes";
 import classes from "./ReadingChallengeSelector.module.css";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
+import CreateReadingChallengeModal from "../../../Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
 
 interface ReadingChallengeSelectorProps {
   challenges: Challenge[];
@@ -12,6 +13,12 @@ interface ReadingChallengeSelectorProps {
 }
 
 const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
+  const [isCreatingReadingChallenge, setIsCreatingReadingChallenge] =
+    useState(false);
+
+  const closeCreateReadingChallengeModal = () =>
+    setIsCreatingReadingChallenge(false);
+
   const unselectedChallenges = props.challenges.filter(
     (challenge) => challenge.id !== props.selectedChallenge.id
   );
@@ -20,35 +27,44 @@ const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
     props.setSelectedReadingChallengeId(challengeId);
     props.setIsSelectingChallenge(false);
   };
+
   return (
-    <div className={classes.SelectorCard}>
-      <ReadingChallengeCard
-        selected={true}
-        challenge={props.selectedChallenge}
-        onClickAction={() => props.setIsSelectingChallenge(false)}
+    <>
+      <CreateReadingChallengeModal
+        isCreatingReadingChallenge={isCreatingReadingChallenge}
+        closeCreateReadingChallengeModal={closeCreateReadingChallengeModal}
       />
-
-      {unselectedChallenges.map((challenge) => (
+      <div className={classes.SelectorCard}>
         <ReadingChallengeCard
-          selected={false}
-          key={challenge.id}
-          challenge={challenge}
-          onClickAction={() => handleSelectChallenge(challenge.id)}
+          selected={true}
+          challenge={props.selectedChallenge}
+          onClickAction={() => props.setIsSelectingChallenge(false)}
         />
-      ))}
 
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={() => props.setIsSelectingChallenge(false)}
-        sx={{
-          width: "calc(100% - 24px)",
-          marginLeft: "12px",
-        }}
-      >
-        Create new challenge
-      </Button>
-    </div>
+        {unselectedChallenges.map((challenge) => (
+          <ReadingChallengeCard
+            selected={false}
+            key={challenge.id}
+            challenge={challenge}
+            onClickAction={() => handleSelectChallenge(challenge.id)}
+          />
+        ))}
+
+        {props.challenges.length < 3 && (
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={() => setIsCreatingReadingChallenge(true)}
+            sx={{
+              width: "calc(100% - 24px)",
+              marginLeft: "12px",
+            }}
+          >
+            Create new challenge
+          </Button>
+        )}
+      </div>
+    </>
   );
 };
 
