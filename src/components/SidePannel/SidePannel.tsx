@@ -9,9 +9,12 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
+import CreateListModal from "../Modals/CreateListModal/CreateListModal";
+import { useState } from "react";
 
 const SidePannel = () => {
   const user = useAppSelector((state) => state.authUser.user);
+  const [isCreatingList, setIsCreatingList] = useState(false);
 
   if (!user) return <></>;
 
@@ -33,48 +36,55 @@ const SidePannel = () => {
   ];
 
   return (
-    <aside className={classes.SidePannel}>
-      <div className={classes.user}>
-        <div>
-          <CustomAvatar user={user} size="m" />
+    <>
+      <CreateListModal
+        isCreatingList={isCreatingList}
+        closeCreateListModal={() => setIsCreatingList(false)}
+      />
+      <aside className={classes.SidePannel}>
+        <div className={classes.user}>
+          <div>
+            <CustomAvatar user={user} size="m" />
+          </div>
+          <div className={classes.info}>
+            <h2>{user.name}</h2>
+            <Link to={`/profile/${user.username}`} title="Go to profile">
+              @{user.username}
+            </Link>
+          </div>
         </div>
-        <div className={classes.info}>
-          <h2>{user.name}</h2>
-          <Link to={`/profile/${user.username}`} title="Go to profile">
-            @{user.username}
-          </Link>
-        </div>
-      </div>
 
-      <ReadingChallenge />
-      <nav className={classes.Navigator}>
-        <ul>
-          {navItems.map((item, idx) => (
-            <li key={idx}>
-              <a href={item.link}>
-                <FontAwesomeIcon icon={item.icon} />
-                <p>{item.text}</p>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <ReadingChallenge />
 
-      <div className={classes.myLists}>
-        <div className={classes.myListsTop}>
-          <p>My Lists</p>
-          <button onClick={() => null}>+</button>
+        <nav className={classes.Navigator}>
+          <ul>
+            {navItems.map((item, idx) => (
+              <li key={idx}>
+                <a href={item.link}>
+                  <FontAwesomeIcon icon={item.icon} />
+                  <p>{item.text}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className={classes.myLists}>
+          <div className={classes.myListsTop}>
+            <p>My Lists</p>
+            <button onClick={() => setIsCreatingList(true)}>+</button>
+          </div>
+          <hr />
+          <ul className={classes.lists}>
+            {lists.map((list) => (
+              <li key={list.id}>
+                <Link to={`/lists/${list.id}`}>{list.name}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
-        <hr />
-        <ul className={classes.lists}>
-          {lists.map((list) => (
-            <li key={list.id}>
-              <Link to={`/lists/${list.id}`}>{list.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 

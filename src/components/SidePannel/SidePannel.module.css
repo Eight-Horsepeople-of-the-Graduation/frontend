@@ -52,8 +52,9 @@
 
 .Navigator {
   width: 100%;
-  margin-bottom: 32px;
+  margin: 32px 0 32px;
 }
+
 .Navigator li {
   list-style: none;
   padding: 0 24px;
