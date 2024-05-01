@@ -10,21 +10,10 @@ import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/Currentl
 import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
 import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
-import { useAppDispatch } from "./redux/hooks";
-import { showAlert } from "./redux/features/alerts/alertsSlice";
 
 function App() {
-  const dispatch = useAppDispatch();
-
   return (
     <>
-      <button
-        onClick={() => {
-          dispatch(showAlert({ message: "Test", severity: "success" }));
-        }}
-      >
-        Add alert
-      </button>
       <CustomAlert />
       <BrowserRouter>
         <Routes>
