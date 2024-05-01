@@ -12,7 +12,7 @@ const initialState: AuthState = {
     username: "test_user",
     email: "test_user@gmail.com",
     role: "user",
-    image: "https://avatars.githubusercontent.com/u/56196724?v=4",
+    image: "https://avatars.githubusercontent.com/u/56196724?v=1",
   },
 };
 

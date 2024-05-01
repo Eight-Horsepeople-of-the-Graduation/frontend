@@ -63,13 +63,3 @@ body {
 *::-webkit-scrollbar-thumb:active {
   background: var(--primary-color);
 }
-*[title]:hover::after {
-  content: attr(title);
-  font-size: 14px;
-  color: var(--dark-primary-color);
-  background-color: var(--gray-color);
-  padding: 8px;
-  border-radius: var(--small-border-radius);
-  position: absolute;
-  top: 50px;
-}

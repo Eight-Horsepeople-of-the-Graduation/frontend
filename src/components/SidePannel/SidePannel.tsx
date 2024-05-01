@@ -40,7 +40,9 @@ const SidePannel = () => {
         </div>
         <div className={classes.info}>
           <h2>{user.name}</h2>
-          <Link to={`/profile/${user.username}`}>@{user.username}</Link>
+          <Link to={`/profile/${user.username}`} title="Go to profile">
+            @{user.username}
+          </Link>
         </div>
       </div>
 
