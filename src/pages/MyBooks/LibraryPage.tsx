@@ -1,15 +1,15 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
 
-const MyBooksPage = () => {
-  document.title = `Readify | My Books`;
+const LibraryPage = () => {
+  document.title = `Readify | Library`;
   return (
     <Layout>
       <div>
-        <h1>My Books Page</h1>
+        <h1>Library Page</h1>
       </div>
     </Layout>
   );
 };
 
-export default MyBooksPage;
+export default LibraryPage;

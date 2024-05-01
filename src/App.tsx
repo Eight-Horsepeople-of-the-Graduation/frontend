@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/Home";
 import ListsPage from "./pages/Lists/Lists";
 import ProfilePage from "./pages/Profile/Profile";
-import MyBooksPage from "./pages/MyBooks/MyBooks";
+import LibraryPage from "./pages/MyBooks/LibraryPage";
 import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBook";
 import SingleListPage from "./pages/Lists/SingleList/SingleList";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
@@ -10,36 +10,13 @@ import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/Currentl
 import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
 import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
-import { useAppDispatch } from "./redux/hooks";
-import { showAlert } from "./redux/features/alerts/alertsSlice";
-import { useState } from "react";
-import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
 import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
 import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const [isCreatingList, sitIsCreatingList] = useState(false);
-
-  const createNewList = () => sitIsCreatingList(true);
-  const closeCreateListModal = () => sitIsCreatingList(false);
-
   return (
     <>
       <CustomAlert />
-      <CreateListModal
-        isCreatingList={isCreatingList}
-        closeCreateListModal={closeCreateListModal}
-      />
-
-      <button
-        onClick={() => {
-          dispatch(showAlert({ message: "Test", severity: "success" }));
-        }}
-      >
-        Add alert
-      </button>
-      <button onClick={createNewList}>Create new list</button>
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />
@@ -54,7 +31,7 @@ function App() {
 
           <Route element={<DoneReadingPage />} path="/lists/done" />
 
-          <Route element={<MyBooksPage />} path="/books" />
+          <Route element={<LibraryPage />} path="/library" />
 
           <Route element={<SingleBookPage />} path="/books/:bookId" />
 
