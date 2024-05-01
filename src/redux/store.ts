@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 // ? import authReducer from authSlice
 import authReducer from "./features/users/authSlice";
-import alertReducer from "./features/alerts/alertsSlice"
+import alertReducer from "./features/alerts/alertsSlice";
+import readingChallengeReducer from "./features/readingChallenges/readingChallengeSlice";
 import { booksApi } from "./services/booksApiSlice";
 import { listsApi } from "./services/listsApiSlice";
 
@@ -10,10 +11,11 @@ export const store = configureStore({
     // ? Add the authReducer to the reducer object
     authUser: authReducer,
     alert: alertReducer,
+    readingChallenge: readingChallengeReducer,
 
     // API
     [booksApi.reducerPath]: booksApi.reducer,
-    [listsApi.reducerPath]: listsApi.reducer
+    [listsApi.reducerPath]: listsApi.reducer,
   },
   devTools: import.meta.env.NODE_ENV !== "production",
   // ? Adding the api middleware enables caching, invalidation, polling,

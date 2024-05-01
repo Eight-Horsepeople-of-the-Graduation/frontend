@@ -1,0 +1,18 @@
+.SelectorCard {
+  width: 100%;
+  background-color: white;
+  border-radius: var(--small-border-radius);
+  box-shadow: var(--near-border-shadow);
+  border: 1px solid var(--gray-color);
+  padding: 12px 0;
+  transform: translateY(-12px);
+  position: absolute;
+  top: 186px;
+  width: 384px;
+  z-index: 10;
+  box-shadow: var(--shadow-near);
+}
+
+.SelectorCard > div {
+  margin-bottom: 8px;
+}
