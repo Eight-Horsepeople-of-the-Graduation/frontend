@@ -42,13 +42,13 @@ const theme = createTheme({
       defaultProps: {
         InputProps: {
           sx: { borderRadius: "var(--large-border-radius)" },
-        }
+        },
       },
       styleOverrides: {
         root: {
           borderRadius: "var(--large-border-radius)",
-        }
-      }
+        },
+      },
     },
     MuiSelect: {
       styleOverrides: {
@@ -61,12 +61,11 @@ const theme = createTheme({
           PaperProps: {
             sx: {
               borderRadius: "var(--large-border-radius)",
-              marginTop: "8px"
+              marginTop: "8px",
             },
-
           },
-        }
-      }
+        },
+      },
     },
     MuiMenuItem: {
       styleOverrides: {
@@ -78,28 +77,26 @@ const theme = createTheme({
           fontWeight: 600,
 
           "&:first-child": {
-            marginTop: 0
+            marginTop: 0,
           },
           "&:last-child": {
-            marginBottom: 0
+            marginBottom: 0,
           },
 
           "&:hover": {
-            backgroundColor: "var(--gray-color)"
+            backgroundColor: "var(--gray-color)",
           },
           "&:focus": {
             backgroundColor: "var(--primary-color) !important",
-            color: "white"
+            color: "white",
           },
         },
-      }
+      },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          width: "128px",
-          height: "42px",
+          textTransform: "none",
           borderRadius: "var(--large-border-radius)",
           fontSize: "20px",
           fontWeight: 700,
@@ -108,14 +105,12 @@ const theme = createTheme({
           },
           "&.MuiButton-textError:hover": {
             color: "#da2d2d",
-            textDecoration: "underline"
-
-          }
-        }
-      }
-    }
-  }
-
+            textDecoration: "underline",
+          },
+        },
+      },
+    },
+  },
 });
 
 const ThemerProvider = ({ children }: { children: React.ReactNode }) => {
