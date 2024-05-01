@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: start;
   width: 384px;
-  height: 850px;
+  height: 768px;
   background-color: #fff;
   border: var(--border);
   border-radius: var(--large-border-radius);
@@ -55,7 +55,7 @@
 }
 .Navigator li {
   list-style: none;
-  padding: 8px 24px;
+  padding: 0 24px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -107,7 +107,7 @@
 .lists {
   width: 336px;
   margin: 0 24px;
-  max-height: 350px;
+  max-height: 256px;
   overflow-y: hidden;
 }
 
