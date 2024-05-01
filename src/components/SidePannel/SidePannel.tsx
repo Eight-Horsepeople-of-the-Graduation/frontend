@@ -1,6 +1,5 @@
 import classes from "./SidePannel.module.css";
 import CustomAvatar from "../UI/CustomAvatar/CustomAvatar";
-import ProgressBar from "../UI/ProgressBar/ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpen,
@@ -10,14 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
+import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
 
 const SidePannel = () => {
   const user = useAppSelector((state) => state.authUser.user);
 
   if (!user) return <></>;
-
-  const progress = 120;
-  const total = 240;
 
   const navItems = [
     { icon: faHome, text: "Home", link: "/" },
@@ -49,16 +46,7 @@ const SidePannel = () => {
         </div>
       </div>
 
-      <div className={classes.progressInfo}>
-        <p>My progress</p>
-        <p>
-          {progress}/{total}
-        </p>
-      </div>
-      <div className={classes.progress}>
-        <ProgressBar progress={(progress / total) * 100} />
-      </div>
-
+      <ReadingChallenge />
       <nav className={classes.Navigator}>
         <ul>
           {navItems.map((item, idx) => (

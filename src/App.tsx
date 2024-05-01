@@ -12,16 +12,34 @@ import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPa
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
 import { useAppDispatch } from "./redux/hooks";
 import { showAlert } from "./redux/features/alerts/alertsSlice";
+import { useState } from "react";
+import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
+import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
+import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
 
 function App() {
   const dispatch = useAppDispatch();
+  const [isCreatingList, sitIsCreatingList] = useState(false);
+
+  const createNewList = () => sitIsCreatingList(true);
+  const closeCreateListModal = () => sitIsCreatingList(false);
 
   return (
     <>
-      <button onClick={() => {
-        dispatch(showAlert({ message: "Test", severity: "success" }))
-      }}>Add alert</button>
       <CustomAlert />
+      <CreateListModal
+        isCreatingList={isCreatingList}
+        closeCreateListModal={closeCreateListModal}
+      />
+
+      <button
+        onClick={() => {
+          dispatch(showAlert({ message: "Test", severity: "success" }));
+        }}
+      >
+        Add alert
+      </button>
+      <button onClick={createNewList}>Create new list</button>
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />
@@ -41,6 +59,12 @@ function App() {
           <Route element={<SingleBookPage />} path="/books/:bookId" />
 
           <Route element={<ProfilePage />} path="/profile/:username" />
+
+          <Route element={<AllChallengesPage />} path="/challenges" />
+          <Route
+            element={<SingleChallengePage />}
+            path="/challenges/:challengeId"
+          />
 
           <Route path="/*" element={<PageNotFoundPage />} />
         </Routes>

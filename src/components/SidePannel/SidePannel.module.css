@@ -40,17 +40,6 @@
   text-decoration: underline;
 }
 
-.progress {
-  width: 100%;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.progressInfo,
 .myListsTop {
   padding: 0 24px;
   margin-bottom: 8px;
