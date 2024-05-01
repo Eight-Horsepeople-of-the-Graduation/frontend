@@ -14,8 +14,8 @@
   --dark-success-color: #52c982;
   --warning-color: #fae19b;
   --dark-warning-color: #8c691e;
-  --danger-color: #f0a5a5;
-  --dark-danger-color: #da2d2d;
+  --error-color: #f0a5a5;
+  --dark-error-color: #da2d2d;
   --large-border-radius: 12px;
   --small-border-radius: 8px;
   --border: 1px solid var(--gray-color);
