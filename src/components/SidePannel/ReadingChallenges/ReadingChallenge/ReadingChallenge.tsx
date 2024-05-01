@@ -3,7 +3,6 @@ import ReadingChallengeSelector from "../ReadingChallengeSelector/ReadingChallen
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
 import { Challenge } from "../../../../Types/readingChallengeTypes";
-import { useAppSelector } from "../../../../redux/hooks";
 
 const challenges: Challenge[] = [
   {
@@ -30,23 +29,24 @@ const challenges: Challenge[] = [
 ];
 const ReadingChallenge = () => {
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
-  const selectedChallengeId = useAppSelector(
-    (state) => state.readingChallenge.selectedChallengeId
-  );
+  const [selectedReadingChallengeId, setSelectedReadingChallengeId] =
+    useState(1);
 
   if (challenges.length === 0) return <Button>Create a challenge</Button>;
 
   const selectedChallenge =
-    challenges.find((challenge) => challenge.id === selectedChallengeId) ??
-    challenges[0];
+    challenges.find(
+      (challenge) => challenge.id === selectedReadingChallengeId
+    ) ?? challenges[0];
 
   return (
     <>
       {isSelectingChallenge && (
         <ReadingChallengeSelector
           challenges={challenges}
-          setIsSelectingChallenge={setIsSelectingChallenge}
           selectedChallenge={selectedChallenge}
+          setIsSelectingChallenge={setIsSelectingChallenge}
+          setSelectedReadingChallengeId={setSelectedReadingChallengeId}
         />
       )}
       <ReadingChallengeCard
