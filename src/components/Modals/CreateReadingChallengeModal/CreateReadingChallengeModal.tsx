@@ -15,13 +15,14 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useCreateReadingChallengeMutation } from "../../../redux/services/readingChallengeApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { ChallengeType } from "../../../Types/readingChallenges.types";
 
 interface CreateReadingChallengeModalProps {
   isCreatingReadingChallenge: boolean;
   closeCreateReadingChallengeModal: () => void;
 }
 interface FormValues {
-  type: "yearly" | "monthly" | "weekly";
+  type: ChallengeType;
   goal: number;
 }
 
@@ -40,7 +41,7 @@ const CreateReadingChallengeModal = ({
   const dispatch = useAppDispatch();
   const form = useForm<FormValues>({
     defaultValues: {
-      type: "yearly",
+      type: "ANNUAL",
       goal: 1,
     },
   });
@@ -82,6 +83,21 @@ const CreateReadingChallengeModal = ({
     height: "42px",
   };
 
+  const challengeSelectorOptions: { title: string; value: ChallengeType }[] = [
+    {
+      title: "Annual",
+      value: "ANNUAL",
+    },
+    {
+      title: "Monthly",
+      value: "MONTHLY",
+    },
+    {
+      title: "Weekly",
+      value: "WEEKLY",
+    },
+  ];
+
   return (
     <CustomModal
       isModalOpen={isCreatingReadingChallenge}
@@ -101,9 +117,9 @@ const CreateReadingChallengeModal = ({
                 {...register("type")}
                 onChange={handleSelectChallengeType}
               >
-                <MenuItem value={"yearly"}>Yearly</MenuItem>
-                <MenuItem value={"monthly"}>Monthly</MenuItem>
-                <MenuItem value={"weekly"}>Weekly</MenuItem>
+                {challengeSelectorOptions.map((option) => (
+                  <MenuItem value={option.value}>{option.title}</MenuItem>
+                ))}
               </Select>
             </FormControl>
             <Box sx={{ height: "24px" }} />

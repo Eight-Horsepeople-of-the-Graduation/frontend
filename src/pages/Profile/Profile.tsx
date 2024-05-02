@@ -20,6 +20,9 @@ const ProfilePage = () => {
   const user = useAppSelector((state) => state.authUser.user);
 
   const challenges = dummyChallenges;
+  const activeChallenges = challenges.filter(
+    (challenge) => new Date(challenge.endDate) > new Date()
+  );
 
   if (!user) return <Navigate to="/" />;
 
@@ -55,7 +58,7 @@ const ProfilePage = () => {
             <div className={classes.ChallengesHeader}>
               <h2>My Challenges</h2>
               <button
-                disabled={challenges.length >= 3}
+                disabled={activeChallenges.length >= 3}
                 title="Create new challenge"
                 onClick={() => setIsCreatingReadingChallenge(true)}
               >

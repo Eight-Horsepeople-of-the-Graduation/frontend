@@ -3,26 +3,34 @@ import ReadingChallengeSelector from "../ReadingChallengeSelector/ReadingChallen
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
 import { dummyChallenges } from "../../../../dummyData";
-
-const challenges = dummyChallenges.slice(0, 3);
+import { useAppSelector } from "../../../../redux/hooks";
 
 const ReadingChallenge = () => {
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
   const [selectedReadingChallengeId, setSelectedReadingChallengeId] =
     useState(1);
 
-  if (challenges.length === 0) return <Button>Create a challenge</Button>;
+  const userId = useAppSelector((state) => state.authUser.user?.id) ?? 1;
+
+  const userChallenges = dummyChallenges.filter(
+    (challenge) => challenge.userId === userId
+  );
+  const activeChallenges = userChallenges.filter(
+    (challenge) => new Date(challenge.endDate) > new Date()
+  );
+
+  if (activeChallenges.length === 0) return <Button>Create a challenge</Button>;
 
   const selectedChallenge =
-    challenges.find(
+    activeChallenges.find(
       (challenge) => challenge.id === selectedReadingChallengeId
-    ) ?? challenges[0];
+    ) ?? activeChallenges[0];
 
   return (
     <>
       {isSelectingChallenge && (
         <ReadingChallengeSelector
-          challenges={challenges}
+          challenges={activeChallenges}
           selectedChallenge={selectedChallenge}
           setIsSelectingChallenge={setIsSelectingChallenge}
           setSelectedReadingChallengeId={setSelectedReadingChallengeId}

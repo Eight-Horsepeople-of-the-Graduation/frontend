@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import {
   Challenge,
-  CreateReadingChallengePayload,
-} from "../../Types/readingChallengeTypes";
+  CreateChallengePayload,
+} from "../../Types/readingChallenges.types";
 
 export const readingChallengeApi = createApi({
   reducerPath: "readingChallengeApi",
@@ -25,19 +25,18 @@ export const readingChallengeApi = createApi({
         return `challenges/${id}`;
       },
     }),
-    createReadingChallenge: builder.mutation<
-      Challenge,
-      CreateReadingChallengePayload
-    >({
-      query(data) {
-        return {
-          url: "challenges",
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["challenges"],
-    }),
+    createReadingChallenge: builder.mutation<Challenge, CreateChallengePayload>(
+      {
+        query(data) {
+          return {
+            url: "challenges",
+            method: "POST",
+            body: data,
+          };
+        },
+        invalidatesTags: ["challenges"],
+      }
+    ),
     editReadingChallenge: builder.mutation<
       Challenge,
       { id: number; challengeData: Challenge }

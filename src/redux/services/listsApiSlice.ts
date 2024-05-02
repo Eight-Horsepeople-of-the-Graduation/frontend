@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { List, createListPayload } from "../../Types/listTypes";
+import { List, createListPayload } from "../../Types/lists.types";
 
 export const listsApi = createApi({
   reducerPath: "listsApi",

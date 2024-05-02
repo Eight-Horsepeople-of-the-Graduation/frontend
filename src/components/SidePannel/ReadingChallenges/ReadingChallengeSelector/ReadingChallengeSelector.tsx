@@ -1,5 +1,5 @@
 import { SetStateAction, useState } from "react";
-import { Challenge } from "../../../../Types/readingChallengeTypes";
+import { Challenge } from "../../../../Types/readingChallenges.types";
 import classes from "./ReadingChallengeSelector.module.css";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
