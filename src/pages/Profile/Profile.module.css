@@ -1,0 +1,91 @@
+.ProfilePage {
+  width: 100vw;
+  height: calc(100vh - 64px);
+  display: flex;
+}
+.ProfilePage main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+.ProfilePage aside {
+  width: 384px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  border-left: 1px solid var(--gray-color);
+}
+
+.ProfileHeader {
+  height: 283px;
+  border-bottom: 1px solid var(--gray-color);
+  width: 100%;
+  display: flex;
+  align-items: end;
+  padding: 0 96px;
+}
+.ProfileInfo {
+  display: flex;
+  align-items: center;
+  transform: translateY(32px);
+}
+
+.Info {
+  margin-left: 32px;
+}
+
+.Info h1 {
+  font-size: 32px;
+  color: var(--dark-primary-color);
+}
+.Info p {
+  font-size: 24px;
+  color: var(--light-primary-color);
+}
+
+.Challenges {
+  width: 100%;
+  padding: 24px;
+}
+
+.ChallengesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.ChallengesHeader button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--dark-gray-color);
+  outline: none !important;
+}
+
+.ChallengesHeader button:hover {
+  background-color: var(--gray-color);
+  color: var(--dark-primary-color);
+  transition: all 0.3s;
+}
+.ChallengesHeader button:disabled {
+  background-color: white;
+  color: var(--gray-color);
+  cursor: not-allowed;
+}
+
+.ChallengesList > * {
+  width: 100%;
+  margin-bottom: 12px;
+}

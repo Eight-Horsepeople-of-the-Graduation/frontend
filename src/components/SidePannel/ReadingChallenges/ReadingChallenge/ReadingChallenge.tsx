@@ -2,26 +2,10 @@ import { useState } from "react";
 import ReadingChallengeSelector from "../ReadingChallengeSelector/ReadingChallengeSelector";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
-import { Challenge } from "../../../../Types/readingChallengeTypes";
+import { dummyChallenges } from "../../../../dummyData";
 
-const challenges: Challenge[] = [
-  {
-    id: 1,
-    goal: 100,
-    progress: 90,
-    type: "yearly",
-    period: "2024",
-    userId: 1,
-  },
-  {
-    id: 2,
-    goal: 8,
-    progress: 6,
-    type: "monthly",
-    period: "april",
-    userId: 1,
-  },
-];
+const challenges = dummyChallenges.slice(0, 3);
+
 const ReadingChallenge = () => {
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
   const [selectedReadingChallengeId, setSelectedReadingChallengeId] =

@@ -1,19 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../../Types/userTypes";
+import { dummyUser } from "../../../dummyData";
 
 interface AuthState {
   user?: User | null;
 }
 
 const initialState: AuthState = {
-  user: {
-    id: 1,
-    name: "Test User",
-    username: "test_user",
-    email: "test_user@gmail.com",
-    role: "user",
-    image: "https://avatars.githubusercontent.com/u/56196724?v=1",
-  },
+  user: dummyUser,
 };
 
 export const authSlice = createSlice({

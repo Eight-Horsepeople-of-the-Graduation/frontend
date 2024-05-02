@@ -1,11 +1,12 @@
 import React from "react";
-import { Avatar } from "@mui/material";
+import { Avatar, SxProps, Theme } from "@mui/material";
 import classes from "./CustomAvatar.module.css";
 import { User } from "../../../Types/userTypes";
 
 interface CustomAvatarProps {
   user: User;
   size?: "s" | "m" | "l";
+  style?: SxProps<Theme>;
 }
 
 const avatarSizes = {
@@ -40,11 +41,15 @@ function stringAvatar(name: string) {
   };
 }
 
-const CustomAvatar = ({ user, size }: CustomAvatarProps) => {
+const CustomAvatar = ({ user, size, style }: CustomAvatarProps) => {
   return (
     <Avatar
       {...stringAvatar(user.name)}
-      sx={{ width: avatarSizes[size ?? "m"], height: avatarSizes[size ?? "m"] }}
+      sx={{
+        width: avatarSizes[size ?? "m"],
+        height: avatarSizes[size ?? "m"],
+        ...style,
+      }}
       className={classes.avatar}
       alt={user.name}
       src={user.image}

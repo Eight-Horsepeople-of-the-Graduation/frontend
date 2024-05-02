@@ -29,10 +29,7 @@ const ReadingChallengeCard = ({
       <div className={classes.Info}>
         <div className={classes.ChallengeInfo}>
           <p>{convertFirstLetterToUppercase(challenge.type)} Challenge</p>
-          <Link
-            to={`/reading-challenge/${challenge.id}`}
-            title="Go to challenge"
-          >
+          <Link to={`/challenges/${challenge.id}`} title="Go to challenge">
             {convertFirstLetterToUppercase(challenge.period)}
           </Link>
         </div>
