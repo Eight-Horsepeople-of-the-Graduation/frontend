@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
 import CreateListModal from "../Modals/CreateListModal/CreateListModal";
 import { useState } from "react";
+import { dummyLists } from "../../dummyData";
 
 const SidePannel = () => {
   const user = useAppSelector((state) => state.authUser.user);
@@ -24,16 +25,7 @@ const SidePannel = () => {
     { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
   ];
 
-  const lists = [
-    { id: 1, name: "Novels" },
-    { id: 2, name: "Self Development Books" },
-    { id: 3, name: "Programming Books" },
-    { id: 4, name: "Business Books" },
-    { id: 5, name: "History Books" },
-    { id: 6, name: "Biography Books" },
-    { id: 7, name: "Science Books" },
-    { id: 8, name: "Fantasy Books" },
-  ];
+  const lists = dummyLists;
 
   return (
     <>

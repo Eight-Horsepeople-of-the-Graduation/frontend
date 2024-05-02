@@ -39,6 +39,10 @@ function App() {
 
           <Route element={<AllChallengesPage />} path="/challenges" />
           <Route
+            element={<div>Single Challenge</div>}
+            path="/challenges/:challengeId"
+          />
+          <Route
             element={<SingleChallengePage />}
             path="/challenges/:challengeId"
           />
