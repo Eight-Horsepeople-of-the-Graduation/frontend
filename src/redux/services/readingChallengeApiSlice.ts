@@ -10,6 +10,11 @@ export const readingChallengeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["challenges"],
   endpoints: (builder) => ({
+    getAllReadingChallenges: builder.query<Challenge[], void>({
+      query() {
+        return "challenges";
+      },
+    }),
     getAllUserChallenges: builder.query<Challenge[], number>({
       query(userId) {
         return `challenges/user/${userId}`;
@@ -33,19 +38,19 @@ export const readingChallengeApi = createApi({
       },
       invalidatesTags: ["challenges"],
     }),
-    updateReadingChallenge: builder.mutation<
+    editReadingChallenge: builder.mutation<
       Challenge,
-      { id: string; challengeData: Challenge }
+      { id: number; challengeData: Challenge }
     >({
       query({ id, challengeData }) {
         return {
           url: `challenges/${id}`,
-          method: "PATCH",
+          method: "PUT",
           body: challengeData,
         };
       },
     }),
-    deleteChallenge: builder.mutation<null, string>({
+    deleteReadingChallenge: builder.mutation<null, string>({
       query(id) {
         return {
           url: `lists/${id}`,
@@ -57,9 +62,10 @@ export const readingChallengeApi = createApi({
 });
 
 export const {
-  useCreateReadingChallengeMutation,
-  useDeleteChallengeMutation,
+  useGetAllReadingChallengesQuery,
   useGetAllUserChallengesQuery,
   useGetReadingChallengeByIdQuery,
-  useUpdateReadingChallengeMutation,
+  useCreateReadingChallengeMutation,
+  useEditReadingChallengeMutation,
+  useDeleteReadingChallengeMutation,
 } = readingChallengeApi;
