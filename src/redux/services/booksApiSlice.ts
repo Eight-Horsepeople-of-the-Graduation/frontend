@@ -1,46 +1,45 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { Book } from "../../Types/bookTypes";
+import { Book } from "../../Types/books.types";
 
 export const booksApi = createApi({
-  reducerPath: "bookApi",
+  reducerPath: "booksApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["books"],
   endpoints: (builder) => ({
-    // ? Query: Get All books
-    getBooks: builder.query<Book[], void>({
+    getAllBooks: builder.query<Book[], void>({
       query() {
         return "books";
       },
     }),
-    // ? Query: Get a single book
-    getBook: builder.query<Book, string>({
+    getBookById: builder.query<Book, number>({
       query(id) {
         return `books/${id}`;
       },
     }),
-    // ? Mutation: Create a book
+    getBookByTitle: builder.query<Book, string>({
+      query(title) {
+        return `books/title/${title}`;
+      },
+    }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
         return {
           url: "books",
           method: "POST",
-          credentials: "include",
           body: data,
         };
       },
     }),
-    // ? Mutation: Update book
-    updateBook: builder.mutation<Book, { id: string; formData: FormData }>({
+    editBook: builder.mutation<Book, { id: string; formData: FormData }>({
       query({ id, formData }) {
         return {
           url: `books/${id}`,
-          method: "PATCH",
+          method: "PUT",
           body: formData,
         };
       },
     }),
-    // ? Mutation: Delete book
     deleteBook: builder.mutation<null, string>({
       query(id) {
         return {
@@ -53,9 +52,10 @@ export const booksApi = createApi({
 });
 
 export const {
+  useGetAllBooksQuery,
+  useGetBookByIdQuery,
+  useGetBookByTitleQuery,
   useCreateBookMutation,
-  useUpdateBookMutation,
+  useEditBookMutation,
   useDeleteBookMutation,
-  useGetBooksQuery,
-  useGetBookQuery,
 } = booksApi;

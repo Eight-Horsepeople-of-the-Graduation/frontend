@@ -2,14 +2,19 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import {
   Challenge,
-  CreateReadingChallengePayload,
-} from "../../Types/readingChallengeTypes";
+  CreateChallengePayload,
+} from "../../Types/readingChallenges.types";
 
 export const readingChallengeApi = createApi({
   reducerPath: "readingChallengeApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["challenges"],
   endpoints: (builder) => ({
+    getAllReadingChallenges: builder.query<Challenge[], void>({
+      query() {
+        return "challenges";
+      },
+    }),
     getAllUserChallenges: builder.query<Challenge[], number>({
       query(userId) {
         return `challenges/user/${userId}`;
@@ -20,32 +25,31 @@ export const readingChallengeApi = createApi({
         return `challenges/${id}`;
       },
     }),
-    createReadingChallenge: builder.mutation<
+    createReadingChallenge: builder.mutation<Challenge, CreateChallengePayload>(
+      {
+        query(data) {
+          return {
+            url: "challenges",
+            method: "POST",
+            body: data,
+          };
+        },
+        invalidatesTags: ["challenges"],
+      }
+    ),
+    editReadingChallenge: builder.mutation<
       Challenge,
-      CreateReadingChallengePayload
-    >({
-      query(data) {
-        return {
-          url: "challenges",
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["challenges"],
-    }),
-    updateReadingChallenge: builder.mutation<
-      Challenge,
-      { id: string; challengeData: Challenge }
+      { id: number; challengeData: Challenge }
     >({
       query({ id, challengeData }) {
         return {
           url: `challenges/${id}`,
-          method: "PATCH",
+          method: "PUT",
           body: challengeData,
         };
       },
     }),
-    deleteChallenge: builder.mutation<null, string>({
+    deleteReadingChallenge: builder.mutation<null, string>({
       query(id) {
         return {
           url: `lists/${id}`,
@@ -57,9 +61,10 @@ export const readingChallengeApi = createApi({
 });
 
 export const {
-  useCreateReadingChallengeMutation,
-  useDeleteChallengeMutation,
+  useGetAllReadingChallengesQuery,
   useGetAllUserChallengesQuery,
   useGetReadingChallengeByIdQuery,
-  useUpdateReadingChallengeMutation,
+  useCreateReadingChallengeMutation,
+  useEditReadingChallengeMutation,
+  useDeleteReadingChallengeMutation,
 } = readingChallengeApi;

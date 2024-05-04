@@ -8,7 +8,7 @@ import { readingChallengeApi } from "./services/readingChallengeApiSlice";
 
 export const store = configureStore({
   reducer: {
-    // ? Add the authReducer to the reducer object
+    // States
     authUser: authReducer,
     alert: alertReducer,
 

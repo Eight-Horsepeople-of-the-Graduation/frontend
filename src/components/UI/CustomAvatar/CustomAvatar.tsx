@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, SxProps, Theme } from "@mui/material";
 import classes from "./CustomAvatar.module.css";
-import { User } from "../../../Types/userTypes";
+import { User } from "../../../Types/users.types";
 
 interface CustomAvatarProps {
   user: User;
