@@ -11,15 +11,28 @@
 }
 
 .Card.Selected {
-  background-color: #e1faeb;
-  border: 1px solid var(--success-color);
+  background-color: var(--light-primary-color);
+  border: 1px solid var(--primary-color);
 }
+
+.Card.Done {
+  background-color: var(--success-color);
+  border: 1px solid var(--dark-success-color);
+}
+
+.Card.Expired {
+  background-color: var(--gray-color);
+  border: 1px solid var(--gray-color);
+}
+
 .Card:hover {
   background-color: var(--gray-color);
   border: 1px solid var(--primary-color);
   transition: all 0.3s;
 }
-
+.Card.Expired:hover {
+  border: 1px solid var(--dark-gray-color);
+}
 .Info {
   margin-bottom: 8px;
   color: var(--dark-gray-color);
