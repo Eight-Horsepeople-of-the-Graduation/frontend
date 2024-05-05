@@ -2,14 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  position: fixed;
+  top: calc(64px + 32px);
+  right: 48px;
   width: 384px;
-  height: 90%;
+  height: calc(90% - 64px);
   background-color: #fff;
   border: var(--border);
   border-radius: var(--large-border-radius);
   box-shadow: var(--shadow-far);
   padding: 32px 0;
   overflow: auto;
+}
+
+.SidePannel.Hiden {
+  -webkit-animation: slide-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .user {
@@ -148,4 +156,26 @@
   flex-wrap: nowrap;
   width: 100%;
   height: 100%;
+}
+
+@-webkit-keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(500px);
+    transform: translateX(500px);
+  }
+}
+@keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(500px);
+    transform: translateX(500px);
+    display: none;
+  }
 }

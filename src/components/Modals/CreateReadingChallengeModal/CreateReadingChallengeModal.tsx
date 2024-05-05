@@ -117,8 +117,10 @@ const CreateReadingChallengeModal = ({
                 {...register("type")}
                 onChange={handleSelectChallengeType}
               >
-                {challengeSelectorOptions.map((option) => (
-                  <MenuItem value={option.value}>{option.title}</MenuItem>
+                {challengeSelectorOptions.map((option, idx) => (
+                  <MenuItem value={option.value} key={idx}>
+                    {option.title}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

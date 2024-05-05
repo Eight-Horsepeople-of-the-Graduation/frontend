@@ -1,15 +1,15 @@
 import React from "react";
-import Layout from "../../../../../components/Layout/Layout";
+import SidePannelLayout from "../../../../../components/SidePannelLayout/SidePannelLayout";
 
 const CurrentlyReadingPage = () => {
   document.title = "Readify | Currently Reading";
 
   return (
-    <Layout>
+    <SidePannelLayout>
       <div>
         <h1>Currently Reading Page</h1>
       </div>
-    </Layout>
+    </SidePannelLayout>
   );
 };
 

@@ -1,14 +1,14 @@
 .SelectorCard {
-  width: 100%;
   background-color: white;
-  border-radius: var(--small-border-radius);
+  border-radius: calc(var(--small-border-radius) + 12px);
   box-shadow: var(--near-border-shadow);
   border: 1px solid var(--gray-color);
   padding: 12px 0;
-  transform: translateY(-12px);
   position: absolute;
-  top: 235px;
-  width: 384px;
+  top: 115px;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 10;
   box-shadow: var(--shadow-near);
 }

@@ -1,14 +1,14 @@
 import React from "react";
-import Layout from "../../components/Layout/Layout";
+import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 
 const ListsPage = () => {
   document.title = `Readify | Lists`;
   return (
-    <Layout>
+    <SidePannelLayout>
       <div>
         <h1>Lists Page</h1>
       </div>
-    </Layout>
+    </SidePannelLayout>
   );
 };
 
