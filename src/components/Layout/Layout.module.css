@@ -6,7 +6,8 @@
 
 .content {
   height: 100%;
-  width: calc(100% - 480px);
+  flex: 1;
+  overflow-y: auto;
 }
 
 .sidePannelContainer {
@@ -15,4 +16,27 @@
   justify-content: center;
   align-items: center;
   width: 480px;
+}
+
+.sidePannelContainer.Hiden {
+  -webkit-animation: shrenk-right 0.5s both !important;
+  animation: shrenk-right 0.5s both !important;
+}
+
+@-webkit-keyframes shrenk-right {
+  0% {
+    width: 480px;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+@keyframes shrenk-right {
+  0% {
+    width: 480px;
+  }
+  100% {
+    width: 0;
+  }
 }
