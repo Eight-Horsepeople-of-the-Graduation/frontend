@@ -1,4 +1,3 @@
-import React from "react";
 import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 
 const HomePage = () => {
