@@ -6,32 +6,32 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#525fe1",
-      light: "#b1b8ff",
+      light: "#e8eaff",
       dark: "#121a69",
     },
     secondary: {
       main: "#f86f03",
-      light: "#f8a766",
+      light: "#ffc597",
       dark: "#6b2f00",
     },
     error: {
-      main: "#f0a5a5",
-      dark: "#da2d2d",
+      main: "#fae6e6",
+      dark: "#e15f5f",
     },
     warning: {
       main: "#fae19b",
       dark: "#8c691e",
     },
     success: {
-      main: "#a5ebbe",
-      dark: "#52c982",
+      main: "#e1faeb",
+      dark: "#73d79b",
     },
     background: {
       default: "#fff",
     },
     grey: {
-      500: "#f5f5f5",
-      600: "#e0e0e0",
+      100: "#f5f5f5",
+      200: "#9c9b9d",
     },
     text: {
       primary: "#121a69",

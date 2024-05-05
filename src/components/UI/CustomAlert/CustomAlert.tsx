@@ -26,6 +26,7 @@ const CustomAlert = () => {
       sx={{
         zIndex: 10,
         backgroundColor: `var(--${severity}-color)`,
+        border: `1px solid var(--dark-${severity}-color)`,
         color: `var(--dark-${severity}-color)`,
         maxWidth: "384px",
         minWidth: "256px",
@@ -35,7 +36,6 @@ const CustomAlert = () => {
         bottom: 32,
         left: 48,
         display: "flex",
-        alignItems: "center",
         boxShadow: "var(--shadow-near)",
         "& *": { marginBottom: 0 },
         "& svg": { color: `var(--dark-${severity}-color)` },
@@ -43,10 +43,13 @@ const CustomAlert = () => {
       }}
       severity={severity}
     >
-      <AlertTitle sx={{ fontWeight: "bold" }}>
-        {convertFirstLetterToUppercase(severity)}
-        {message !== "" ? `: ${message}` : ""}
-      </AlertTitle>
+      {message ? (
+        message
+      ) : (
+        <AlertTitle sx={{ fontWeight: "bold" }}>
+          {convertFirstLetterToUppercase(severity)}
+        </AlertTitle>
+      )}
     </Alert>
   );
 };
