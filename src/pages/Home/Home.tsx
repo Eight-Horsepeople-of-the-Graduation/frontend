@@ -2,7 +2,8 @@
 import Layout from "../../components/Layout/Layout";
 import BookComponent from "../../components/UI/BookComponent/BookComponent";
 import { Box } from "@mui/material";
-import { dummyBooks } from "../../components/UI/BookComponent/dummyBooks";
+import { dummyBooks } from "../../dummyData";
+
 const HomePage = () => {
   document.title = "Readify | Home";
 

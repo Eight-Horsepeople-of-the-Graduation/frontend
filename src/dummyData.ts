@@ -1,4 +1,6 @@
 import { Challenge } from "./Types/readingChallengeTypes";
+import { Book } from "./Types/bookTypes";
+
 
 export const dummyChallenges: Challenge[] = [
   {
@@ -45,4 +47,24 @@ export const dummyLists = [
   { id: 6, name: "Biography Books" },
   { id: 7, name: "Science Books" },
   { id: 8, name: "Fantasy Books" },
+];
+
+
+export const dummyBooks: Book[] = [
+  {
+    id: 1,
+    author: {
+      name: "Chinua Acheeeeeeeebe",
+      username: "",
+      email: "",
+      image: "",
+      role: "",
+      id: 0,
+    },
+    cover:
+      "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
+    name: "Things Fall Apart",
+    description: "",
+    category: "",
+  },
 ];
