@@ -1,10 +1,16 @@
 import React from "react";
-import Layout from "../../components/Layout/Layout";
+import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 
 const HomePage = () => {
   document.title = "Readify | Home";
 
-  return <Layout>Home</Layout>;
+  return (
+    <SidePannelLayout>
+      <main>
+        <h1>Home Page</h1>
+      </main>
+    </SidePannelLayout>
+  );
 };
 
 export default HomePage;

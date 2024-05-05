@@ -13,19 +13,23 @@ import CreateListModal from "../Modals/CreateListModal/CreateListModal";
 import { useState } from "react";
 import { dummyLists } from "../../dummyData";
 
-const SidePannel = () => {
+interface SidePannelProps {
+  isHiden?: boolean;
+}
+
+const navItems = [
+  { icon: faBookOpen, text: "Currently reading", link: "/lists/current" },
+  { icon: faBook, text: "Want to read", link: "/lists/to-read" },
+  { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
+];
+
+const SidePannel = ({ isHiden }: SidePannelProps) => {
   const user = useAppSelector((state) => state.authUser.user);
   const [isCreatingList, setIsCreatingList] = useState(false);
 
   if (!user) return <></>;
 
-  const navItems = [
-    { icon: faBookOpen, text: "Currently reading", link: "/lists/current" },
-    { icon: faBook, text: "Want to read", link: "/lists/to-read" },
-    { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
-  ];
-
-  const lists = dummyLists;
+  const lists = dummyLists; //todo: fetch user lists
 
   return (
     <>
@@ -33,7 +37,9 @@ const SidePannel = () => {
         isCreatingList={isCreatingList}
         closeCreateListModal={() => setIsCreatingList(false)}
       />
-      <aside className={classes.SidePannel}>
+      <aside
+        className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}
+      >
         <div className={classes.user}>
           <div>
             <CustomAvatar user={user} size="m" />
