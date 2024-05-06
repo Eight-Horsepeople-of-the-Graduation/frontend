@@ -1,14 +1,19 @@
 .book {
   display: flex;
-  width: 128px;
+  width: 142px;
   flex-direction: column;
   gap: 8px;
+  position: absolute;
+}
+.container {
+  width: 128px;
+  height: 192px;
+  position: relative;
 }
 .cover {
   border-radius: 10px;
   height: 192px;
   width: 100%;
-  position: relative;
 }
 .content {
   max-width: 100%;
@@ -26,25 +31,29 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
-.addButton {
+.readButton {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
-  visibility: hidden
-}
-
-.plus {
-  color: var(--dark-primary-color);
-  position: relative;
-  z-index: 1;
-  padding: auto;
-  color: var(--gray-color);
+  position: absolute !important;
   cursor: pointer;
+  z-index: 1;
 }
-.cover:hover .addButton {
-  opacity: 0.7;
-  visibility: visible
+.readButton:hover {
+  opacity: 1;
+  visibility: visible;
+}
+.iconButton {
+  width: 36px;
+  height: 36px;
+  fill: var(--primary-color);
+  top: -2px;
+  left: 122px;
+  padding: 0;
+}
+.icon{
+  width: 32px;
+  height: 32px;
 }

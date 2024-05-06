@@ -6,6 +6,8 @@ export const dummyBooks: Book[] = [
   {
     id: 2341,
     title: "Lost City",
+    cover:
+      "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
     isbn: "978-4230198765421",
     description: "Deep in the Amazon jungle...",
     language: "Spanish",
