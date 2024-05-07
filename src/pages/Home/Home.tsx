@@ -1,3 +1,4 @@
+import React from "react";
 import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import BookComponent from "../../components/UI/BookComponent/BookComponent";
 import { dummyBooks } from "../../dummyData";
