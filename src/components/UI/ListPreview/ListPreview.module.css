@@ -1,0 +1,31 @@
+.list {
+  display: flex; 
+  flex-direction: column;
+  flex-wrap: wrap; 
+  gap: 100px; 
+  width: 1448px;
+}
+
+.listDetails{
+}
+
+.bookList{
+   display: flex;
+   flex-direction: row;
+   justify-items: center;
+   flex-wrap: nowrap;
+   gap: 48px;
+   width:auto;
+   height: fit-content;
+   flex-grow: 1;
+}
+.bookInList{
+}
+
+.seeAllButton{
+   width: fit-content;
+}
+.title{
+   width: 200px;
+}
+

@@ -118,6 +118,8 @@ export const dummyBooks: Book[] = [
   {
     id: 2341,
     title: "Lost City",
+    cover:
+      "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
     isbn: "978-4230198765421",
     description: "Deep in the Amazon jungle...",
     language: "Spanish",
@@ -218,6 +220,8 @@ export const dummyBooks: Book[] = [
   {
     id: 2341,
     title: "Lost City",
+    cover:
+      "https://www.designforwriters.com/wp-content/uploads/2017/10/design-for-writers-book-cover-tf-2-a-million-to-one.jpg",
     isbn: "978-4230198765421",
     description: "Deep in the Amazon jungle...",
     language: "Spanish",
@@ -328,6 +332,8 @@ export const dummyBooks: Book[] = [
   {
     id: 2341,
     title: "Lost City",
+    cover:
+      "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
     isbn: "978-4230198765421",
     description: "Deep in the Amazon jungle...",
     language: "Spanish",
@@ -428,6 +434,8 @@ export const dummyBooks: Book[] = [
   {
     id: 2341,
     title: "Lost City",
+    cover:
+      "https://www.designforwriters.com/wp-content/uploads/2017/10/design-for-writers-book-cover-tf-2-a-million-to-one.jpg",
     isbn: "978-4230198765421",
     description: "Deep in the Amazon jungle...",
     language: "Spanish",
