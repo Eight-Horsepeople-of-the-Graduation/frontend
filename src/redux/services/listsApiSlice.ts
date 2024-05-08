@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { List, createListPayload } from "../../Types/lists.types";
+import {
+  List,
+  createListPayload,
+  updateListPayload,
+} from "../../Types/lists.types";
 
 export const listsApi = createApi({
   reducerPath: "listsApi",
@@ -32,8 +36,11 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists"],
     }),
-    editList: builder.mutation<List, { id: number; formData: FormData }>({
-      query({ id, formData }) {
+    editList: builder.mutation<
+      List,
+      { id: number; listData: updateListPayload }
+    >({
+      query({ id, listData: formData }) {
         return {
           url: `bookshelves/${id}`,
           method: "PUT",

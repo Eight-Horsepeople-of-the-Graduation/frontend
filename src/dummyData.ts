@@ -1073,7 +1073,7 @@ export const dummyChallenges: Challenge[] = [
     period: "2024",
     userId: 1,
     books: dummyBooks.slice(0, 50),
-    endDate: "2027-12-31",
+    endDate: "2022-12-31",
   },
   {
     id: 2,

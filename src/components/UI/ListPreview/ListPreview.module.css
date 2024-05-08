@@ -1,31 +1,55 @@
-.list {
-  display: flex; 
-  flex-direction: column;
-  flex-wrap: wrap; 
-  gap: 100px; 
-  width: 1448px;
+.List {
+  max-width: fit-content;
+  margin-bottom: 46px;
 }
 
-.listDetails{
+.List header {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  width: 100%;
+  align-items: baseline;
 }
 
-.bookList{
-   display: flex;
-   flex-direction: row;
-   justify-items: center;
-   flex-wrap: nowrap;
-   gap: 48px;
-   width:auto;
-   height: fit-content;
-   flex-grow: 1;
-}
-.bookInList{
+.List header h1 {
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.seeAllButton{
-   width: fit-content;
-}
-.title{
-   width: 200px;
+.Books {
+  display: flex;
+  justify-content: start;
+  gap: 42px;
 }
 
+.Books .ButtonContainer {
+  height: 200px;
+  width: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ButtonContainer button {
+  background-color: transparent;
+  color: var(--dark-primary-color);
+  width: 128px;
+  height: 46px;
+  border-radius: var(--large-border-radius);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.3s all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ButtonContainer button:hover {
+  background-color: var(--light-primary-color);
+  transform: scale(1.05);
+  gap: 12px;
+}

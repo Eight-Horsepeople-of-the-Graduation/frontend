@@ -7,6 +7,7 @@
   height: 384px;
   border-radius: var(--large-border-radius);
   background-color: white;
+  animation: scale-in 0.5s ease 0s 1 normal forwards;
 }
 .fade {
   position: fixed;
@@ -21,5 +22,31 @@
   align-items: center;
 
   z-index: 1;
+}
 
+@-webkit-keyframes scale-in {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
