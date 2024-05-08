@@ -1,0 +1,14 @@
+.ChatMessage {
+  display: flex;
+  gap: 24px;
+}
+
+.Message {
+  background-color: white;
+  box-shadow: var(--shadow-far);
+  padding: 12px 24px;
+  border-radius: var(--large-border-radius);
+  flex: 1;
+  border: var(--border);
+  margin-bottom: 24px;
+}

@@ -30,6 +30,7 @@
   height: 100%;
   border-radius: var(--small-border-radius);
   box-shadow: var(--shadow-far);
+  border: var(--border);
 }
 
 .Content h3 {
@@ -83,4 +84,29 @@
 }
 .Desc p:hover::-webkit-scrollbar {
   display: block;
+}
+
+.Chat {
+  height: calc(100vh - 64px);
+  padding-top: 32px;
+}
+.Chat > h1 {
+  padding: 0 128px;
+  margin-bottom: 24px;
+}
+.Chat main {
+  width: 100%;
+  height: calc(100% - 46px);
+  background-color: var(--light-primary-color);
+  padding: 46px 200px;
+}
+
+.Chat main > div {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  padding: 0 56px;
+}
+
+.Chat main > div::-webkit-scrollbar {
+  display: none;
 }

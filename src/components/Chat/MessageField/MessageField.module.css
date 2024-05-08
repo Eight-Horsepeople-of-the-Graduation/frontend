@@ -1,0 +1,7 @@
+.MessageField {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  max-height: 95px;
+}
