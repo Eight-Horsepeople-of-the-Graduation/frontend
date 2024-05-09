@@ -1,59 +1,90 @@
 .book {
-  display: flex;
-  width: 142px;
-  flex-direction: column;
-  gap: 8px;
-  position: absolute;
-}
-.container {
   width: 128px;
-  height: 192px;
-  position: relative;
+  transition: all 0.3s;
 }
+
+.book:hover {
+  transform: scale(1.05);
+  text-shadow: var(--shadow-near);
+}
+
+.book:hover .cover {
+  box-shadow: var(--shadow-far);
+}
+
 .cover {
-  border-radius: 10px;
-  height: 192px;
   width: 100%;
-}
-.content {
-  max-width: 100%;
-  gap: 4px;
-}
-.title {
-  color: var(--dark-primary-color);
-  text-overflow: ellipsis;
+  position: relative;
+  height: 200px;
+  margin-bottom: 8px;
+
   overflow: hidden;
-  white-space: nowrap;
+  border-radius: var(--large-border-radius);
 }
-.author {
-  color: var(--dark-gray-color);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.readButton {
-  top: 0;
-  left: 0;
+
+.noCover {
   width: 100%;
-  height: 100%;
-  opacity: 0;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-primary-color);
+  font-size: xx-large;
+  color: var(--gray-color);
+}
+
+.iconButton {
   position: absolute !important;
+  top: 12px;
+  right: 10px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: transparent;
+  font-size: 16px;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
   cursor: pointer;
+  z-index: 10;
+}
+
+.cover:hover .iconButton {
+  background-color: var(--gray-color);
+  color: var(--dark-gray-color);
+}
+
+.iconButton:hover {
+  color: var(--primary-color) !important;
+  transform: scale(1.1);
+  box-shadow: var(--shadow-near);
+}
+
+.cover img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: 0 4px;
   z-index: 1;
 }
-.readButton:hover {
-  opacity: 1;
-  visibility: visible;
+
+.info h2 {
+  font-size: 16px;
+  color: var(--dark-primary-color);
+  font-weight: 900;
 }
-.iconButton {
-  width: 36px;
-  height: 36px;
-  fill: var(--primary-color);
-  top: -2px;
-  left: 122px;
-  padding: 0;
+
+.info p {
+  font-size: 14px;
+  color: var(--dark-gray-color);
 }
-.icon{
-  width: 32px;
-  height: 32px;
+
+.info *:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
