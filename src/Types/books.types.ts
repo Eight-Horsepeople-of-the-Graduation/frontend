@@ -14,8 +14,9 @@ export interface Book {
   authors: Author[];
   genres: Genre[];
   cover?: string;
+  file?: string;
 }
 
-export type CreateBookPayload = Omit<Book, "id">
+export type CreateBookPayload = Omit<Book, "id">;
 
-export type UpdateBookPayload = Partial<CreateBookPayload>
+export type UpdateBookPayload = Partial<CreateBookPayload>;

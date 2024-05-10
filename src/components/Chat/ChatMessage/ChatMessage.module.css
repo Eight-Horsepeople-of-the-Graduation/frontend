@@ -8,7 +8,9 @@
   box-shadow: var(--shadow-far);
   padding: 12px 24px;
   border-radius: var(--large-border-radius);
+  border-top-left-radius: var(--small-border-radius);
   flex: 1;
   border: var(--border);
   margin-bottom: 24px;
+  position: relative;
 }
