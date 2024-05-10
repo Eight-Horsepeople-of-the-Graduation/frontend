@@ -7,10 +7,7 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { dummyLists } from "../../../dummyData";
 import { List } from "../../../Types/lists.types";
 import { Book } from "../../../Types/books.types";
-import {
-  useAddBookToListMutation,
-  useAddBookToMultibleListsMutation,
-} from "../../../redux/services/listsApiSlice";
+import { useAddBookToMultibleListsMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 interface FormValues {
@@ -29,7 +26,7 @@ const AddBookToListsModal = () => {
 
   const form = useForm<FormValues>({
     defaultValues: {
-      lists: dummyLists.slice(0, 2) as List[],
+      lists: dummyLists.slice(0, 2),
     },
   });
 
