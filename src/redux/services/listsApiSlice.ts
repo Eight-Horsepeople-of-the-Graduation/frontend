@@ -68,6 +68,19 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists", "books"],
     }),
+    removeBookFromList: builder.mutation<
+      null,
+      { listId: number; bookId: number }
+    >({
+      query({ listId, bookId }) {
+        return {
+          url: `bookshelves/add-book/${listId}`,
+          method: "DELETE",
+          body: { bookId },
+        };
+      },
+      invalidatesTags: ["lists", "books"],
+    }),
     updateBookLists: builder.mutation<
       null,
       {
@@ -100,5 +113,6 @@ export const {
   useGetListByIdQuery,
   useGetListByTitleQuery,
   useAddBookToListMutation,
+  useRemoveBookFromListMutation,
   useUpdateBookListsMutation,
 } = listsApi;

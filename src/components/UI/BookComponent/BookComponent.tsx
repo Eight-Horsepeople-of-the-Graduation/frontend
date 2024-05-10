@@ -5,16 +5,22 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookOpen,
+  faEllipsisVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch } from "../../../redux/hooks";
-import { openAddBookToListModal } from "../../../redux/features/modals/modalsSlice";
-//import { List } from "../../../Types/lists.types";
+import {
+  openAddBookToListModal,
+  openRemoveBookFromListModal,
+} from "../../../redux/features/modals/modalsSlice";
 
 interface BookProps {
   book: Book;
+  currentListId?: number;
 }
 
-const BookComponent: React.FC<BookProps> = ({ book }) => {
+const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const BookClick = () => navigate(`/books/${book.id}`);
@@ -34,6 +40,37 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
     closeMenu();
   };
 
+  const removeBookFromList = () => {
+    dispatch(
+      openRemoveBookFromListModal({
+        bookToRemoveFromListId: book.id,
+        listToRemoveBookFromId: currentListId!,
+      })
+    );
+    closeMenu();
+  };
+
+  interface MenuOption {
+    title: string;
+    action: () => void;
+    variant?: "default" | "danger";
+  }
+
+  const menuOptions: MenuOption[] = [
+    {
+      title: "Add to lists",
+      action: addBookToList,
+    },
+  ];
+
+  if (currentListId) {
+    menuOptions.push({
+      title: "Remove from list",
+      action: removeBookFromList,
+      variant: "danger",
+    });
+  }
+
   return (
     <>
       <div className={classes.book} onClick={BookClick}>
@@ -46,8 +83,8 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
             </div>
           )}
           <button
-            aria-label="Add to list"
-            title="Add to list"
+            aria-label="Options"
+            title="Options"
             className={classes.iconButton}
             id="book-button"
             aria-controls={open ? "book-menu" : undefined}
@@ -55,7 +92,7 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faEllipsisVertical} />
           </button>
         </div>
         <div className={classes.info}>
@@ -64,8 +101,8 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
         </div>
       </div>
       <Menu
-        id="positioned-menu"
-        aria-labelledby="positioned-button"
+        id="book-options-menu"
+        aria-labelledby="book-options-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={closeMenu}
@@ -77,8 +114,27 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
           vertical: "top",
           horizontal: "left",
         }}
+        autoFocus={false}
       >
-        <MenuItem onClick={addBookToList}>Add to lists</MenuItem>
+        {menuOptions.map((option, idx) => (
+          <MenuItem
+            key={idx}
+            onClick={option.action}
+            sx={
+              option.variant === "danger"
+                ? {
+                    color: "var(--dark-error-color)",
+
+                    "&:hover": {
+                      backgroundColor: "var(--error-color)",
+                    },
+                  }
+                : {}
+            }
+          >
+            {option.title}
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

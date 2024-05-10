@@ -15,10 +15,12 @@ import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/S
 import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
 import CreateReadingChallengeModal from "./components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
 import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
+import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal/RemoveBookFromListModal";
 
 function App() {
   return (
     <>
+      <RemoveBookFromListModal />
       <CustomAlert />
       <CreateListModal />
       <CreateReadingChallengeModal />
