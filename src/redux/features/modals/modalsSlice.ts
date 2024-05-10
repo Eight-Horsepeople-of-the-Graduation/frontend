@@ -1,38 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface Modals {
   createListModalOpen: boolean;
   createChallengeModalOpen: boolean;
-  addBookToListModalOpen: boolean;
+  bookToAddToListId?: number;
 }
 
 const initialState: Modals = {
   createListModalOpen: false,
   createChallengeModalOpen: false,
-  addBookToListModalOpen: false,
+  bookToAddToListId: undefined,
 };
 
 export const modalsSlice = createSlice({
   name: "modals",
   initialState,
   reducers: {
-    openCreateListModal: (state) => {
+    openCreateListModal: (state: Modals) => {
       state.createListModalOpen = true;
     },
-    closeCreateListModal: (state) => {
+    closeCreateListModal: (state: Modals) => {
       state.createListModalOpen = false;
     },
-    openCreateChallengeModal: (state) => {
+    openCreateChallengeModal: (state: Modals) => {
       state.createChallengeModalOpen = true;
     },
-    closeCreateChallengeModal: (state) => {
+    closeCreateChallengeModal: (state: Modals) => {
       state.createChallengeModalOpen = false;
     },
-    openAddBookToListModal: (state) => {
-      state.addBookToListModalOpen = true;
+    openAddBookToListModal: (
+      state: Modals,
+      action: PayloadAction<{
+        bookToAddToListId: number;
+      }>
+    ) => {
+      state.bookToAddToListId = action.payload.bookToAddToListId;
     },
-    closeAddBookToListModal: (state) => {
-      state.addBookToListModalOpen = false;
+    closeAddBookToListModal: (state: Modals) => {
+      state.bookToAddToListId = undefined;
     },
   },
 });

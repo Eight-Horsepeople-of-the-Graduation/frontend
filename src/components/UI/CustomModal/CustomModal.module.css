@@ -8,6 +8,7 @@
   border-radius: var(--large-border-radius);
   background-color: white;
   animation: scale-in 0.5s ease 0s 1 normal forwards;
+  position: relative;
 }
 .fade {
   position: fixed;

@@ -14,6 +14,7 @@ import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllCh
 import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
 import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
 import CreateReadingChallengeModal from "./components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
+import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <CustomAlert />
       <CreateListModal />
       <CreateReadingChallengeModal />
+      <AddBookToListsModal />
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />

@@ -1144,7 +1144,7 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Adventure"),
+    books: dummyBooks.slice(0, 5),
   },
   {
     id: 2,
@@ -1152,7 +1152,7 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Non-Fiction"),
+    books: dummyBooks.slice(0, 4),
   },
   {
     id: 3,
