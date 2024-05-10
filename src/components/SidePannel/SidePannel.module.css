@@ -13,6 +13,9 @@
   box-shadow: var(--shadow-far);
   padding: 32px 0;
   overflow: auto;
+
+  -webkit-animation: slide-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .SidePannel.Hiden {
@@ -164,8 +167,9 @@
     transform: translateX(0);
   }
   100% {
-    -webkit-transform: translateX(500px);
-    transform: translateX(500px);
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    display: none;
   }
 }
 @keyframes slide-right {
@@ -174,8 +178,30 @@
     transform: translateX(0);
   }
   100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    display: none;
+  }
+}
+
+@-webkit-keyframes slide-left {
+  0% {
     -webkit-transform: translateX(500px);
     transform: translateX(500px);
-    display: none;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(500px);
+    transform: translateX(500px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
   }
 }
