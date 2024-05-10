@@ -39,7 +39,7 @@ const SingleBookPage = () => {
   document.title = `Readify | ${bookData.title}`;
   return (
     <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
-      <main style={{ width: "100%", scrollSnapType: "y mandatory" }}>
+      <main style={{ width: "100%" }}>
         <section id="info" className={classes.Info}>
           <div className={classes.Content}>
             {bookData.cover ? (
