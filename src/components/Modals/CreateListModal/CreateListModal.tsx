@@ -15,21 +15,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateListMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { Privacy } from "../../../Types/lists.types";
+import { closeCreateListModal } from "../../../redux/features/modals/modalsSlice";
 
-interface CreateListModalProps {
-  isCreatingList: boolean;
-  closeCreateListModal: () => void;
-}
 interface FormValues {
-  name: string;
-  privacy: "private" | "puplic";
+  title: string;
+  privacy: Privacy;
   userId: number;
+  description: string;
 }
 
-const CreateListModal = ({
-  isCreatingList,
-  closeCreateListModal,
-}: CreateListModalProps) => {
+const CreateListModal = () => {
   const userId = useAppSelector((state) => state.authUser).user!.id;
   const [listPrivacy, setListPricvacy] = useState<"private" | "puplic">(
     "puplic"
@@ -37,10 +33,13 @@ const CreateListModal = ({
   const dispatch = useAppDispatch();
   const [createList, { isSuccess, isError }] = useCreateListMutation();
 
+  const modalOpen = useAppSelector((state) => state.modals.createListModalOpen);
+
   const form = useForm<FormValues>({
     defaultValues: {
-      name: "",
-      privacy: "puplic",
+      title: "",
+      description: "",
+      privacy: "PUBLIC",
       userId,
     },
   });
@@ -51,11 +50,14 @@ const CreateListModal = ({
     setListPricvacy(event.target.value as typeof listPrivacy);
   };
 
+  const closeModal = () => dispatch(closeCreateListModal());
+
   const onSubmit = async (data: FormValues) => {
     await createList({
-      booksIds: [],
-      name: data.name,
-      ownerId: userId,
+      title: data.title,
+      userId,
+      privacy: data.privacy,
+      description: data.description,
     });
 
     if (isError)
@@ -70,7 +72,7 @@ const CreateListModal = ({
           severity: "success",
         })
       );
-      closeCreateListModal();
+      closeModal();
     }
   };
 
@@ -80,7 +82,7 @@ const CreateListModal = ({
   };
 
   return (
-    <CustomModal isModalOpen={isCreatingList} closeModal={closeCreateListModal}>
+    <CustomModal isModalOpen={modalOpen} closeModal={closeModal}>
       <div className={classes.CreateListModal}>
         <h1>Create new list</h1>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +95,16 @@ const CreateListModal = ({
               label="List Name"
               variant="outlined"
               sx={{ marginBottom: "32px" }}
-              {...register("name", { required: true })}
+              {...register("title", { required: true })}
+            />
+            <TextField
+              fullWidth
+              color="primary"
+              id="list-description"
+              label="Description"
+              variant="outlined"
+              sx={{ marginBottom: "32px" }}
+              {...register("description", { required: false })}
             />
             <FormControl fullWidth>
               <InputLabel id="privacy-label">Privacy</InputLabel>
@@ -105,8 +116,8 @@ const CreateListModal = ({
                 {...register("privacy")}
                 onChange={handleSelectPrivacy}
               >
-                <MenuItem value={"puplic"}>Public</MenuItem>
-                <MenuItem value={"private"}>Private</MenuItem>
+                <MenuItem value={"PUPLIC"}>Public</MenuItem>
+                <MenuItem value={"PRIVATE"}>Private</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -126,7 +137,7 @@ const CreateListModal = ({
             </Button>
             <Button
               sx={buttonSx}
-              onClick={closeCreateListModal}
+              onClick={closeModal}
               variant="text"
               color="error"
             >

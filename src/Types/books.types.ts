@@ -1,5 +1,6 @@
 import { Author } from "./authors.types";
 import { Genre } from "./genres.types";
+import { List } from "./lists.types";
 
 export interface Book {
   id: number;
@@ -15,6 +16,7 @@ export interface Book {
   genres: Genre[];
   cover?: string;
   file?: string;
+  lists: List[];
 }
 
 export type CreateBookPayload = Omit<Book, "id">;

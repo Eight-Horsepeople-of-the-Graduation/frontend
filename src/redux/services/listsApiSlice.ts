@@ -68,6 +68,27 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists", "books"],
     }),
+    updateBookLists: builder.mutation<
+      null,
+      {
+        addedListsIds: number[];
+        removedListsIds: number[];
+        bookId: number;
+      }
+    >({
+      query({
+        addedListsIds: addedBookshelvesIds,
+        removedListsIds: removedBookshelvesIds,
+        bookId,
+      }) {
+        return {
+          url: `bookshelves/add-book`,
+          method: "POST",
+          body: { bookId, addedBookshelvesIds, removedBookshelvesIds },
+        };
+      },
+      invalidatesTags: ["lists", "books"],
+    }),
   }),
 });
 
@@ -79,4 +100,5 @@ export const {
   useGetListByIdQuery,
   useGetListByTitleQuery,
   useAddBookToListMutation,
+  useUpdateBookListsMutation,
 } = listsApi;

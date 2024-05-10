@@ -54,6 +54,32 @@ const theme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          borderRadius: "var(--large-border-radius)",
+          "& .MuiAutocomplete-inputRoot": {
+            borderRadius: "var(--large-border-radius)",
+          },
+          "& .MuiAutocomplete-option": {
+            borderRadius: "var(--small-border-radius)",
+          },
+        },
+      },
+      defaultProps: {
+        autoComplete: true,
+        autoHighlight: true,
+        componentsProps: {
+          paper: {
+            sx: {
+              borderRadius: "var(--large-border-radius)",
+              padding: "8px",
+              marginTop: "8px",
+            },
+          },
+        },
+      },
+    },
     MuiSelect: {
       styleOverrides: {
         root: {

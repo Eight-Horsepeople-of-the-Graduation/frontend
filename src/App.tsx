@@ -12,11 +12,17 @@ import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPa
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
 import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
 import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
+import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
+import CreateReadingChallengeModal from "./components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
+import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
 
 function App() {
   return (
     <>
       <CustomAlert />
+      <CreateListModal />
+      <CreateReadingChallengeModal />
+      <AddBookToListsModal />
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />

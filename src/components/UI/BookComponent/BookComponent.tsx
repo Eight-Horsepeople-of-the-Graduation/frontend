@@ -6,6 +6,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useAppDispatch } from "../../../redux/hooks";
+import { openAddBookToListModal } from "../../../redux/features/modals/modalsSlice";
 //import { List } from "../../../Types/lists.types";
 
 interface BookProps {
@@ -14,6 +16,7 @@ interface BookProps {
 
 const BookComponent: React.FC<BookProps> = ({ book }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const BookClick = () => navigate(`/books/${book.id}`);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -22,8 +25,13 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
 
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null);
+  };
+
+  const addBookToList = () => {
+    dispatch(openAddBookToListModal({ bookToAddToListId: book.id }));
+    closeMenu();
   };
 
   return (
@@ -60,7 +68,7 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
         aria-labelledby="positioned-button"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={closeMenu}
         anchorOrigin={{
           vertical: "top",
           horizontal: "left",
@@ -70,9 +78,7 @@ const BookComponent: React.FC<BookProps> = ({ book }) => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>List 1</MenuItem>
-        <MenuItem onClick={handleClose}>List 2</MenuItem>
-        <MenuItem onClick={handleClose}>List 3</MenuItem>
+        <MenuItem onClick={addBookToList}>Add to lists</MenuItem>
       </Menu>
     </>
   );

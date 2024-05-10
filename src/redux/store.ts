@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // ? import authReducer from authSlice
 import authReducer from "./features/users/authSlice";
 import alertReducer from "./features/alerts/alertsSlice";
+import modalsReducer from "./features/modals/modalsSlice";
 import { booksApi } from "./services/booksApiSlice";
 import { listsApi } from "./services/listsApiSlice";
 import { readingChallengeApi } from "./services/readingChallengeApiSlice";
@@ -11,6 +12,7 @@ export const store = configureStore({
     // States
     authUser: authReducer,
     alert: alertReducer,
+    modals: modalsReducer,
 
     // API
     [booksApi.reducerPath]: booksApi.reducer,

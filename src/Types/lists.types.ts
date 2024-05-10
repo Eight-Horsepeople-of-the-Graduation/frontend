@@ -11,6 +11,6 @@ export interface List {
   books: Book[];
 }
 
-export type createListPayload = Omit<List, "id">
+export type createListPayload = Omit<List, "id" | "books">;
 
-export type updateListPayload = Partial<createListPayload>
+export type updateListPayload = Partial<createListPayload>;

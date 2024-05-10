@@ -6,12 +6,11 @@ import {
   faBook,
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
-import CreateListModal from "../Modals/CreateListModal/CreateListModal";
-import { useState } from "react";
 import { dummyLists } from "../../dummyData";
+import { openCreateListModal } from "../../redux/features/modals/modalsSlice";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -24,8 +23,8 @@ const navItems = [
 ];
 
 const SidePannel = ({ isHiden }: SidePannelProps) => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
-  const [isCreatingList, setIsCreatingList] = useState(false);
 
   if (!user) return <></>;
 
@@ -33,10 +32,6 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
 
   return (
     <>
-      <CreateListModal
-        isCreatingList={isCreatingList}
-        closeCreateListModal={() => setIsCreatingList(false)}
-      />
       <aside
         className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}
       >
@@ -70,7 +65,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
         <div className={classes.myLists}>
           <div className={classes.myListsTop}>
             <p>My Lists</p>
-            <button onClick={() => setIsCreatingList(true)}>+</button>
+            <button onClick={() => dispatch(openCreateListModal())}>+</button>
           </div>
           <hr />
           <ul className={classes.lists}>
