@@ -2,7 +2,7 @@
   background-color: white;
   border-radius: calc(var(--small-border-radius) + 12px);
   box-shadow: var(--near-border-shadow);
-  border: 1px solid var(--gray-color);
+  border: var(--border);
   padding: 12px 0;
   position: absolute;
   top: 115px;

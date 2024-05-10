@@ -16,7 +16,6 @@ const SidePannelLayout = ({
   const [hideSidePannel, setHideSidePannel] = React.useState<boolean>(false);
 
   window.addEventListener("scroll", () => {
-    console.log("here");
     if (!hideSidePannelPoint) return;
 
     if (window.scrollY > hideSidePannelPoint) {

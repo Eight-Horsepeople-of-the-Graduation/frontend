@@ -34,6 +34,7 @@
 body {
   font-family: "Noto Sans", sans-serif;
   color: var(--dark-primary-color);
+  overflow-x: hidden;
 }
 
 /* width */

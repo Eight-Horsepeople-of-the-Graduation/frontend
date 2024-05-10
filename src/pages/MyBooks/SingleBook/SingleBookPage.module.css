@@ -1,0 +1,131 @@
+.Info {
+  position: relative;
+  height: calc(100vh - 64px);
+  width: 100%;
+}
+
+.Info::before {
+  content: "";
+  position: absolute;
+  height: 75%;
+  width: 100vw;
+  top: 10%;
+  left: 0;
+  background-color: var(--light-primary-color);
+  z-index: -1;
+}
+
+.Content {
+  position: absolute;
+  top: 5%;
+  height: 85%;
+  width: 100%;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 3%;
+}
+
+.Content img,
+.NoCover {
+  height: 100% !important;
+  border-radius: var(--small-border-radius);
+  box-shadow: var(--shadow-far);
+  border: var(--border);
+}
+
+.NoCover {
+  display: flex;
+  aspect-ratio: 10/14;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-color);
+  color: var(--light-primary-color);
+  font-size: 256px;
+  border: 1px solid var(--light-primary-color);
+}
+
+.Content h3 {
+  margin-bottom: 4px;
+  color: var(--dark-gray-color);
+}
+
+.Content > div {
+  height: 80%;
+}
+.Content > div > div {
+  margin-bottom: 16px;
+}
+.Title {
+  display: flex;
+  align-items: baseline;
+}
+.Title h1 {
+  flex: 1;
+}
+.Title button {
+  color: var(--light-primary-color);
+  box-shadow: var(--shadow-near);
+  padding: 0;
+  height: 32px;
+  box-shadow: none;
+}
+
+.Data {
+  display: flex;
+  justify-content: start;
+  gap: 128px;
+}
+
+.Data p {
+  font-weight: 700;
+}
+
+.Desc {
+  height: 100%;
+}
+
+.Desc p {
+  overflow-y: scroll;
+  height: 70%;
+}
+
+.Desc p::-webkit-scrollbar {
+  display: none;
+}
+.Desc p:hover::-webkit-scrollbar {
+  display: block;
+}
+
+.Chat,
+.Reader {
+  height: calc(100vh - 64px);
+  padding-top: 32px;
+}
+.Chat > h1,
+.Reader > h1 {
+  padding: 0 128px;
+  margin-bottom: 24px;
+}
+.Chat main,
+.Reader main {
+  width: 100%;
+  height: calc(100% - 46px);
+  background-color: var(--light-primary-color);
+  padding: 46px 200px;
+}
+
+.Reader main {
+  background-color: white;
+  padding: 0 48px;
+}
+
+.Chat main > div {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  padding: 0 56px;
+}
+
+.Chat main > div::-webkit-scrollbar {
+  display: none;
+}
