@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import classes from "./PDFViewer.module.css";
+import classes from "./BookReader.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "../UI/ProgressBar/ProgressBar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-interface PDFViewerProps {
+interface BookReaderProps {
   file: string;
+  language?: string;
 }
 
-const PDFViewer: React.FC<PDFViewerProps> = ({ file }) => {
+const BookReader: React.FC<BookReaderProps> = ({ file, language }) => {
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,9 +28,25 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file }) => {
     setCurrentPage((prevPage) => prevPage + 2);
   };
 
+  const isRtl = [
+    "arabic",
+    "urdu",
+    "aramaic",
+    "ruhingya",
+    "sindhi",
+    "hebrew",
+    "divehi",
+    "azerbaijani",
+    "syriac",
+    "persian",
+    "kurdish",
+    "fula",
+    "pashto",
+  ].includes(language ?? "english");
+
   return (
-    <div className={classes.PDFViewer}>
-      <div className={classes.PDF}>
+    <div className={classes.BookReader}>
+      <div className={classes.Book}>
         <button
           onClick={goToPreviousPage}
           title="Previous page"
@@ -42,24 +59,32 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file }) => {
           onLoadSuccess={onDocumentLoadSuccess}
           className={classes.Document}
         >
-          {currentPage > 1 && (
-            <>
-              <Page
-                pageNumber={currentPage - 1}
-                className={classes.Page}
-                renderTextLayer={false}
-              />
+          <div
+            className={classes.PagesWrapper}
+            style={{ direction: isRtl ? "rtl" : "ltr" }}
+          >
+            {currentPage > 1 && (
+              <>
+                <Page
+                  pageNumber={currentPage - 1}
+                  className={classes.Page}
+                  renderTextLayer={false}
+                />
 
-              <div className={classes.PageShadow}>
-                <div className={classes.Separator} />
-              </div>
-            </>
-          )}
-          <Page
-            pageNumber={currentPage}
-            className={classes.Page}
-            renderTextLayer={false}
-          />
+                <div className={classes.PageShadow}>
+                  <div className={classes.Separator} />
+                </div>
+
+                <div className={classes.LeftShadow} />
+                <div className={classes.RightShadow} />
+              </>
+            )}
+            <Page
+              pageNumber={currentPage}
+              className={classes.Page}
+              renderTextLayer={false}
+            />
+          </div>
         </Document>
 
         <button
@@ -85,4 +110,4 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file }) => {
   );
 };
 
-export default PDFViewer;
+export default BookReader;

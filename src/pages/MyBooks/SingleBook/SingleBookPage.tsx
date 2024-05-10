@@ -4,7 +4,7 @@ import { dummyBooks } from "../../../dummyData";
 import { Button } from "@mui/material";
 import ChatMessage from "../../../components/Chat/ChatMessage/ChatMessage";
 import MessageField from "../../../components/Chat/MessageField/MessageField";
-import PDFViewer from "../../../components/PDFViewer/PDFViewer";
+import BookReader from "../../../components/BookReader/BookReader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 
@@ -82,7 +82,7 @@ const SingleBookPage = () => {
           <section id="reader" className={classes.Reader}>
             <h1>Read {bookData.title}</h1>
             <main>
-              <PDFViewer file={bookData.file} />
+              <BookReader file={bookData.file} language={bookData.language} />
             </main>
           </section>
         )}

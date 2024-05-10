@@ -1,4 +1,4 @@
-.PDFViewer {
+.BookReader {
   height: 90%;
   width: 100%;
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.PDF {
+.Book {
   height: 95%;
   width: 100%;
   display: flex;
@@ -15,7 +15,7 @@
   gap: 48px;
 }
 
-.PDF button {
+.Book button {
   width: 48px;
   height: 48px;
   background-color: var(--primary-color);
@@ -28,13 +28,13 @@
   cursor: pointer;
 }
 
-.PDF button:hover {
+.Book button:hover {
   background-color: var(--dark-primary-color);
   box-shadow: var(--shadow-near);
   transform: scale(1.1);
 }
 
-.PDF button:disabled {
+.Book button:disabled {
   background-color: var(--gray-color);
   box-shadow: var(--shadow-near);
   cursor: auto;
@@ -43,10 +43,14 @@
 .Document {
   height: 100%;
   width: fit-content;
-  display: flex;
   box-shadow: var(--shadow-near);
   border-radius: var(--large-border-radius);
   overflow: hidden;
+}
+.PagesWrapper {
+  min-width: fit-content;
+  height: 100%;
+  display: flex;
   position: relative;
 }
 
@@ -57,7 +61,7 @@
   z-index: 1;
   position: absolute;
   height: 100%;
-  width: 10%;
+  width: 20%;
 
   background: rgb(255, 255, 255);
   background: linear-gradient(
@@ -78,6 +82,34 @@
   z-index: 2;
 }
 
+.LeftShadow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.01) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  height: 100%;
+  width: 20%;
+  z-index: 2;
+}
+.RightShadow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  height: 100%;
+  width: 20%;
+  z-index: 2;
+}
 .Page {
   height: 100%;
   aspect-ratio: 10/14;
@@ -104,7 +136,7 @@
   font-size: 12px;
   min-width: 64px;
   text-align: center;
-  visibility: hidden;
+  font-weight: bold;
 }
 
 .ProgressLabel::before {
@@ -117,8 +149,4 @@
   width: 0;
   border: 5px solid transparent;
   border-bottom: 5px solid var(--primary-color);
-}
-
-.Progress:hover .ProgressLabel {
-  visibility: visible;
 }
