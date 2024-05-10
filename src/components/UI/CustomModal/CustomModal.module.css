@@ -4,7 +4,7 @@
   z-index: 1;
   padding: 24px;
   width: 640px;
-  height: 384px;
+  min-height: 384px;
   border-radius: var(--large-border-radius);
   background-color: white;
   animation: scale-in 0.5s ease 0s 1 normal forwards;
@@ -20,8 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  z-index: 1;
+  z-index: 100;
 }
 
 @-webkit-keyframes scale-in {

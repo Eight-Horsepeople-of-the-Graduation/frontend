@@ -1,19 +1,17 @@
-import React, { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import classes from "./Profile.module.css";
 import CustomAvatar from "../../components/UI/CustomAvatar/CustomAvatar";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Header from "../../components/Header/Header";
 import { dummyChallenges } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
-import CreateReadingChallengeModal from "../../components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
+import { openCreateChallengeModal } from "../../redux/features/modals/modalsSlice";
 
 const ProfilePage = () => {
   const { username } = useParams();
 
   const navigate = useNavigate();
-  const [isCreatingReadingChallenge, setIsCreatingReadingChallenge] =
-    useState(false);
+  const dispath = useAppDispatch();
 
   document.title = `Readify | ${username}`;
 
@@ -28,12 +26,6 @@ const ProfilePage = () => {
 
   return (
     <>
-      <CreateReadingChallengeModal
-        isCreatingReadingChallenge={isCreatingReadingChallenge}
-        closeCreateReadingChallengeModal={() =>
-          setIsCreatingReadingChallenge(false)
-        }
-      />
       <Header />
       <div className={classes.ProfilePage}>
         <main>
@@ -60,7 +52,7 @@ const ProfilePage = () => {
               <button
                 disabled={activeChallenges.length >= 3}
                 title="Create new challenge"
-                onClick={() => setIsCreatingReadingChallenge(true)}
+                onClick={() => dispath(openCreateChallengeModal())}
               >
                 +
               </button>

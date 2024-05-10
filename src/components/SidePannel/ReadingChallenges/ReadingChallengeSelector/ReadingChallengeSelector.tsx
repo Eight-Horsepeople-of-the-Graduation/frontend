@@ -1,9 +1,10 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import { Challenge } from "../../../../Types/readingChallenges.types";
 import classes from "./ReadingChallengeSelector.module.css";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
-import CreateReadingChallengeModal from "../../../Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { openCreateChallengeModal } from "../../../../redux/features/modals/modalsSlice";
 
 interface ReadingChallengeSelectorProps {
   challenges: Challenge[];
@@ -13,11 +14,7 @@ interface ReadingChallengeSelectorProps {
 }
 
 const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
-  const [isCreatingReadingChallenge, setIsCreatingReadingChallenge] =
-    useState(false);
-
-  const closeCreateReadingChallengeModal = () =>
-    setIsCreatingReadingChallenge(false);
+  const dispatch = useAppDispatch();
 
   const unselectedChallenges = props.challenges.filter(
     (challenge) => challenge.id !== props.selectedChallenge.id
@@ -30,10 +27,6 @@ const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
 
   return (
     <>
-      <CreateReadingChallengeModal
-        isCreatingReadingChallenge={isCreatingReadingChallenge}
-        closeCreateReadingChallengeModal={closeCreateReadingChallengeModal}
-      />
       <div className={classes.SelectorCard}>
         <ReadingChallengeCard
           selected={true}
@@ -54,7 +47,7 @@ const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
           <Button
             variant="contained"
             fullWidth
-            onClick={() => setIsCreatingReadingChallenge(true)}
+            onClick={() => dispatch(openCreateChallengeModal())}
             sx={{
               width: "calc(100% - 24px)",
               marginLeft: "12px",
