@@ -4,6 +4,7 @@ import ProgressBar from "../../../UI/ProgressBar/ProgressBar";
 import { Link } from "react-router-dom";
 import convertFirstLetterToUppercase from "../../../../helperFuctions/convertFirstLetterToUppercase";
 import { Challenge } from "../../../../Types/readingChallenges.types";
+import checkDatePassed from "../../../../helperFuctions/checkDatePassed";
 
 interface ChallengeCardProps {
   challenge: Challenge;
@@ -22,7 +23,7 @@ const ReadingChallengeCard = ({
   selected,
   onClickAction,
 }: ChallengeCardProps) => {
-  const expired = new Date(challenge.endDate) < new Date();
+  const expired = checkDatePassed(challenge.endDate);
 
   const done = challenge.books.length >= challenge.goal;
 

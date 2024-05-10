@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import classes from "./Profile.module.css";
 import CustomAvatar from "../../components/UI/CustomAvatar/CustomAvatar";
 import { useAppSelector } from "../../redux/hooks";
 import Header from "../../components/Header/Header";
-import { dummyChallenges } from "../../dummyData";
+import { dummyChallenges, dummyLists } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
 import CreateReadingChallengeModal from "../../components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
+import ListPreview from "../../components/UI/ListPreview/ListPreview";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -24,7 +25,31 @@ const ProfilePage = () => {
     (challenge) => new Date(challenge.endDate) > new Date()
   );
 
+  const sortedChallenges = challenges.sort((a, b) => {
+    const aDate = new Date(a.endDate);
+    const bDate = new Date(b.endDate);
+    const aYear = aDate.getFullYear();
+    const bYear = bDate.getFullYear();
+    const aMonth = aDate.getMonth();
+    const bMonth = bDate.getMonth();
+    const aDay = aDate.getDate();
+    const bDay = bDate.getDate();
+
+    if (aYear < bYear) return 1;
+    if (aYear > bYear) return -1;
+
+    if (aMonth < bMonth) return 1;
+    if (aMonth > bMonth) return -1;
+
+    if (aDay < bDay) return 1;
+    if (aDay > bDay) return -1;
+
+    return 0;
+  });
+
   if (!user) return <Navigate to="/" />;
+
+  const userLists = dummyLists.filter((list) => list.userId === user.id);
 
   return (
     <>
@@ -52,7 +77,14 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
+
+          <section className={classes.PageContent}>
+            {userLists.map((list) => (
+              <ListPreview key={list.id} list={list} />
+            ))}
+          </section>
         </main>
+
         <aside>
           <div className={classes.Challenges}>
             <div className={classes.ChallengesHeader}>
@@ -66,7 +98,7 @@ const ProfilePage = () => {
               </button>
             </div>
             <div className={classes.ChallengesList}>
-              {challenges.map((challenge) => (
+              {sortedChallenges.map((challenge) => (
                 <ReadingChallengeCard
                   key={challenge.id}
                   challenge={challenge}

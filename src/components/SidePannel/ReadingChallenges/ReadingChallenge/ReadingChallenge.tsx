@@ -4,6 +4,7 @@ import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
 import { dummyChallenges } from "../../../../dummyData";
 import { useAppSelector } from "../../../../redux/hooks";
+import checkDatePassed from "../../../../helperFuctions/checkDatePassed";
 
 const ReadingChallenge = () => {
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
@@ -16,7 +17,7 @@ const ReadingChallenge = () => {
     (challenge) => challenge.userId === userId
   );
   const activeChallenges = userChallenges.filter(
-    (challenge) => new Date(challenge.endDate) > new Date()
+    (challenge) => !checkDatePassed(challenge.endDate)
   );
 
   if (activeChallenges.length === 0) return <Button>Create a challenge</Button>;
