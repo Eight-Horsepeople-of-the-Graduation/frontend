@@ -1,8 +1,7 @@
-import React from "react";
 import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
-//import BookComponent from "../../components/UI/BookComponent/BookComponent";
 import ListPreview from "../../components/UI/ListPreview/ListPreview";
 import { dummyLists } from "../../dummyData";
+
 
 const HomePage = () => {
   document.title = "Readify | Home";
