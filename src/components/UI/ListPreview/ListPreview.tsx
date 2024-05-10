@@ -11,7 +11,6 @@ import { useEditListMutation } from "../../../redux/services/listsApiSlice";
 
 interface ListPreviewProps {
   list: list;
-  onListButtonClick: () => void; // Function to handle list button click
 }
 
 const ListPreview: React.FC<ListPreviewProps> = ({ list }) => {

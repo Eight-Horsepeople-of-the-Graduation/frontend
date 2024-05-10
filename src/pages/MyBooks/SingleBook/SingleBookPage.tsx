@@ -7,9 +7,10 @@ import MessageField from "../../../components/Chat/MessageField/MessageField";
 import BookReader from "../../../components/BookReader/BookReader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 const SingleBookPage = () => {
-  // const { bookId } = useParams();
+  const { bookId } = useParams();
   // const dispatch = useAppDispatch();
 
   // const {
@@ -34,7 +35,7 @@ const SingleBookPage = () => {
 
   // All the comming code is pased on dummy data
 
-  const bookData = dummyBooks[0];
+  const bookData = dummyBooks.find((book) => book.id === +bookId!)!;
 
   document.title = `Readify | ${bookData.title}`;
   return (
