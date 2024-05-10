@@ -1,6 +1,5 @@
 .ProfilePage {
   width: 100vw;
-  height: calc(100vh - 64px);
   display: flex;
 }
 .ProfilePage main {
@@ -88,4 +87,11 @@
 .ChallengesList > * {
   width: 100%;
   margin-bottom: 12px;
+}
+
+.PageContent {
+  margin-top: 64px;
+  width: 100%;
+  height: 100%;
+  padding: 0 48px;
 }
