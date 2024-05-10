@@ -4,10 +4,9 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import CustomModal from "../../UI/CustomModal/CustomModal";
 import classes from "./AddBookToListsModal.module.css";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import { dummyLists } from "../../../dummyData";
+import { dummyBooks, dummyLists } from "../../../dummyData";
 import { List } from "../../../Types/lists.types";
-import { Book } from "../../../Types/books.types";
-import { useAddBookToMultibleListsMutation } from "../../../redux/services/listsApiSlice";
+import { useUpdateBookListsMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 interface FormValues {
@@ -20,30 +19,44 @@ const AddBookToListsModal = () => {
 
   const closeModal = () => dispatch(closeAddBookToListModal());
 
-  const listsBookIn = dummyLists.filter((list) =>
-    list.books.some((book: Book) => book.id === bookId)
-  );
-
   const form = useForm<FormValues>({
     defaultValues: {
       lists: dummyLists.slice(0, 2),
     },
   });
 
-  const [addBookToLists, { isSuccess, isError }] =
-    useAddBookToMultibleListsMutation();
+  const [updateBookLists, { isSuccess, isError }] =
+    useUpdateBookListsMutation();
 
   const { handleSubmit } = form;
 
+  const book = dummyBooks.find((book) => book.id === bookId);
+
   const onSubmit = async (data: FormValues) => {
-    if (JSON.stringify(data.lists) === JSON.stringify(listsBookIn)) {
+    if (!bookId || !book) return;
+
+    const currentListsIds = book.lists.map((list) => list.id);
+    const newListsIds = data.lists.map((list) => list.id);
+
+    if (
+      JSON.stringify(currentListsIds.sort()) ===
+      JSON.stringify(newListsIds.sort())
+    ) {
       closeModal();
       return;
     }
 
-    await addBookToLists({
-      bookId: bookId!,
-      listsIds: data.lists.map((list) => list.id),
+    const addedListsIds = newListsIds.filter(
+      (id) => !currentListsIds.includes(id)
+    );
+    const removedListsIds = currentListsIds.filter(
+      (id) => !newListsIds.includes(id)
+    );
+
+    await updateBookLists({
+      bookId,
+      addedListsIds,
+      removedListsIds,
     });
 
     if (isError)
@@ -88,7 +101,7 @@ const AddBookToListsModal = () => {
                       placeholder="Choose lists"
                     />
                   )}
-                  defaultValue={listsBookIn}
+                  defaultValue={book?.lists ?? []}
                   onChange={(_, data) => {
                     field.onChange(data);
                     return data;
