@@ -1,6 +1,6 @@
 import classes from "./BookComponent.module.css";
 import { useNavigate } from "react-router-dom";
-import { Book } from "../../../Types/books.types";
+import { Book } from "../../Types/books.types";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";

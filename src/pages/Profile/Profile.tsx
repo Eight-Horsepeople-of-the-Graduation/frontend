@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Header from "../../components/Header/Header";
 import { dummyChallenges, dummyLists } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
+import ListPreview from "../../components/ListPreview/ListPreview";
 import { openCreateChallengeModal } from "../../redux/features/modals/modalsSlice";
-import ListPreview from "../../components/UI/ListPreview/ListPreview";
 
 const ProfilePage = () => {
   const { username } = useParams();
