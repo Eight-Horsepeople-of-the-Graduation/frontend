@@ -16,9 +16,6 @@ const HomePage = () => {
             <ListPreview
               key={list.id}
               list={list}
-              onListButtonClick={function (): void {
-                throw new Error("Function not implemented.");
-              }}
             />
           ))}
       </main>
