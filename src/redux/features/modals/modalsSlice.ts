@@ -6,6 +6,7 @@ export interface Modals {
   bookToAddToListId?: number;
   bookToRemoveFromListId?: number;
   listToRemoveBookFromId?: number;
+  isLoading: boolean;
 }
 
 const initialState: Modals = {
@@ -14,6 +15,7 @@ const initialState: Modals = {
   bookToAddToListId: undefined,
   bookToRemoveFromListId: undefined,
   listToRemoveBookFromId: undefined,
+  isLoading: false,
 };
 
 export const modalsSlice = createSlice({
@@ -57,6 +59,12 @@ export const modalsSlice = createSlice({
       state.bookToRemoveFromListId = undefined;
       state.listToRemoveBookFromId = undefined;
     },
+    startLoading: (state: Modals) => {
+      state.isLoading = true;
+    },
+    stopLoading: (state: Modals) => {
+      state.isLoading = false;
+    },
   },
 });
 
@@ -69,6 +77,8 @@ export const {
   closeAddBookToListModal,
   openRemoveBookFromListModal,
   closeRemoveBookFromListModal,
+  startLoading,
+  stopLoading,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

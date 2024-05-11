@@ -1,0 +1,30 @@
+.SingleListPage {
+  width: 100%;
+}
+
+.ListTitle {
+  margin: 28px 44px 8px;
+  font-weight: 700;
+  font-size: 32px;
+  padding: 4px;
+  border-radius: var(--large-border-radius);
+}
+.ListHeader {
+  display: flex;
+  justify-content: start;
+  align-items: baseline;
+  border-bottom: var(--border);
+}
+.Controllers {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.List {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  flex-wrap: wrap;
+  margin: 48px;
+}
