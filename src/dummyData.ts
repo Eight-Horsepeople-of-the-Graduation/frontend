@@ -2,6 +2,7 @@ import { Book } from "./Types/books.types";
 import { List } from "./Types/lists.types";
 import { Challenge } from "./Types/readingChallenges.types";
 import bookFile from "./assets/Atomic Habits.pdf";
+import { Images } from "./Types/Images.types";
 
 export const dummyBooks: Book[] = [
   {
@@ -365,5 +366,18 @@ export const dummyLists: List[] = [
     privacy: "PUBLIC",
     userId: 1,
     books: dummyBooks.filter((book) => book.genres[0].title === "Fantasy"),
+  },
+];
+
+export const dummyImages: Images[] = [
+  // Update images array with interface type
+  {
+    url: "../src/assets/CarouselImages/to READIFY (2).png",
+  },
+  {
+    url: "../src/assets/CarouselImages/to READIFY.png",
+  },
+  {
+    url: "../src/assets/CarouselImages/to READIFY (1).png",
   },
 ];

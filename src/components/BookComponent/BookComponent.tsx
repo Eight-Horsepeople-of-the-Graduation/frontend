@@ -9,11 +9,11 @@ import {
   faBookOpen,
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import {
   openAddBookToListModal,
   openRemoveBookFromListModal,
-} from "../../../redux/features/modals/modalsSlice";
+} from "../../redux/features/modals/modalsSlice";
 
 interface BookProps {
   book: Book;
