@@ -8,15 +8,25 @@ const HomePage = () => {
 
   return (
     <SidePannelLayout>
-      <main style={{ width: "100%", margin: "48px 48px" }}>
-        <ImageCarousel url={""}/>
+      <main
+        style={{
+          width: "100%",
+          margin: "48px 48px 0",
+        }}
+      >
+        <section
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <ImageCarousel url={""} />
+        </section>
         {dummyLists
           .filter((list) => list.books.length)
           .map((list) => (
-            <ListPreview
-              key={list.id}
-              list={list}
-            />
+            <ListPreview key={list.id} list={list} />
           ))}
       </main>
     </SidePannelLayout>
