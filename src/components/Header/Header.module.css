@@ -7,6 +7,6 @@
   left: 0;
   padding: 0 48px;
   background-color: white;
-  z-index: 100;
+  z-index: 1;
   /* border: 1px solid green; */
 }

@@ -16,24 +16,19 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useCreateReadingChallengeMutation } from "../../../redux/services/readingChallengeApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { ChallengeType } from "../../../Types/readingChallenges.types";
+import { closeCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
 
-interface CreateReadingChallengeModalProps {
-  isCreatingReadingChallenge: boolean;
-  closeCreateReadingChallengeModal: () => void;
-}
 interface FormValues {
   type: ChallengeType;
   goal: number;
 }
 
-const CreateReadingChallengeModal = ({
-  isCreatingReadingChallenge,
-  closeCreateReadingChallengeModal,
-}: CreateReadingChallengeModalProps) => {
+const CreateReadingChallengeModal = () => {
   const userId = useAppSelector((state) => state.authUser).user!.id;
-  const [challengeType, setChallengeType] = useState<
-    "yearly" | "monthly" | "weekly"
-  >("yearly");
+  const [challengeType, setChallengeType] = useState<ChallengeType>("ANNUAL");
+  const modalOpen = useAppSelector(
+    (state) => state.modals.createChallengeModalOpen
+  );
 
   const [createReadingChallenge, { isSuccess, isError }] =
     useCreateReadingChallengeMutation();
@@ -52,6 +47,10 @@ const CreateReadingChallengeModal = ({
     setChallengeType(event.target.value as typeof challengeType);
   };
 
+  const closeModal = () => {
+    dispatch(closeCreateChallengeModal());
+  };
+
   const onSubmit = async (data: FormValues) => {
     await createReadingChallenge({
       ...data,
@@ -65,7 +64,7 @@ const CreateReadingChallengeModal = ({
           severity: "success",
         })
       );
-      closeCreateReadingChallengeModal();
+      closeModal();
     }
 
     if (isError) {
@@ -99,10 +98,7 @@ const CreateReadingChallengeModal = ({
   ];
 
   return (
-    <CustomModal
-      isModalOpen={isCreatingReadingChallenge}
-      closeModal={closeCreateReadingChallengeModal}
-    >
+    <CustomModal isModalOpen={modalOpen} closeModal={closeModal}>
       <div className={classes.CreateReadingChallengeModal}>
         <h1>Create reading challenge</h1>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -153,7 +149,7 @@ const CreateReadingChallengeModal = ({
             </Button>
             <Button
               sx={buttonSx}
-              onClick={closeCreateReadingChallengeModal}
+              onClick={closeModal}
               variant="text"
               color="error"
             >

@@ -1,0 +1,28 @@
+.Modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Warning {
+  margin: 0;
+  font-size: 100px;
+  text-align: center;
+  color: var(--dark-error-color);
+}
+
+.Warning p {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.Controlers {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+}
+
+.Controlers button {
+  margin-left: 12px;
+}

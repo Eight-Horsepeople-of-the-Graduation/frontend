@@ -41,7 +41,7 @@ const ListPreview: React.FC<ListPreviewProps> = ({ list }) => {
       </header>
       <div className={classes.Books}>
         {list.books.slice(0, 5).map((book: Book, index: number) => (
-          <BookComponent key={index} book={book} />
+          <BookComponent key={index} book={book} currentListId={list.id} />
         ))}
         <div className={classes.ButtonContainer}>
           <button onClick={onListButtonClick}>
