@@ -61,8 +61,8 @@ const theme = createTheme({
           "& .MuiAutocomplete-inputRoot": {
             borderRadius: "var(--large-border-radius)",
           },
-          "& .MuiAutocomplete-option": {
-            borderRadius: "var(--small-border-radius)",
+          "& .MuiButtonBase-root:hover": {
+            backgroundColor: "var(--light-primary-color)",
           },
         },
       },
@@ -75,6 +75,9 @@ const theme = createTheme({
               borderRadius: "var(--large-border-radius)",
               padding: "8px",
               marginTop: "8px",
+              "& li": {
+                borderRadius: "var(--small-border-radius)",
+              },
             },
           },
         },
@@ -94,6 +97,15 @@ const theme = createTheme({
               marginTop: "8px",
             },
           },
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          borderRadius: "var(--large-border-radius)",
+          padding: "0 4px",
+          boxShadow: "var(--shadow-near)",
         },
       },
     },
@@ -117,8 +129,7 @@ const theme = createTheme({
             backgroundColor: "var(--gray-color)",
           },
           "&:focus": {
-            backgroundColor: "var(--primary-color) !important",
-            color: "white",
+            backgroundColor: "var(--light-primary-color) !important",
           },
         },
       },

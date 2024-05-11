@@ -4,7 +4,7 @@
 }
 
 .book:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   text-shadow: var(--shadow-near);
 }
 

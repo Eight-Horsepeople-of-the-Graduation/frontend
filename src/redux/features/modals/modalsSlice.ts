@@ -4,12 +4,16 @@ export interface Modals {
   createListModalOpen: boolean;
   createChallengeModalOpen: boolean;
   bookToAddToListId?: number;
+  bookToRemoveFromListId?: number;
+  listToRemoveBookFromId?: number;
 }
 
 const initialState: Modals = {
   createListModalOpen: false,
   createChallengeModalOpen: false,
   bookToAddToListId: undefined,
+  bookToRemoveFromListId: undefined,
+  listToRemoveBookFromId: undefined,
 };
 
 export const modalsSlice = createSlice({
@@ -39,6 +43,20 @@ export const modalsSlice = createSlice({
     closeAddBookToListModal: (state: Modals) => {
       state.bookToAddToListId = undefined;
     },
+    openRemoveBookFromListModal: (
+      state: Modals,
+      action: PayloadAction<{
+        bookToRemoveFromListId: number;
+        listToRemoveBookFromId: number;
+      }>
+    ) => {
+      state.bookToRemoveFromListId = action.payload.bookToRemoveFromListId;
+      state.listToRemoveBookFromId = action.payload.listToRemoveBookFromId;
+    },
+    closeRemoveBookFromListModal: (state: Modals) => {
+      state.bookToRemoveFromListId = undefined;
+      state.listToRemoveBookFromId = undefined;
+    },
   },
 });
 
@@ -49,6 +67,8 @@ export const {
   closeCreateChallengeModal,
   openAddBookToListModal,
   closeAddBookToListModal,
+  openRemoveBookFromListModal,
+  closeRemoveBookFromListModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

@@ -71,9 +71,10 @@ const ProfilePage = () => {
           </div>
 
           <section className={classes.PageContent}>
-            {userLists.map((list) => (
-              <ListPreview key={list.id} list={list} />
-            ))}
+            {userLists.map(
+              (list) =>
+                list.books.length && <ListPreview key={list.id} list={list} />
+            )}
           </section>
         </main>
 
