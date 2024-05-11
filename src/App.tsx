@@ -4,7 +4,7 @@ import ListsPage from "./pages/Lists/Lists";
 import ProfilePage from "./pages/Profile/Profile";
 import LibraryPage from "./pages/MyBooks/LibraryPage";
 import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBookPage";
-import SingleListPage from "./pages/Lists/SingleList/SingleList";
+import SingleListPage from "./pages/Lists/SingleList/SingleListPage";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
 import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingPage/CurrentlyReadingPage";
 import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
@@ -16,10 +16,12 @@ import CreateListModal from "./components/Modals/CreateListModal/CreateListModal
 import CreateReadingChallengeModal from "./components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
 import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
 import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal/RemoveBookFromListModal";
+import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 
 function App() {
   return (
     <>
+      <LoadingSpinner />
       <RemoveBookFromListModal />
       <CustomAlert />
       <CreateListModal />
