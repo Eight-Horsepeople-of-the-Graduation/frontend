@@ -98,6 +98,12 @@ const SingleListPage = () => {
       e.preventDefault();
       await finishEditName();
     }
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      titleRef.current!.innerText = list?.title ?? "Untitled";
+      setISEditngName(false);
+    }
   });
 
   if (!list) return <PageNotFoundPage />;
