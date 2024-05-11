@@ -7,7 +7,7 @@ import Header from "../../components/Header/Header";
 import { dummyChallenges, dummyLists } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
 import CreateReadingChallengeModal from "../../components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
-import ListPreview from "../../components/UI/ListPreview/ListPreview";
+import ListPreview from "../../components/ListPreview/ListPreview";
 
 const ProfilePage = () => {
   const { username } = useParams();

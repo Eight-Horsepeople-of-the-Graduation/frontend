@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import BookComponent from "../BookComponent/BookComponent";
-import { List as list } from "../../../Types/lists.types";
-import { Book } from "../../../Types/books.types";
+import { List as list } from "../../Types/lists.types";
+import { Book } from "../../Types/books.types";
 import classes from "./ListPreview.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
-import { useEditListMutation } from "../../../redux/services/listsApiSlice";
+import { useEditListMutation } from "../../redux/services/listsApiSlice";
 
 interface ListPreviewProps {
   list: list;
@@ -56,38 +56,3 @@ const ListPreview: React.FC<ListPreviewProps> = ({ list }) => {
 
 export default ListPreview;
 
-// <List className={classes.list}>
-// <ListItem className={classes.listDetials}>
-//   <TextField
-//     hiddenLabel
-//     id="filled-hidden-label-small"
-//     defaultValue={list.title}
-//     variant="filled"
-//     size="small"
-//   />
-//   <PrivacySwitch />
-// </ListItem>
-// <Stack
-//   direction="row"
-//   justifyContent="flex-start"
-//   alignItems="center"
-//   className={classes.bookList}
-// >
-//   {list.books
-//     .slice(0, 5)
-//     .map((book: Book, index: React.Key | null | undefined) => (
-//       <ListItem key={index} className={classes.bookInList}>
-//         <BookComponent book={book} />
-//       </ListItem>
-//     ))}
-//   <ListItem className={classes.seeAllButton}>
-//     <Button
-//       variant="contained"
-//       color="primary"
-//       onClick={onListButtonClick}
-//     >
-//       See All Books
-//     </Button>
-//   </ListItem>
-// </Stack>
-// </List>

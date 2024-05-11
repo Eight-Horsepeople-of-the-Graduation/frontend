@@ -1,7 +1,6 @@
 import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
-import ListPreview from "../../components/UI/ListPreview/ListPreview";
+import ListPreview from "../../components/ListPreview/ListPreview";
 import { dummyLists } from "../../dummyData";
-
 
 const HomePage = () => {
   document.title = "Readify | Home";
