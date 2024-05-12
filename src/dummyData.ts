@@ -2,7 +2,7 @@ import { Book } from "./Types/books.types";
 import { List } from "./Types/lists.types";
 import { Challenge } from "./Types/readingChallenges.types";
 import bookFile from "./assets/Atomic Habits.pdf";
-import { Images } from "./Types/Images.types";
+import { Images } from "./Types/images.types";
 
 export const dummyBooks: Book[] = [
   {
