@@ -5,6 +5,7 @@ import modalsReducer from "./features/modals/modalsSlice";
 import { booksApi } from "./services/booksApiSlice";
 import { listsApi } from "./services/listsApiSlice";
 import { readingChallengeApi } from "./services/readingChallengeApiSlice";
+import { usersApi } from "./services/usersApiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     [booksApi.reducerPath]: booksApi.reducer,
     [listsApi.reducerPath]: listsApi.reducer,
     [readingChallengeApi.reducerPath]: readingChallengeApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer
   },
   devTools: import.meta.env.NODE_ENV !== "production",
   // ? Adding the api middleware enables caching, invalidation, polling,
@@ -26,6 +28,7 @@ export const store = configureStore({
       booksApi.middleware,
       listsApi.middleware,
       readingChallengeApi.middleware,
+      usersApi.middleware
     ]),
 });
 

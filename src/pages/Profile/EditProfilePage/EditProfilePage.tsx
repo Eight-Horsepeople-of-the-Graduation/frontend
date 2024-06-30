@@ -1,26 +1,29 @@
 import { useForm } from "react-hook-form";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import classes from "./EditProfilePage.module.css";
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import CustomAvatar from "../../../components/UI/CustomAvatar/CustomAvatar";
+import { useEditUserMutation } from "../../../redux/services/usersApiSlice";
+import { User } from "../../../Types/users.types";
+import { startLoading, stopLoading } from "../../../redux/features/modals/modalsSlice";
+import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 const EditProfilePage = () => {
 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const user = useAppSelector(state => state.authUser.user);
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
-    const [errorTexts, setErrorTexts] = useState({
-        password: "",
-        confirmPassword: "",
-    });
+
     const [enableChangePassword, setEnableChangePassword] = useState(false)
 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: user! });
 
-    // const saveInfo = () => 
+    const [editUser, { isSuccess, isError }] = useEditUserMutation();
 
     useEffect(() => {
         if (user) {
@@ -33,18 +36,36 @@ const EditProfilePage = () => {
 
     if (!user) return <Navigate to="/" />;
 
-    const onSubmit = () => {
+    const onSubmit = async (data: User) => {
+        console.log(data);
+        dispatch(startLoading());
 
+        await editUser({ id: user.id.toString(), info: data })
 
+        dispatch(stopLoading());
+
+        if (isSuccess) {
+            dispatch(showAlert({
+                message: "Info updated",
+                severity: "success"
+            }))
+            navigate(`/profile/${user.username}`)
+        }
+
+        if (isError) {
+            dispatch(showAlert({
+                message: "Something happened",
+                severity: "error"
+            }))
+        }
     };
 
     return (
         <SidePannelLayout>
             <form onSubmit={handleSubmit(onSubmit)} className={classes.Form}>
-                <div>
+                <div className={classes.Avatar}>
                     <CustomAvatar user={user} size="l" />
                     <TextField
-                        fullWidth
                         type="file"
                         id="profileImage"
                         {...register('image', {
@@ -130,11 +151,16 @@ const EditProfilePage = () => {
 
                     />
                 </div>
-                <Button type="submit" variant="contained">
-                    Save Changes
-                </Button>
+                <div className={classes.Actions}>
+                    <Button type="submit" variant="contained" color="success">
+                        Save Changes
+                    </Button>
+                    <Button type="reset" variant="outlined" color="error">
+                        Cancel
+                    </Button>
+                </div>
             </form>
-        </SidePannelLayout>
+        </SidePannelLayout >
     );
 };
 

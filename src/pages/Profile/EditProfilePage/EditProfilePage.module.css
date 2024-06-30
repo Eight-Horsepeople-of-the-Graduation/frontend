@@ -9,3 +9,10 @@
 .Form > div {
     margin: 24px 0;
 }
+
+.Actions {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    flex-direction: row-reverse;
+}

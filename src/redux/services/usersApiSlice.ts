@@ -26,14 +26,15 @@ export const usersApi = createApi({
                 };
             },
         }),
-        editUser: builder.mutation<User, { id: string; formData: FormData }>({
-            query({ id, formData }) {
+        editUser: builder.mutation<User, { id: string; info: User }>({
+            query({ id, info }) {
                 return {
                     url: `users/${id}`,
                     method: "PUT",
-                    body: formData,
+                    body: info,
                 };
             },
+            invalidatesTags: ["users"]
         }),
         removeUserById: builder.mutation<null, string>({
             query(id) {
