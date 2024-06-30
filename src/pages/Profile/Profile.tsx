@@ -7,6 +7,9 @@ import { dummyChallenges, dummyLists } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
 import ListPreview from "../../components/ListPreview/ListPreview";
 import { openCreateChallengeModal } from "../../redux/features/modals/modalsSlice";
+import EditIcon from "@mui/icons-material/Edit";
+
+import { Button } from "@mui/material";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -68,6 +71,23 @@ const ProfilePage = () => {
                 <p>@{user.username}</p>
               </div>
             </div>
+
+            {username === user.username && <Button
+              title={"Edit Profile"}
+              aria-label="edit-profile"
+              sx={{
+                fontSize: "24px",
+                width: "32px",
+                height: "32px",
+                borderRadius: "50%",
+                minWidth: "36px",
+              }}
+              color="primary"
+              onClick={() => { navigate("edit") }}
+            >
+              {<EditIcon />}
+            </Button>
+            }
           </div>
 
           <section className={classes.PageContent}>
