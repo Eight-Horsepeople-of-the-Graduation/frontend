@@ -6,8 +6,18 @@
     padding: 24px;
 }
 
-.Form > div {
+.Form>div {
     margin: 24px 0;
+}
+
+.Avatar {
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+}
+
+.Avatar *{
+    margin : 8px 0;
 }
 
 .Actions {

@@ -26,7 +26,7 @@ export const usersApi = createApi({
                 };
             },
         }),
-        editUser: builder.mutation<User, { id: string; info: User }>({
+        editUser: builder.mutation<User, { id: string; info: FormData }>({
             query({ id, info }) {
                 return {
                     url: `users/${id}`,

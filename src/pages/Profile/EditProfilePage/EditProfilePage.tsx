@@ -13,6 +13,9 @@ import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 const EditProfilePage = () => {
 
+    document.title = `Readify | Edit profile`;
+
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const user = useAppSelector(state => state.authUser.user);
@@ -24,6 +27,12 @@ const EditProfilePage = () => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: user! });
 
     const [editUser, { isSuccess, isError }] = useEditUserMutation();
+
+    const passwordError = !!newPassword && newPassword.length < 8;
+    const confirmPasswordError = !!confirmNewPassword && newPassword !== confirmNewPassword;
+    const changePasswordError = enableChangePassword && passwordError || confirmNewPassword;
+    const preventSupmit = !!errors.email || !!errors.name || !!errors.username || changePasswordError;
+
 
     useEffect(() => {
         if (user) {
@@ -37,10 +46,20 @@ const EditProfilePage = () => {
     if (!user) return <Navigate to="/" />;
 
     const onSubmit = async (data: User) => {
-        console.log(data);
+        if (preventSupmit) return;
+
+        const userData = new FormData();
+
+        userData.append("name", data.name);
+        userData.append("username", data.username);
+        userData.append("email", data.email);
+        userData.append("image", data.image)
+
+        if (enableChangePassword) userData.append("password", newPassword)
+
         dispatch(startLoading());
 
-        await editUser({ id: user.id.toString(), info: data })
+        await editUser({ id: user.id.toString(), info: userData })
 
         dispatch(stopLoading());
 
@@ -131,8 +150,8 @@ const EditProfilePage = () => {
                         id="newPassword"
                         type="password"
                         onChange={(e) => setNewPassword(e.target.value)}
-                        error={!!newPassword && newPassword.length < 8}
-                        helperText={!!newPassword && newPassword.length < 8 ? "Password should be at least 8 characters" : ""}
+                        error={passwordError}
+                        helperText={passwordError ? "Password should be at least 8 characters" : ""}
                         disabled={!enableChangePassword}
                     />
                 </div>
@@ -144,18 +163,21 @@ const EditProfilePage = () => {
                         type="password"
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        error={!!confirmNewPassword && newPassword !== confirmNewPassword}
-                        helperText={!!confirmNewPassword && newPassword !== confirmNewPassword ? "Password unmatched" : ""}
+                        error={confirmPasswordError}
+                        helperText={confirmPasswordError ? "Password unmatched" : ""}
                         disabled={!enableChangePassword}
 
 
                     />
                 </div>
                 <div className={classes.Actions}>
-                    <Button type="submit" variant="contained" color="success">
+                    <Button
+                        disabled={!!preventSupmit} type="submit" variant="contained" color="success">
                         Save Changes
                     </Button>
-                    <Button type="reset" variant="outlined" color="error">
+                    <Button type="button" variant="outlined" color="error" onClick={()=>{
+                        navigate(`/profile/${user.username}`)
+                    }}>
                         Cancel
                     </Button>
                 </div>
