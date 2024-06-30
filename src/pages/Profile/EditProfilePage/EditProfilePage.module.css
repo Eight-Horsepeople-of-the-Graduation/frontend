@@ -1,0 +1,10 @@
+.Form {
+    margin: 24px auto;
+    width: 90%;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+
+.Form > div {
+    margin: 24px 0;
+}
