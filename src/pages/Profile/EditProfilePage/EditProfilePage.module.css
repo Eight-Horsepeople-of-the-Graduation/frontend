@@ -2,7 +2,8 @@
     margin: 24px auto;
     width: 90%;
     border: var(--border);
-    border-radius: var(--border-radius);
+    border-radius: var(--large-border-radius);
+    padding: 24px;
 }
 
 .Form > div {

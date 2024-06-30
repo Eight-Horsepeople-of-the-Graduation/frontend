@@ -1,0 +1,55 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseUrl } from "../config";
+import { User } from "../../Types/users.types";
+
+export const usersApi = createApi({
+    reducerPath: "usersApi",
+    baseQuery: fetchBaseQuery({ baseUrl }),
+    tagTypes: ["users"],
+    endpoints: (builder) => ({
+        getAllUsers: builder.query<User[], void>({
+            query() {
+                return "users";
+            },
+        }),
+        getUserById: builder.query<User, number>({
+            query(id) {
+                return `users/${id}`;
+            },
+        }),
+        signUp: builder.mutation<User, FormData>({
+            query(data) {
+                return {
+                    url: "users",
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
+        editUser: builder.mutation<User, { id: string; formData: FormData }>({
+            query({ id, formData }) {
+                return {
+                    url: `users/${id}`,
+                    method: "PUT",
+                    body: formData,
+                };
+            },
+        }),
+        removeUserById: builder.mutation<null, string>({
+            query(id) {
+                return {
+                    url: `users/${id}`,
+                    method: "DELETE",
+                };
+            },
+        }),
+    }),
+});
+
+export const {
+    useGetAllUsersQuery,
+    useGetUserByIdQuery,
+    useSignUpMutation,
+    useEditUserMutation,
+    useRemoveUserByIdMutation,
+} = usersApi;

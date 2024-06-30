@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-// ? import authReducer from authSlice
 import authReducer from "./features/users/authSlice";
 import alertReducer from "./features/alerts/alertsSlice";
 import modalsReducer from "./features/modals/modalsSlice";

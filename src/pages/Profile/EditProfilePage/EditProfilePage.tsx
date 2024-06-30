@@ -22,10 +22,8 @@ const EditProfilePage = () => {
 
     // const saveInfo = () => 
 
-    // Fetch initial data if needed (for edit scenario)
     useEffect(() => {
         if (user) {
-            // Set initial values from props (if editing)
             setValue('image', user.image ?? "");
             setValue('name', user.name ?? "");
             setValue('username', user.username ?? "");
@@ -36,14 +34,6 @@ const EditProfilePage = () => {
     if (!user) return <Navigate to="/" />;
 
     const onSubmit = () => {
-        if (newPassword.length < 8) { setErrorTexts({ ...errorTexts, password: "Password should be at least 8 characters" }) } else {
-            setErrorTexts({ ...errorTexts, password: "" })
-        }
-
-        if (confirmNewPassword !== newPassword) { setErrorTexts({ ...errorTexts, confirmPassword: "Password unmatched" }) } else {
-            setErrorTexts({ ...errorTexts, confirmPassword: "" })
-        }
-
 
 
     };
@@ -120,8 +110,8 @@ const EditProfilePage = () => {
                         id="newPassword"
                         type="password"
                         onChange={(e) => setNewPassword(e.target.value)}
-                        error={newPassword.length < 8}
-                        helperText={errorTexts.password}
+                        error={!!newPassword && newPassword.length < 8}
+                        helperText={!!newPassword && newPassword.length < 8 ? "Password should be at least 8 characters" : ""}
                         disabled={!enableChangePassword}
                     />
                 </div>
@@ -133,8 +123,8 @@ const EditProfilePage = () => {
                         type="password"
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        error={newPassword !== confirmNewPassword}
-                        helperText={errorTexts.confirmPassword}
+                        error={!!confirmNewPassword && newPassword !== confirmNewPassword}
+                        helperText={!!confirmNewPassword && newPassword !== confirmNewPassword ? "Password unmatched" : ""}
                         disabled={!enableChangePassword}
 
 
