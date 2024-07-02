@@ -6,3 +6,8 @@ export interface User {
   role: string;
   id: number;
 }
+
+export interface SignUpUser {
+  user: Omit<User, "id" | "image" | "role">;
+  password: string;
+}

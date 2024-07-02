@@ -23,7 +23,7 @@ const AuthSwitch = () => {
           <LoginForm />
           <p className={classes.SwitchParagraph}>
             Don't have an account?{" "}
-            <a onClick={switchAuthModeHandler}>Sign Up</a>
+            <a onClick={switchAuthModeHandler}>Sign up</a>
           </p>
         </div>
       ) : (

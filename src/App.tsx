@@ -18,8 +18,21 @@ import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBook
 import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal/RemoveBookFromListModal";
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
+import { useEffect } from "react";
+import { useAppDispatch } from "./redux/hooks";
+import { setLogedInUser } from "./redux/features/users/authSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      dispatch(setLogedInUser(user));
+    }
+  }, []);
+
   return (
     <>
       <LoadingSpinner />

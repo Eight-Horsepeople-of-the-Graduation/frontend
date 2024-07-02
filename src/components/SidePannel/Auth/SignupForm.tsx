@@ -1,7 +1,16 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
+import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
+import { SignUpUser, User } from "../../../Types/users.types";
+import { useAppDispatch } from "../../../redux/hooks";
+import {
+  startLoading,
+  stopLoading,
+} from "../../../redux/features/modals/modalsSlice";
+import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { setLogedInUser } from "../../../redux/features/users/authSlice";
 
 interface SignUpFormValues {
   name: string;
@@ -11,11 +20,20 @@ interface SignUpFormValues {
 }
 
 const SignupForm = () => {
+  const dispatch = useAppDispatch();
   const [password, setPassword] = useState<string>("");
   const [confirmPasword, setConfirmPassword] = useState<string>("");
 
+  const [signUp, { data: newUser, isError, isSuccess }] = useSignUpMutation();
+
+  const matchPasswordError = Boolean(
+    confirmPasword && !password.includes(confirmPasword)
+  );
+
   const SignUpForm = useForm<SignUpFormValues>({
     defaultValues: {
+      name: "",
+      username: "",
       email: "",
       password: "",
     },
@@ -23,8 +41,35 @@ const SignupForm = () => {
 
   const { register, handleSubmit } = SignUpForm;
 
-  const onSubmit = (data: SignUpFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormValues) => {
+    dispatch(startLoading());
+
+    const newUserData: SignUpUser = {
+      user: {
+        name: data.name,
+        username: data.username,
+        email: data.email,
+      },
+      password: data.password,
+    };
+
+    const returnedData = await signUp(newUserData);
+
+    dispatch(stopLoading());
+
+    if (isError) {
+      dispatch(showAlert({ message: "Error signing up", severity: "error" }));
+    }
+
+    if (isSuccess) {
+      dispatch(
+        showAlert({ message: "Sign up successful", severity: "success" })
+      );
+
+      dispatch(setLogedInUser(newUser));
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.Form}>
@@ -91,11 +136,8 @@ const SignupForm = () => {
           fullWidth
           label="Confirm Password"
           type="password"
-          error={Boolean(confirmPasword && !password.includes(confirmPasword))}
-          helperText={
-            Boolean(confirmPasword && !password.includes(confirmPasword)) &&
-            "Passwords do not match"
-          }
+          error={matchPasswordError}
+          helperText={matchPasswordError && "Passwords do not match"}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </div>
