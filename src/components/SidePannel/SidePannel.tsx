@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
 import { dummyLists } from "../../dummyData";
 import { openCreateListModal } from "../../redux/features/modals/modalsSlice";
+import AuthSwitch from "./Auth/AuthSwitch";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -26,58 +27,58 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
 
-  if (!user) return <></>;
-
   const lists = dummyLists; //todo: fetch user lists
 
   return (
-    <>
-      <aside
-        className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}
-      >
-        <div className={classes.user}>
-          <div>
-            <CustomAvatar user={user} size="m" />
+    <aside className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}>
+      {!user ? (
+        <AuthSwitch />
+      ) : (
+        <>
+          <div className={classes.user}>
+            <div>
+              <CustomAvatar user={user} size="m" />
+            </div>
+            <div className={classes.info}>
+              <h2>{user.name}</h2>
+              <Link to={`/profile/${user.username}`} title="Go to profile">
+                @{user.username}
+              </Link>
+            </div>
           </div>
-          <div className={classes.info}>
-            <h2>{user.name}</h2>
-            <Link to={`/profile/${user.username}`} title="Go to profile">
-              @{user.username}
-            </Link>
+
+          <ReadingChallenge />
+
+          <nav className={classes.Navigator}>
+            <ul>
+              {navItems.map((item, idx) => (
+                <li key={idx}>
+                  <a href={item.link}>
+                    <FontAwesomeIcon icon={item.icon} />
+                    <p>{item.text}</p>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className={classes.myLists}>
+            <div className={classes.myListsTop}>
+              <p>My Lists</p>
+              <button onClick={() => dispatch(openCreateListModal())}>+</button>
+            </div>
+            <hr />
+            <ul className={classes.lists}>
+              {lists.map((list) => (
+                <li key={list.id}>
+                  <Link to={`/lists/${list.id}`}>{list.title}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-
-        <ReadingChallenge />
-
-        <nav className={classes.Navigator}>
-          <ul>
-            {navItems.map((item, idx) => (
-              <li key={idx}>
-                <a href={item.link}>
-                  <FontAwesomeIcon icon={item.icon} />
-                  <p>{item.text}</p>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className={classes.myLists}>
-          <div className={classes.myListsTop}>
-            <p>My Lists</p>
-            <button onClick={() => dispatch(openCreateListModal())}>+</button>
-          </div>
-          <hr />
-          <ul className={classes.lists}>
-            {lists.map((list) => (
-              <li key={list.id}>
-                <Link to={`/lists/${list.id}`}>{list.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
-    </>
+        </>
+      )}
+    </aside>
   );
 };
 

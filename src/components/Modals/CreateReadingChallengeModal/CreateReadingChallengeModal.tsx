@@ -24,7 +24,7 @@ interface FormValues {
 }
 
 const CreateReadingChallengeModal = () => {
-  const userId = useAppSelector((state) => state.authUser).user!.id;
+  const userId = useAppSelector((state) => state.authUser).user?.id;
   const [challengeType, setChallengeType] = useState<ChallengeType>("ANNUAL");
   const modalOpen = useAppSelector(
     (state) => state.modals.createChallengeModalOpen
@@ -52,6 +52,7 @@ const CreateReadingChallengeModal = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
+    if (!userId) return;
     await createReadingChallenge({
       ...data,
       userId,

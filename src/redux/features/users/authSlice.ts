@@ -7,7 +7,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: dummyUser,
+  user: null,
 };
 
 export const authSlice = createSlice({
