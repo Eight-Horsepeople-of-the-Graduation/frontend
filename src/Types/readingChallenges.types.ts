@@ -3,6 +3,7 @@ export type ChallengeType = "ANNUAL" | "MONTHLY" | "WEEKLY";
 
 export interface Challenge {
   id: number;
+  title: string;
   userId: number;
   type: ChallengeType;
   startDate: string;

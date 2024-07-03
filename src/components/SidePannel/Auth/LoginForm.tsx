@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
 import { UserCredintials } from "../../../Types/users.types";
 import { useAppDispatch } from "../../../redux/hooks";
@@ -9,6 +9,7 @@ import {
 } from "../../../redux/features/modals/modalsSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { setLogedInUser } from "../../../redux/features/users/authSlice";
+import { useLogInMutation } from "../../../redux/services/usersApiSlice";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -86,9 +87,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-function useLogInMutation(): [
-  any,
-  { data: any; isError: any; isSuccess: any }
-] {
-  throw new Error("Function not implemented.");
-}

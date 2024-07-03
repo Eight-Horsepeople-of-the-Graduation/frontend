@@ -44,7 +44,7 @@ const ReadingChallengeCard = ({
             Challenge
           </p>
           <Link to={`/challenges/${challenge.id}`} title="Go to challenge">
-            {convertFirstLetterToUppercase(challenge.period)}
+            {convertFirstLetterToUppercase(challenge.title)}
           </Link>
         </div>
 

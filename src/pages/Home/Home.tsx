@@ -1,10 +1,13 @@
 import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import ListPreview from "../../components/ListPreview/ListPreview";
-import { dummyLists } from "../../dummyData";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarosel";
+import { useGetAllListsQuery } from "../../redux/services/listsApiSlice";
+import { List } from "../../Types/lists.types";
 
 const HomePage = () => {
   document.title = "Readify | Home";
+
+  const { data: lists } = useGetAllListsQuery();
 
   return (
     <SidePannelLayout>
@@ -23,7 +26,7 @@ const HomePage = () => {
         >
           <ImageCarousel url={""} />
         </section>
-        {dummyLists
+        {(lists ?? ([] as List[]))
           .filter((list) => list.books.length)
           .map((list) => (
             <ListPreview key={list.id} list={list} />

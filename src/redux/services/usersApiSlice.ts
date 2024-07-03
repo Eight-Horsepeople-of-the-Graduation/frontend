@@ -17,6 +17,11 @@ export const usersApi = createApi({
         return `users/${id}`;
       },
     }),
+    getUserByUsername: builder.query<User, string>({
+      query(username) {
+        return `users/${username}`;
+      },
+    }),
     logIn: builder.mutation<User, UserCredintials>({
       query(loginData) {
         return {
@@ -59,6 +64,8 @@ export const usersApi = createApi({
 export const {
   useGetAllUsersQuery,
   useGetUserByIdQuery,
+  useGetUserByUsernameQuery,
+  useLogInMutation,
   useSignUpMutation,
   useEditUserMutation,
   useRemoveUserByIdMutation,

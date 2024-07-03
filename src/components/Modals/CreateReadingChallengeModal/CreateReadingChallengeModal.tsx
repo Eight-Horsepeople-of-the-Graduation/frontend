@@ -56,6 +56,7 @@ const CreateReadingChallengeModal = () => {
     await createReadingChallenge({
       ...data,
       userId,
+      startDate: new Date().toISOString(),
     });
 
     if (isSuccess) {

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
 import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
-import { SignUpUser, User } from "../../../Types/users.types";
+import { SignUpUser } from "../../../Types/users.types";
 import { useAppDispatch } from "../../../redux/hooks";
 import {
   startLoading,
@@ -45,15 +45,13 @@ const SignupForm = () => {
     dispatch(startLoading());
 
     const newUserData: SignUpUser = {
-      user: {
-        name: data.name,
-        username: data.username,
-        email: data.email,
-        country: "Egypt", // todo: add country selection
-        gender: "MALE", // todo: add gender selection;
-        birthDate: "1999-01-01", // todo: add birthdate selection
-        isAdmin: false,
-      },
+      name: data.name,
+      username: data.username,
+      email: data.email,
+      country: "Egypt", // todo: add country selection
+      gender: "MALE", // todo: add gender selection;
+      birthDate: "1999-01-01", // todo: add birthdate selection
+      isAdmin: false,
       password: data.password,
     };
 

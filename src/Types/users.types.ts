@@ -18,7 +18,4 @@ export interface UserCredintials {
   password: string;
 }
 
-export interface SignUpUser {
-  user: Omit<User, "id" | "joinDate">;
-  password: string;
-}
+export type SignUpUser = Omit<User, "id" | "joinDate"> & { password: string };

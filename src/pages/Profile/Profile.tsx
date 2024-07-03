@@ -1,15 +1,19 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import classes from "./Profile.module.css";
 import CustomAvatar from "../../components/UI/CustomAvatar/CustomAvatar";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Header from "../../components/Header/Header";
-import { dummyChallenges, dummyLists } from "../../dummyData";
 import ReadingChallengeCard from "../../components/SidePannel/ReadingChallenges/ReadingChallengeCard/ReadingChallengeCard";
 import ListPreview from "../../components/ListPreview/ListPreview";
 import { openCreateChallengeModal } from "../../redux/features/modals/modalsSlice";
 import EditIcon from "@mui/icons-material/Edit";
-
 import { Button } from "@mui/material";
+import { useGetUserByUsernameQuery } from "../../redux/services/usersApiSlice";
+import { Challenge } from "../../Types/readingChallenges.types";
+import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
+import { List } from "../../Types/lists.types";
+import { useGetUserReadingChallengesQuery } from "../../redux/services/readingChallengeApiSlice";
+import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -17,40 +21,52 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const dispath = useAppDispatch();
 
+  if (!username) navigate("/");
+
   document.title = `Readify | ${username}`;
 
-  const user = useAppSelector((state) => state.authUser.user);
+  const currentUser = useAppSelector((state) => state.authUser.user);
 
-  const challenges = dummyChallenges;
-  const activeChallenges = challenges.filter(
-    (challenge) => new Date(challenge.endDate) > new Date()
-  );
+  const { data: user } = useGetUserByUsernameQuery(username!);
 
-  const sortedChallenges = challenges.sort((a, b) => {
-    const aDate = new Date(a.endDate);
-    const bDate = new Date(b.endDate);
-    const aYear = aDate.getFullYear();
-    const bYear = bDate.getFullYear();
-    const aMonth = aDate.getMonth();
-    const bMonth = bDate.getMonth();
-    const aDay = aDate.getDate();
-    const bDay = bDate.getDate();
-
-    if (aYear < bYear) return 1;
-    if (aYear > bYear) return -1;
-
-    if (aMonth < bMonth) return 1;
-    if (aMonth > bMonth) return -1;
-
-    if (aDay < bDay) return 1;
-    if (aDay > bDay) return -1;
-
-    return 0;
+  const { data: challenges } = useGetUserReadingChallengesQuery(user!.id, {
+    skip: !user,
   });
 
-  if (!user) return <Navigate to="/" />;
+  const activeChallenges = challenges
+    ? challenges.filter((challenge) => new Date(challenge.endDate) > new Date())
+    : [];
 
-  const userLists = dummyLists.filter((list) => list.userId === user.id);
+  const sortedChallenges = challenges
+    ? challenges.sort((a, b) => {
+        const aDate = new Date(a.endDate);
+        const bDate = new Date(b.endDate);
+        const aYear = aDate.getFullYear();
+        const bYear = bDate.getFullYear();
+        const aMonth = aDate.getMonth();
+        const bMonth = bDate.getMonth();
+        const aDay = aDate.getDate();
+        const bDay = bDate.getDate();
+
+        if (aYear < bYear) return 1;
+        if (aYear > bYear) return -1;
+
+        if (aMonth < bMonth) return 1;
+        if (aMonth > bMonth) return -1;
+
+        if (aDay < bDay) return 1;
+        if (aDay > bDay) return -1;
+
+        return 0;
+      })
+    : [];
+
+  const { data: userLists } = useGetUserListsQuery(user!.id, {
+    skip: !user,
+  });
+
+  const isMyProfile = Boolean(currentUser && username === currentUser.username);
+  if (!user) return <PageNotFoundPage />;
 
   return (
     <>
@@ -72,26 +88,29 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {username === user.username && <Button
-              title={"Edit Profile"}
-              aria-label="edit-profile"
-              sx={{
-                fontSize: "24px",
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                minWidth: "36px",
-              }}
-              color="primary"
-              onClick={() => { navigate("edit") }}
-            >
-              {<EditIcon />}
-            </Button>
-            }
+            {isMyProfile && (
+              <Button
+                title={"Edit Profile"}
+                aria-label="edit-profile"
+                sx={{
+                  fontSize: "24px",
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  minWidth: "36px",
+                }}
+                color="primary"
+                onClick={() => {
+                  navigate("edit");
+                }}
+              >
+                {<EditIcon />}
+              </Button>
+            )}
           </div>
 
           <section className={classes.PageContent}>
-            {userLists.map(
+            {(userLists ?? ([] as List[])).map(
               (list) =>
                 list.books.length && <ListPreview key={list.id} list={list} />
             )}
@@ -111,7 +130,7 @@ const ProfilePage = () => {
               </button>
             </div>
             <div className={classes.ChallengesList}>
-              {sortedChallenges.map((challenge) => (
+              {sortedChallenges.map((challenge: Challenge) => (
                 <ReadingChallengeCard
                   key={challenge.id}
                   challenge={challenge}

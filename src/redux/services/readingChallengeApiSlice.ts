@@ -15,11 +15,6 @@ export const readingChallengeApi = createApi({
         return "reading-challenges";
       },
     }),
-    getAllUserChallenges: builder.query<Challenge[], number>({
-      query(userId) {
-        return `reading-challenges/user/${userId}`;
-      },
-    }),
     getReadingChallengeById: builder.query<Challenge, string>({
       query(id) {
         return `reading-challenges/${id}`;
@@ -57,7 +52,6 @@ export const readingChallengeApi = createApi({
         };
       },
     }),
-
     getUserReadingChallenges: builder.query<Challenge[], number>({
       query(userId) {
         return `reading-challenges/user/${userId}`;
@@ -80,9 +74,9 @@ export const readingChallengeApi = createApi({
 
 export const {
   useGetAllReadingChallengesQuery,
-  useGetAllUserChallengesQuery,
   useGetReadingChallengeByIdQuery,
   useCreateReadingChallengeMutation,
   useEditReadingChallengeMutation,
   useDeleteReadingChallengeMutation,
+  useGetUserReadingChallengesQuery,
 } = readingChallengeApi;

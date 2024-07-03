@@ -21,6 +21,7 @@ import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useEffect } from "react";
 import { useAppDispatch } from "./redux/hooks";
 import { setLogedInUser } from "./redux/features/users/authSlice";
+import { User } from "./Types/users.types";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,10 +29,10 @@ function App() {
   useEffect(() => {
     const currentUser = localStorage.getItem("user");
     if (currentUser) {
-      const user = JSON.parse(currentUser);
+      const user = JSON.parse(currentUser) as User;
       dispatch(setLogedInUser(user));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
