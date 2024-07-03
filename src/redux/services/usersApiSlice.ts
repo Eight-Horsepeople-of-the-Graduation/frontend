@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { SignUpUser, User } from "../../Types/users.types";
+import { SignUpUser, User, UserCredintials } from "../../Types/users.types";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -17,12 +17,21 @@ export const usersApi = createApi({
         return `users/${id}`;
       },
     }),
+    logIn: builder.mutation<User, UserCredintials>({
+      query(loginData) {
+        return {
+          url: "users/login",
+          method: "GET",
+          body: loginData,
+        };
+      },
+    }),
     signUp: builder.mutation<User, SignUpUser>({
-      query(data) {
+      query(userData) {
         return {
           url: "users",
           method: "POST",
-          body: data,
+          body: userData,
         };
       },
     }),

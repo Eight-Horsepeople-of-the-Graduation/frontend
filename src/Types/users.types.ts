@@ -7,6 +7,11 @@ export interface User {
   id: number;
 }
 
+export interface UserCredintials {
+  email: string;
+  password: string;
+}
+
 export interface SignUpUser {
   user: Omit<User, "id" | "image" | "role">;
   password: string;
