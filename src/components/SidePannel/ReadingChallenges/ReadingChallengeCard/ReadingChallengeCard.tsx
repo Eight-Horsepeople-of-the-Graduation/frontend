@@ -43,13 +43,23 @@ const ReadingChallengeCard = ({
             {convertFirstLetterToUppercase(challenge.type.toLowerCase())}{" "}
             Challenge
           </p>
-          <Link to={`/challenges/${challenge.id}`} title="Go to challenge">
+          <Link
+            style={{
+              maxWidth: "150px",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+            to={`/challenges/${challenge.id}`}
+            title={challenge.title}
+          >
             {convertFirstLetterToUppercase(challenge.title)}
           </Link>
         </div>
 
         <p className={classes.ChallengeCounter}>
-          {challenge.books.length} of {challenge.goal}
+          {challenge.books.length}{" "}
+          {challenge.goal ? `of ${challenge.goal}` : "Read"}
         </p>
       </div>
 

@@ -27,41 +27,45 @@ const ProfilePage = () => {
 
   const currentUser = useAppSelector((state) => state.authUser.user);
 
-  const { data: user } = useGetUserByUsernameQuery(username!);
+  const { data: user } = useGetUserByUsernameQuery(username!, {
+    skip: !username,
+  });
 
-  const { data: challenges } = useGetUserReadingChallengesQuery(user!.id, {
+  const { data: challenges } = useGetUserReadingChallengesQuery(user?.id ?? 0, {
     skip: !user,
   });
 
-  const activeChallenges = challenges
-    ? challenges.filter((challenge) => new Date(challenge.endDate) > new Date())
+  const myChallenges = challenges ? [...challenges] : [];
+
+  const activeChallenges = myChallenges
+    ? myChallenges.filter(
+        (challenge) => new Date(challenge.endDate) > new Date()
+      )
     : [];
 
-  const sortedChallenges = challenges
-    ? challenges.sort((a, b) => {
-        const aDate = new Date(a.endDate);
-        const bDate = new Date(b.endDate);
-        const aYear = aDate.getFullYear();
-        const bYear = bDate.getFullYear();
-        const aMonth = aDate.getMonth();
-        const bMonth = bDate.getMonth();
-        const aDay = aDate.getDate();
-        const bDay = bDate.getDate();
+  const sortedChallenges = myChallenges.sort((a, b) => {
+    const aDate = new Date(a.endDate);
+    const bDate = new Date(b.endDate);
+    const aYear = aDate.getFullYear();
+    const bYear = bDate.getFullYear();
+    const aMonth = aDate.getMonth();
+    const bMonth = bDate.getMonth();
+    const aDay = aDate.getDate();
+    const bDay = bDate.getDate();
 
-        if (aYear < bYear) return 1;
-        if (aYear > bYear) return -1;
+    if (aYear < bYear) return 1;
+    if (aYear > bYear) return -1;
 
-        if (aMonth < bMonth) return 1;
-        if (aMonth > bMonth) return -1;
+    if (aMonth < bMonth) return 1;
+    if (aMonth > bMonth) return -1;
 
-        if (aDay < bDay) return 1;
-        if (aDay > bDay) return -1;
+    if (aDay < bDay) return 1;
+    if (aDay > bDay) return -1;
 
-        return 0;
-      })
-    : [];
+    return 0;
+  });
 
-  const { data: userLists } = useGetUserListsQuery(user!.id, {
+  const { data: userLists } = useGetUserListsQuery(user?.id ?? 0, {
     skip: !user,
   });
 
@@ -130,7 +134,7 @@ const ProfilePage = () => {
               </button>
             </div>
             <div className={classes.ChallengesList}>
-              {sortedChallenges.map((challenge: Challenge) => (
+              {sortedChallenges?.map((challenge: Challenge) => (
                 <ReadingChallengeCard
                   key={challenge.id}
                   challenge={challenge}
