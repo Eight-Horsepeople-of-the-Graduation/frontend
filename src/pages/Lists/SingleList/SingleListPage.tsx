@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
-import { dummyLists } from "../../../dummyData";
 import BookComponent from "../../../components/BookComponent/BookComponent";
 import PageNotFoundPage from "../../PageNotFound/PageNotFoundPage";
 import classes from "./SingleListPage.module.css";
@@ -9,7 +8,10 @@ import PrivacySwitch from "../../../components/PrivacySwitch/PrivacySwitch";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
-import { useEditListMutation } from "../../../redux/services/listsApiSlice";
+import {
+  useEditListMutation,
+  useGetListByIdQuery,
+} from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { useAppDispatch } from "../../../redux/hooks";
 import {
@@ -20,10 +22,16 @@ import {
 const SingleListPage = () => {
   const { listId } = useParams();
   const dispatch = useAppDispatch();
-  const list = dummyLists.find((list) => Number(listId) === list.id);
   const [isEditingName, setISEditngName] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [editList, { isSuccess, isError }] = useEditListMutation();
+
+  const {
+    data: list,
+    isSuccess: listFetched,
+    isLoading: isFetchingList,
+    isError: errorFetchingList,
+  } = useGetListByIdQuery(+listId!, { skip: !listId });
   const [isPrivate, setIsPrivate] = useState(list?.privacy === "PRIVATE");
 
   const startEditName = () => {
@@ -106,62 +114,72 @@ const SingleListPage = () => {
     }
   });
 
-  if (!list) return <PageNotFoundPage />;
+  if (isFetchingList) dispatch(startLoading());
 
-  document.title = `Readify | ${list.title}`;
-  return (
-    <SidePannelLayout>
-      <main className={classes.SingleListPage}>
-        <div className={classes.ListHeader}>
-          <h1
-            className={classes.ListTitle}
-            contentEditable={isEditingName}
-            ref={titleRef}
-            style={{
-              cursor: isEditingName ? "text" : "default",
-              outline: "none",
-              border: isEditingName ? "var(--border)" : "none",
-            }}
-          >
-            {list.title}
-          </h1>
-          <div className={classes.Controllers}>
-            <Button
-              title={isEditingName ? "Save" : "Edit list name"}
-              aria-label="edit"
-              sx={{
-                fontSize: "24px",
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                minWidth: "36px",
+  if (errorFetchingList) {
+    dispatch(stopLoading());
+    dispatch(showAlert({ message: "List not found", severity: "error" }));
+    return <PageNotFoundPage />;
+  }
+
+  if (listFetched) {
+    dispatch(stopLoading());
+
+    document.title = `Readify | ${list.title}`;
+    return (
+      <SidePannelLayout>
+        <main className={classes.SingleListPage}>
+          <div className={classes.ListHeader}>
+            <h1
+              className={classes.ListTitle}
+              contentEditable={isEditingName}
+              ref={titleRef}
+              style={{
+                cursor: isEditingName ? "text" : "default",
+                outline: "none",
+                border: isEditingName ? "var(--border)" : "none",
               }}
-              color="primary"
-              onClick={isEditingName ? finishEditName : startEditName}
             >
-              {isEditingName ? <CheckIcon /> : <EditIcon />}
-            </Button>
-            <PrivacySwitch
-              isChecked={isPrivate}
-              onChange={handleChangePrivacy}
-            />
-          </div>
-        </div>
-
-        <div className={classes.List}>
-          {list?.books.map((book) => (
-            <div key={book.id}>
-              <BookComponent
-                key={book.id}
-                book={book}
-                currentListId={list.id}
+              {list.title}
+            </h1>
+            <div className={classes.Controllers}>
+              <Button
+                title={isEditingName ? "Save" : "Edit list name"}
+                aria-label="edit"
+                sx={{
+                  fontSize: "24px",
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  minWidth: "36px",
+                }}
+                color="primary"
+                onClick={isEditingName ? finishEditName : startEditName}
+              >
+                {isEditingName ? <CheckIcon /> : <EditIcon />}
+              </Button>
+              <PrivacySwitch
+                isChecked={isPrivate}
+                onChange={handleChangePrivacy}
               />
             </div>
-          ))}
-        </div>
-      </main>
-    </SidePannelLayout>
-  );
+          </div>
+
+          <div className={classes.List}>
+            {list?.books.map((book) => (
+              <div key={book.id}>
+                <BookComponent
+                  key={book.id}
+                  book={book}
+                  currentListId={list.id}
+                />
+              </div>
+            ))}
+          </div>
+        </main>
+      </SidePannelLayout>
+    );
+  }
 };
 
 export default SingleListPage;

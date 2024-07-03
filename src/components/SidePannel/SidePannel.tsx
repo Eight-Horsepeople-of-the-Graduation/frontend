@@ -9,9 +9,10 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChallenge";
-import { dummyLists } from "../../dummyData";
 import { openCreateListModal } from "../../redux/features/modals/modalsSlice";
 import AuthSwitch from "./Auth/AuthSwitch";
+import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
+import { List } from "../../Types/lists.types";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -27,7 +28,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
 
-  const lists = dummyLists; //todo: fetch user lists
+  const { data: lists, isSuccess } = useGetUserListsQuery(user?.id ?? 0);
 
   return (
     <aside className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}>
@@ -69,11 +70,12 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
             </div>
             <hr />
             <ul className={classes.lists}>
-              {lists.map((list) => (
-                <li key={list.id}>
-                  <Link to={`/lists/${list.id}`}>{list.title}</Link>
-                </li>
-              ))}
+              {isSuccess &&
+                (lists ?? ([] as List[])).map((list) => (
+                  <li key={list.id}>
+                    <Link to={`/lists/${list.id}`}>{list.title}</Link>
+                  </li>
+                ))}
             </ul>
           </div>
         </>

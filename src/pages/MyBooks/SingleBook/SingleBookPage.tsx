@@ -17,12 +17,17 @@ import {
 } from "../../../redux/features/modals/modalsSlice";
 
 const SingleBookPage = () => {
+  document.title = "Readify";
+
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
 
-  const { data: bookData, isError, isLoading } = useGetBookByIdQuery(+bookId!);
-
-  if (isLoading) dispatch(startLoading());
+  const {
+    data: book,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
   if (isError) {
     dispatch(stopLoading());
@@ -36,75 +41,79 @@ const SingleBookPage = () => {
     return <PageNotFoundPage />;
   }
 
-  document.title = `Readify | ${bookData!.title}`;
-  return (
-    <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
-      <main style={{ width: "100%" }}>
-        <section id="info" className={classes.Info}>
-          <div className={classes.Content}>
-            {bookData!.cover ? (
-              <img src={bookData!.cover} title={bookData!.title} />
-            ) : (
-              <div className={classes.NoCover} title={bookData!.title}>
-                <FontAwesomeIcon icon={faBookOpen} />
-              </div>
-            )}
-            <div>
-              <div className={classes.Title}>
-                <h1>{bookData!.title}</h1>
-                <Button variant="contained" title="Add to list">
-                  +
-                </Button>
-              </div>
-              <div className={classes.Data}>
-                <div>
-                  <h3>Pages</h3>
-                  <p>{bookData!.numOfPages}</p>
+  if (isLoading) dispatch(startLoading());
+
+  if (isSuccess) {
+    document.title = `Readify | ${book.title}`;
+    dispatch(stopLoading());
+    return (
+      <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
+        <main style={{ width: "100%" }}>
+          <section id="info" className={classes.Info}>
+            <div className={classes.Content}>
+              {book.cover ? (
+                <img src={book.cover} title={book.title} />
+              ) : (
+                <div className={classes.NoCover} title={book.title}>
+                  <FontAwesomeIcon icon={faBookOpen} />
                 </div>
-                <div>
-                  <h3>Author</h3>
-                  <p>{bookData!.authors[0].name}</p>
+              )}
+              <div>
+                <div className={classes.Title}>
+                  <h1>{book.title}</h1>
+                  <Button variant="contained" title="Add to list">
+                    +
+                  </Button>
                 </div>
-                <div>
-                  <h3>Genre</h3>
-                  <p>Test</p>
+                <div className={classes.Data}>
+                  <div>
+                    <h3>Pages</h3>
+                    <p>{book.numOfPages}</p>
+                  </div>
+                  <div>
+                    <h3>Author</h3>
+                    <p>{book.authors[0].name}</p>
+                  </div>
+                  <div>
+                    <h3>Genre</h3>
+                    <p>Test</p>
+                  </div>
                 </div>
-              </div>
-              <div className={classes.Desc}>
-                <h3>Overview</h3>
-                <p>{bookData!.description}</p>
+                <div className={classes.Desc}>
+                  <h3>Overview</h3>
+                  <p>{book.description}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {bookData!.pdfLink && (
-          <section id="reader" className={classes.Reader}>
-            <h1>Read {bookData!.title}</h1>
+          {book.pdfLink && book.pdfLink.endsWith(".pdf") && (
+            <section id="reader" className={classes.Reader}>
+              <h1>Read {book.title}</h1>
+              <main>
+                <BookReader file={book.pdfLink} language={book.language} />
+              </main>
+            </section>
+          )}
+
+          <section id="chat" className={classes.Chat}>
+            <h1>Chat with {book.title}</h1>
             <main>
-              <BookReader
-                file={bookData!.pdfLink}
-                language={bookData!.language}
-              />
+              <div>
+                <ChatMessage
+                  message={
+                    "Hello, I'm Ai, I'm here to help you with this book."
+                  }
+                  fromAi={true}
+                />
+              </div>
+              <MessageField />
             </main>
           </section>
-        )}
-
-        <section id="chat" className={classes.Chat}>
-          <h1>Chat with {bookData!.title}</h1>
-          <main>
-            <div>
-              <ChatMessage
-                message={"Hello, I'm Ai, I'm here to help you with this book."}
-                fromAi={true}
-              />
-            </div>
-            <MessageField />
-          </main>
-        </section>
-      </main>
-    </SidePannelLayout>
-  );
+        </main>
+      </SidePannelLayout>
+    );
+  }
 };
 
 export default SingleBookPage;

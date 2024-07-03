@@ -6,8 +6,11 @@ interface AuthState {
   user?: User | null;
 }
 
+const currentUser = localStorage.getItem("user");
+const user = currentUser ? (JSON.parse(currentUser) as User) : null;
+
 const initialState: AuthState = {
-  user: null,
+  user,
 };
 
 export const authSlice = createSlice({

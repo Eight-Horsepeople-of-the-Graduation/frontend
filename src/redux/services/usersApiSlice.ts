@@ -19,7 +19,7 @@ export const usersApi = createApi({
     }),
     getUserByUsername: builder.query<User, string>({
       query(username) {
-        return `users/${username}`;
+        return `users/username/${username}`;
       },
     }),
     logIn: builder.mutation<User, UserCredintials>({
@@ -29,6 +29,13 @@ export const usersApi = createApi({
           method: "GET",
           body: loginData,
         };
+      },
+      onQueryStarted: async (_, { queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          localStorage.removeItem("user");
+        }
       },
     }),
     signUp: builder.mutation<User, SignUpUser>({
