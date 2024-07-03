@@ -12,24 +12,24 @@ export const readingChallengeApi = createApi({
   endpoints: (builder) => ({
     getAllReadingChallenges: builder.query<Challenge[], void>({
       query() {
-        return "challenges";
+        return "reading-challenges";
       },
     }),
     getAllUserChallenges: builder.query<Challenge[], number>({
       query(userId) {
-        return `challenges/user/${userId}`;
+        return `reading-challenges/user/${userId}`;
       },
     }),
     getReadingChallengeById: builder.query<Challenge, string>({
       query(id) {
-        return `challenges/${id}`;
+        return `reading-challenges/${id}`;
       },
     }),
     createReadingChallenge: builder.mutation<Challenge, CreateChallengePayload>(
       {
         query(data) {
           return {
-            url: "challenges",
+            url: "reading-challenges",
             method: "POST",
             body: data,
           };
@@ -43,7 +43,7 @@ export const readingChallengeApi = createApi({
     >({
       query({ id, challengeData }) {
         return {
-          url: `challenges/${id}`,
+          url: `reading-challenges/${id}`,
           method: "PUT",
           body: challengeData,
         };
@@ -52,8 +52,26 @@ export const readingChallengeApi = createApi({
     deleteReadingChallenge: builder.mutation<null, string>({
       query(id) {
         return {
-          url: `lists/${id}`,
+          url: `reading-challenges/${id}`,
           method: "DELETE",
+        };
+      },
+    }),
+
+    getUserReadingChallenges: builder.query<Challenge[], number>({
+      query(userId) {
+        return `reading-challenges/user/${userId}`;
+      },
+    }),
+    addBookToReadingChallenge: builder.mutation<
+      Challenge[],
+      { challengeId: number; bookId: number }
+    >({
+      query({ challengeId, bookId }) {
+        return {
+          url: `reading-challenges/add-books/${challengeId}`,
+          method: "POST",
+          body: { bookId },
         };
       },
     }),

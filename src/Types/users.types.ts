@@ -1,10 +1,16 @@
+export type Gender = "MALE" | "FEMALE";
+
 export interface User {
+  id: number;
   name: string;
   username: string;
   email: string;
-  image: string;
-  role: string;
-  id: number;
+  country: string;
+  gender: Gender;
+  birthDate: string;
+  joinDate: string;
+  profilePicture?: string;
+  isAdmin: boolean;
 }
 
 export interface UserCredintials {
@@ -13,6 +19,6 @@ export interface UserCredintials {
 }
 
 export interface SignUpUser {
-  user: Omit<User, "id" | "image" | "role">;
+  user: Omit<User, "id" | "joinDate">;
   password: string;
 }
