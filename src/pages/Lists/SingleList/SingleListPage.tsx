@@ -13,7 +13,7 @@ import {
   useGetListByIdQuery,
 } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   startLoading,
   stopLoading,
@@ -25,6 +25,7 @@ const SingleListPage = () => {
   const [isEditingName, setISEditngName] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [editList, { isSuccess, isError }] = useEditListMutation();
+  const currentUserId = useAppSelector(state => state.authUser.user)?.id ?? 0;
 
   const {
     data: list,
@@ -32,7 +33,6 @@ const SingleListPage = () => {
     isLoading: isFetchingList,
     isError: errorFetchingList,
   } = useGetListByIdQuery(+listId!, { skip: !listId });
-  const [isPrivate, setIsPrivate] = useState(list?.privacy === "PRIVATE");
 
   const startEditName = () => {
     setISEditngName(true);
@@ -50,7 +50,7 @@ const SingleListPage = () => {
 
     if (title === list.title) return;
 
-    await editList({ id: list.id, listData: { ...list, title } });
+    await editList({ id: list.id, listData: { description: list.description, privacy: list.privacy, title } });
 
     if (isError) {
       dispatch(
@@ -66,36 +66,6 @@ const SingleListPage = () => {
           severity: "success",
         })
       );
-    }
-
-    dispatch(stopLoading());
-  };
-
-  const handleChangePrivacy = async () => {
-    dispatch(startLoading());
-    if (!list) {
-      dispatch(stopLoading());
-      return;
-    }
-
-    const newPrivacy = isPrivate ? "PUBLIC" : "PRIVATE";
-
-    await editList({ id: list.id, listData: { ...list, privacy: newPrivacy } });
-
-    if (isError) {
-      dispatch(
-        showAlert({ message: "Something went wrong", severity: "error" })
-      );
-    }
-
-    if (isSuccess) {
-      dispatch(
-        showAlert({
-          message: `List is now ${newPrivacy.toLowerCase()}`,
-          severity: "success",
-        })
-      );
-      setIsPrivate(!isPrivate);
     }
 
     dispatch(stopLoading());
@@ -142,7 +112,7 @@ const SingleListPage = () => {
             >
               {list.title}
             </h1>
-            <div className={classes.Controllers}>
+            {list.userId === currentUserId && <div className={classes.Controllers}>
               <Button
                 title={isEditingName ? "Save" : "Edit list name"}
                 aria-label="edit"
@@ -159,10 +129,9 @@ const SingleListPage = () => {
                 {isEditingName ? <CheckIcon /> : <EditIcon />}
               </Button>
               <PrivacySwitch
-                isChecked={isPrivate}
-                onChange={handleChangePrivacy}
+                list={list}
               />
-            </div>
+            </div>}
           </div>
 
           <div className={classes.List}>

@@ -1,11 +1,23 @@
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/material";
+import { useEditListMutation } from "../../redux/services/listsApiSlice";
+import { List } from "../../Types/lists.types";
+import { useState } from "react";
+import { useAppDispatch } from "../../redux/hooks";
+import { startLoading, stopLoading } from "../../redux/features/modals/modalsSlice";
+import { showAlert } from "../../redux/features/alerts/alertsSlice";
 interface SwitchProps {
-  isChecked: boolean;
-  onChange: () => void;
+  list: List;
 }
-export default function PrivacySwitch({ isChecked, onChange }: SwitchProps) {
+export default function PrivacySwitch({ list }: SwitchProps) {
+  const dispatch = useAppDispatch();
+
+  const [editList, { isSuccess, isError }] = useEditListMutation();
+  const [isPrivate, setIsPrivate] = useState<boolean>(
+    list.privacy === "PRIVATE"
+  );
+
   const MaterialUISwitch = styled(Switch)(() => ({
     width: 62,
     height: 34,
@@ -54,11 +66,41 @@ export default function PrivacySwitch({ isChecked, onChange }: SwitchProps) {
     },
   }));
 
+  const handleChangePrivacy = async () => {
+    dispatch(startLoading());
+    if (!list) {
+      dispatch(stopLoading());
+      return;
+    }
+
+    const newPrivacy = isPrivate ? "PUBLIC" : "PRIVATE";
+
+    await editList({ id: list.id, listData: { title: list.title, description: list.description, privacy: newPrivacy } });
+
+    if (isError) {
+      dispatch(
+        showAlert({ message: "Something went wrong", severity: "error" })
+      );
+    }
+
+    if (isSuccess) {
+      dispatch(
+        showAlert({
+          message: `List is now ${newPrivacy.toLowerCase()}`,
+          severity: "success",
+        })
+      );
+      setIsPrivate(prev => !prev);
+    }
+
+    dispatch(stopLoading());
+  };
+
   return (
     <div>
       <FormControlLabel
-        control={<MaterialUISwitch checked={isChecked} onChange={onChange} />}
-        label={isChecked ? "Private" : "Public"}
+        control={<MaterialUISwitch checked={isPrivate} onChange={handleChangePrivacy} />}
+        label={isPrivate ? "Private" : "Public"}
       />
     </div>
   );

@@ -28,8 +28,8 @@ const HomePage = () => {
         </section>
         {(lists ?? ([] as List[]))
           .filter((list) => list.books.length)
-          .map((list) => (
-            <ListPreview key={list.id} list={list} />
+          .map((list,idx) => (
+            <ListPreview key={idx} list={list} />
           ))}
       </main>
     </SidePannelLayout>

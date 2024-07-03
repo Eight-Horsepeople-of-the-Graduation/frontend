@@ -35,11 +35,11 @@ export const listsApi = createApi({
       List,
       { id: number; listData: updateListPayload }
     >({
-      query({ id, listData: formData }) {
+      query({ id, listData }) {
         return {
           url: `bookshelves/${id}`,
           method: "PUT",
-          body: formData,
+          body: listData,
         };
       },
       invalidatesTags: ["lists"],

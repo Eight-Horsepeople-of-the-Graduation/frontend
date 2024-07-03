@@ -7,7 +7,7 @@ import classes from "./ListPreview.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
-import { useEditListMutation } from "../../redux/services/listsApiSlice";
+import { useAppSelector } from "../../redux/hooks";
 
 interface ListPreviewProps {
   list: list;
@@ -16,29 +16,14 @@ interface ListPreviewProps {
 const ListPreview: React.FC<ListPreviewProps> = ({ list }) => {
   const navigate = useNavigate();
   const onListButtonClick = () => navigate(`/lists/${list.id}`);
-  const [isPrivate, setIsPrivate] = React.useState<boolean>(
-    list.privacy === "PRIVATE"
-  );
-
-  const [editList, { isSuccess }] = useEditListMutation();
-
-  const handlePrivacyChange = async () => {
-    await editList({
-      id: list.id,
-      listData: { ...list, privacy: isPrivate ? "PUBLIC" : "PRIVATE" },
-    });
-
-    if (isSuccess) {
-      setIsPrivate(!isPrivate);
-    }
-  };
+  const currentUserId = useAppSelector(state=>state.authUser.user)?.id ?? 0;
 
   return (
     <div className={classes.List}>
       <header>
         <h1>{list.title}</h1>
-        <PrivacySwitch isChecked={isPrivate} onChange={handlePrivacyChange} />
-      </header>
+        {list.userId === currentUserId && <PrivacySwitch list={list} />
+        }      </header>
       <div className={classes.Books}>
         {list.books.slice(0, 5).map((book: Book, index: number) => (
           <BookComponent key={index} book={book} currentListId={list.id} />
