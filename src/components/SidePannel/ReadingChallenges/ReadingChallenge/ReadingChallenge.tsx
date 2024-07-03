@@ -2,23 +2,25 @@ import { useState } from "react";
 import ReadingChallengeSelector from "../ReadingChallengeSelector/ReadingChallengeSelector";
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
-import { dummyChallenges } from "../../../../dummyData";
 import { useAppSelector } from "../../../../redux/hooks";
 import checkDatePassed from "../../../../helperFuctions/checkDatePassed";
+import { useGetUserReadingChallengesQuery } from "../../../../redux/services/readingChallengeApiSlice";
 
 const ReadingChallenge = () => {
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
   const [selectedReadingChallengeId, setSelectedReadingChallengeId] =
     useState(1);
 
-  const userId = useAppSelector((state) => state.authUser.user?.id) ?? 1;
+  const userId = useAppSelector((state) => state.authUser.user?.id) ?? 0;
 
-  const userChallenges = dummyChallenges.filter(
-    (challenge) => challenge.userId === userId
-  );
-  const activeChallenges = userChallenges.filter(
-    (challenge) => !checkDatePassed(challenge.endDate)
-  );
+  const { data: userChallenges } = useGetUserReadingChallengesQuery(userId, {
+    skip: !userId,
+  });
+
+  const activeChallenges =
+    userChallenges?.filter(
+      (challenge) => !checkDatePassed(challenge.endDate)
+    ) ?? [];
 
   if (activeChallenges.length === 0) return <Button>Create a challenge</Button>;
 
