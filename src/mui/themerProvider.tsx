@@ -142,6 +142,12 @@ const theme = createTheme({
           borderRadius: "var(--large-border-radius)",
           fontSize: "20px",
           fontWeight: 700,
+          boxShadow: "none",
+
+          "&:hover":{
+            boxShadow: "none"
+          },
+
           "&.MuiButton-textError": {
             color: "var(--dark-gray-color)",
           },

@@ -21,13 +21,24 @@ const SingleBookPage = () => {
 
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
+  // const user = useAppSelector(state => state.authUser.user);
 
+  // const [messages, setMessages] = useState<Message[]>([]);
+
+ 
   const {
     data: book,
     isSuccess,
     isError,
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
+
+
+  // const { data: bookConversation } = useGetBookConversationQuery({
+  //   userId: user?.id ?? 0,
+  //   bookId: book?.id ?? 0
+  // });
+
 
   if (isError) {
     dispatch(stopLoading());
@@ -100,6 +111,7 @@ const SingleBookPage = () => {
             <h1>Chat with {book.title}</h1>
             <main>
               <div>
+
                 <ChatMessage
                   message={
                     "Hello, I'm Ai, I'm here to help you with this book."
