@@ -21,11 +21,6 @@ export const listsApi = createApi({
         return `bookshelves/${id}`;
       },
     }),
-    getListByTitle: builder.query<List, string>({
-      query(title) {
-        return `bookshelves/title/${title}`;
-      },
-    }),
     createList: builder.mutation<List, createListPayload>({
       query(data) {
         return {
@@ -40,11 +35,11 @@ export const listsApi = createApi({
       List,
       { id: number; listData: updateListPayload }
     >({
-      query({ id, listData: formData }) {
+      query({ id, listData }) {
         return {
           url: `bookshelves/${id}`,
           method: "PUT",
-          body: formData,
+          body: listData,
         };
       },
       invalidatesTags: ["lists"],
@@ -61,8 +56,8 @@ export const listsApi = createApi({
     addBookToList: builder.mutation<null, { listId: number; bookId: number }>({
       query({ listId, bookId }) {
         return {
-          url: `bookshelves/add-book/${listId}`,
-          method: "POST",
+          url: `bookshelves/add-books/${listId}`,
+          method: "PATCH",
           body: { bookId },
         };
       },
@@ -74,33 +69,17 @@ export const listsApi = createApi({
     >({
       query({ listId, bookId }) {
         return {
-          url: `bookshelves/add-book/${listId}`,
-          method: "DELETE",
+          url: `bookshelves/remove-books/${listId}`,
+          method: "PATCH",
           body: { bookId },
         };
       },
       invalidatesTags: ["lists", "books"],
     }),
-    updateBookLists: builder.mutation<
-      null,
-      {
-        addedListsIds: number[];
-        removedListsIds: number[];
-        bookId: number;
-      }
-    >({
-      query({
-        addedListsIds: addedBookshelvesIds,
-        removedListsIds: removedBookshelvesIds,
-        bookId,
-      }) {
-        return {
-          url: `bookshelves/add-book`,
-          method: "POST",
-          body: { bookId, addedBookshelvesIds, removedBookshelvesIds },
-        };
+    getUserLists: builder.query<List[], number>({
+      query(userId) {
+        return `bookshelves/user/${userId}`;
       },
-      invalidatesTags: ["lists", "books"],
     }),
   }),
 });
@@ -111,8 +90,7 @@ export const {
   useDeleteListMutation,
   useGetAllListsQuery,
   useGetListByIdQuery,
-  useGetListByTitleQuery,
   useAddBookToListMutation,
   useRemoveBookFromListMutation,
-  useUpdateBookListsMutation,
+  useGetUserListsQuery,
 } = listsApi;

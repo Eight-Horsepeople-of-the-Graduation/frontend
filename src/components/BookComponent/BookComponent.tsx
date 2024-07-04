@@ -73,7 +73,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
 
   return (
     <>
-      <div className={classes.book} onClick={BookClick}>
+      <div className={classes.book} onClick={BookClick} title={book.title}>
         <div className={classes.cover}>
           {book.cover ? (
             <img src={book.cover} alt={book.title} />
@@ -97,7 +97,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
         </div>
         <div className={classes.info}>
           <h2>{book.title}</h2>
-          <p>{book.authors[0].name}</p>
+          {book.authors && <p>{book.authors[0].name}</p>}
         </div>
       </div>
       <Menu

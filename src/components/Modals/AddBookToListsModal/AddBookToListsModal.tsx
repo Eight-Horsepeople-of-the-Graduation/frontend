@@ -4,10 +4,15 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import CustomModal from "../../UI/CustomModal/CustomModal";
 import classes from "./AddBookToListsModal.module.css";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import { dummyBooks, dummyLists } from "../../../dummyData";
+import { dummyLists } from "../../../dummyData";
 import { List } from "../../../Types/lists.types";
-import { useUpdateBookListsMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import {
+  useAddBookToListMutation,
+  useGetUserListsQuery,
+  useRemoveBookFromListMutation,
+} from "../../../redux/services/listsApiSlice";
+import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
 
 interface FormValues {
   lists: List[];
@@ -16,26 +21,37 @@ interface FormValues {
 const AddBookToListsModal = () => {
   const dispatch = useAppDispatch();
   const bookId = useAppSelector((state) => state.modals.bookToAddToListId);
+  const { data: book } = useGetBookByIdQuery(bookId!, { skip: !bookId });
+  const currentUserId = useAppSelector((state) => state.authUser.user)?.id;
 
-  const closeModal = () => dispatch(closeAddBookToListModal());
+  const { data: userLists } = useGetUserListsQuery(currentUserId!, {
+    skip: !currentUserId,
+  });
+
+  const currentBookLists =
+    userLists?.filter((list) => list.books.includes(book!)) ?? [];
 
   const form = useForm<FormValues>({
     defaultValues: {
-      lists: dummyLists.slice(0, 2),
+      lists: currentBookLists,
     },
   });
 
-  const [updateBookLists, { isSuccess, isError }] =
-    useUpdateBookListsMutation();
+  const closeModal = () => dispatch(closeAddBookToListModal());
+
+  const [addBookToList, { isSuccess: bookAdded, isError: ErrorAddingBook }] =
+    useAddBookToListMutation();
+  const [
+    removeBookFromList,
+    { isSuccess: bookRemoved, isError: errorRemovingBook },
+  ] = useRemoveBookFromListMutation();
 
   const { handleSubmit } = form;
 
-  const book = dummyBooks.find((book) => book.id === bookId);
-
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = (data: FormValues) => {
     if (!bookId || !book) return;
 
-    const currentListsIds = book.lists.map((list) => list.id);
+    const currentListsIds = currentBookLists.map((list) => list.id);
     const newListsIds = data.lists.map((list) => list.id);
 
     if (
@@ -53,18 +69,24 @@ const AddBookToListsModal = () => {
       (id) => !newListsIds.includes(id)
     );
 
-    await updateBookLists({
-      bookId,
-      addedListsIds,
-      removedListsIds,
-    });
+    if (addedListsIds.length) {
+      addedListsIds.forEach(async (listId) => {
+        await addBookToList({ listId, bookId });
+      });
+    }
 
-    if (isError)
+    if (removedListsIds.length) {
+      removedListsIds.forEach(async (listId) => {
+        await removeBookFromList({ listId, bookId });
+      });
+    }
+
+    if (ErrorAddingBook || errorRemovingBook)
       dispatch(
         showAlert({ message: "Something went wrong", severity: "error" })
       );
 
-    if (isSuccess) {
+    if (bookAdded || bookRemoved) {
       dispatch(
         showAlert({ message: "Book added to lists", severity: "success" })
       );
@@ -77,6 +99,8 @@ const AddBookToListsModal = () => {
     width: "128px",
     height: "42px",
   };
+
+  if (!bookId || !book) return <></>;
 
   return (
     <CustomModal isModalOpen={!!bookId} closeModal={closeModal}>
@@ -101,7 +125,7 @@ const AddBookToListsModal = () => {
                       placeholder="Choose lists"
                     />
                   )}
-                  defaultValue={book?.lists ?? []}
+                  defaultValue={currentBookLists ?? []}
                   onChange={(_, data) => {
                     field.onChange(data);
                     return data;

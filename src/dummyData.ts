@@ -29,20 +29,13 @@ export const dummyBooks: Book[] = [
     format: "HARDCOVER",
     country: "USA",
     numOfPages: 319,
-    publishDate: new Date("2018-10-16"),
+    publishDate: new Date("2018-10-16").toISOString(),
     authors: [
       {
         name: "James Clear",
       },
     ],
-    genres: [
-      {
-        title: "Self Development",
-        description: "",
-      },
-    ],
-    file: bookFile,
-    lists: [],
+    pdfLink: bookFile,
   },
   {
     id: 7890,
@@ -53,19 +46,12 @@ export const dummyBooks: Book[] = [
     format: "EBOOK",
     country: "United States",
     numOfPages: 272,
-    publishDate: new Date("2022-02-14"),
+    publishDate: new Date("2022-02-14").toISOString(),
     authors: [
       {
         name: "Jane Carter",
       },
     ],
-    genres: [
-      {
-        title: "Science Fiction",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 5678,
@@ -76,19 +62,12 @@ export const dummyBooks: Book[] = [
     format: "PAPERBACK",
     country: "Canada",
     numOfPages: 415,
-    publishDate: new Date("2020-12-25"),
+    publishDate: new Date("2020-12-25").toISOString(),
     authors: [
       {
         name: "Michael Brown",
       },
     ],
-    genres: [
-      {
-        title: "Mystery",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 1023,
@@ -99,19 +78,12 @@ export const dummyBooks: Book[] = [
     format: "HARDCOVER",
     country: "Italy",
     numOfPages: 387,
-    publishDate: new Date("2019-04-12"),
+    publishDate: new Date("2019-04-12").toISOString(),
     authors: [
       {
         name: "Sarah Miller",
       },
     ],
-    genres: [
-      {
-        title: "Non-Fiction",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 9514,
@@ -122,19 +94,12 @@ export const dummyBooks: Book[] = [
     format: "EBOOK",
     country: "Mexico",
     numOfPages: 612,
-    publishDate: new Date("2023-05-01"),
+    publishDate: new Date("2023-05-01").toISOString(),
     authors: [
       {
         name: "William Jones",
       },
     ],
-    genres: [
-      {
-        title: "Fantasy",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 2341,
@@ -147,19 +112,12 @@ export const dummyBooks: Book[] = [
     format: "HARDCOVER",
     country: "Brazil",
     numOfPages: 528,
-    publishDate: new Date("2021-08-07"),
+    publishDate: new Date("2021-08-07").toISOString(),
     authors: [
       {
         name: "David Lee",
       },
     ],
-    genres: [
-      {
-        title: "Adventure",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 7890,
@@ -170,19 +128,12 @@ export const dummyBooks: Book[] = [
     format: "EBOOK",
     country: "United States",
     numOfPages: 272,
-    publishDate: new Date("2022-02-14"),
+    publishDate: new Date("2022-02-14").toISOString(),
     authors: [
       {
         name: "Jane Carter",
       },
     ],
-    genres: [
-      {
-        title: "Science Fiction",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 5678,
@@ -193,19 +144,12 @@ export const dummyBooks: Book[] = [
     format: "PAPERBACK",
     country: "Canada",
     numOfPages: 415,
-    publishDate: new Date("2020-12-25"),
+    publishDate: new Date("2020-12-25").toISOString(),
     authors: [
       {
         name: "Michael Brown",
       },
     ],
-    genres: [
-      {
-        title: "Mystery",
-        description: "",
-      },
-    ],
-    lists: [],
   },
   {
     id: 1023,
@@ -216,14 +160,12 @@ export const dummyBooks: Book[] = [
     format: "HARDCOVER",
     country: "Italy",
     numOfPages: 387,
-    publishDate: new Date("2019-04-12"),
+    publishDate: new Date("2019-04-12").toISOString(),
     authors: [
       {
         name: "Sarah Miller",
       },
     ],
-    genres: [{ title: "Non-Fiction", description: "" }],
-    lists: [],
   },
   {
     id: 9514,
@@ -234,59 +176,62 @@ export const dummyBooks: Book[] = [
     format: "EBOOK",
     country: "Mexico",
     numOfPages: 612,
-    publishDate: new Date("2023-05-01"),
+    publishDate: new Date("2023-05-01").toISOString(),
     authors: [
       {
         name: "William Jones",
       },
     ],
-    genres: [{ title: "Fantasy", description: "" }],
-    lists: [],
   },
 ];
 
 export const dummyChallenges: Challenge[] = [
   {
     id: 1,
+    title: "Reading Challenge 2024",
     goal: 100,
     type: "ANNUAL",
-    period: "2024",
     userId: 1,
     books: dummyBooks.slice(0, 50),
+    startDate: "2024-01-01",
     endDate: "2024-12-31",
   },
   {
     id: 2,
+    title: "May Reading Challenge",
     goal: 8,
     type: "MONTHLY",
-    period: "may 2024",
+    startDate: "2024-05-01",
     userId: 1,
     books: dummyBooks.slice(0, 6),
     endDate: "2024-05-31",
   },
   {
     id: 3,
+    title: "Week 1 Reading Challenge",
     goal: 2,
     type: "WEEKLY",
-    period: "week 2 of May 2024",
+    startDate: "2024-05-01",
     userId: 1,
     books: dummyBooks.slice(0, 1),
     endDate: "2024-05-10",
   },
   {
     id: 4,
+    title: "Reading Challenge 2023",
     goal: 50,
     type: "ANNUAL",
-    period: "2023",
+    startDate: "2023-01-01",
     userId: 1,
     books: dummyBooks.slice(0, 50),
     endDate: "2023-12-31",
   },
   {
     id: 5,
+    title: "Reading Challenge 2023",
     goal: 50,
     type: "ANNUAL",
-    period: "2022",
+    startDate: "2023-01-01",
     userId: 1,
     books: dummyBooks.slice(0, 40),
     endDate: "2023-12-31",
@@ -310,6 +255,7 @@ export const dummyLists: List[] = [
     privacy: "PUBLIC",
     userId: 1,
     books: dummyBooks.slice(0, 5),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 2,
@@ -318,6 +264,7 @@ export const dummyLists: List[] = [
     privacy: "PUBLIC",
     userId: 1,
     books: dummyBooks.slice(0, 4),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 3,
@@ -325,7 +272,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Programming"),
+    books: dummyBooks.slice(5, 10),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 4,
@@ -333,7 +281,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Business"),
+    books: dummyBooks.slice(10, 15),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 5,
@@ -341,7 +290,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "History"),
+    books: dummyBooks.slice(15, 20),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 6,
@@ -349,7 +299,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Biography"),
+    books: dummyBooks.slice(20, 25),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 7,
@@ -357,7 +308,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Science"),
+    books: dummyBooks.slice(25, 30),
+    createdAt: new Date().toISOString(),
   },
   {
     id: 8,
@@ -365,7 +317,8 @@ export const dummyLists: List[] = [
     description: "",
     privacy: "PUBLIC",
     userId: 1,
-    books: dummyBooks.filter((book) => book.genres[0].title === "Fantasy"),
+    books: dummyBooks.slice(30, 35),
+    createdAt: new Date().toISOString(),
   },
 ];
 

@@ -33,18 +33,23 @@ function stringToColor(string: string) {
   return color;
 }
 function stringAvatar(name: string) {
+  let aprev = "";
+
+  if (name.includes(" "))
+    aprev = `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
+  else aprev = name.slice(0, 2);
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    children: aprev,
   };
 }
 
 const CustomAvatar = ({ user, size, style }: CustomAvatarProps) => {
   return (
     <Avatar
-      {...stringAvatar(user.name)}
+      {...stringAvatar(user.name ?? user.username)}
       sx={{
         width: avatarSizes[size ?? "m"],
         height: avatarSizes[size ?? "m"],
@@ -52,7 +57,7 @@ const CustomAvatar = ({ user, size, style }: CustomAvatarProps) => {
       }}
       className={classes.avatar}
       alt={user.name}
-      src={user.image}
+      src={user.profilePicture}
     />
   );
 };
