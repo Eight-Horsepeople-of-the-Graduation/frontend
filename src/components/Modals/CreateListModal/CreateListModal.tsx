@@ -47,7 +47,7 @@ const CreateListModal = () => {
 
   const onSubmit = async (data: createListPayload) => {
     if (!userId) return;
-    await createList(data);
+    await createList({ ...data, userId });
 
     if (isError)
       dispatch(
