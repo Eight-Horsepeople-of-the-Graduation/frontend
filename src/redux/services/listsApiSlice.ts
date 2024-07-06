@@ -9,17 +9,19 @@ import {
 export const listsApi = createApi({
   reducerPath: "listsApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["lists", "books"],
+  tagTypes: ["lists"],
   endpoints: (builder) => ({
     getAllLists: builder.query<List[], void>({
       query() {
         return "bookshelves";
       },
+      providesTags: ["lists"]
     }),
     getListById: builder.query<List, number>({
       query(id) {
         return `bookshelves/${id}`;
       },
+      providesTags: ["lists"]
     }),
     createList: builder.mutation<List, createListPayload>({
       query(data) {
@@ -61,7 +63,7 @@ export const listsApi = createApi({
           body: { bookIds },
         };
       },
-      invalidatesTags: ["lists", "books"],
+      invalidatesTags: ["lists"],
     }),
     removeBookFromList: builder.mutation<
       null,
@@ -74,12 +76,13 @@ export const listsApi = createApi({
           body: { bookIds },
         };
       },
-      invalidatesTags: ["lists", "books"],
+      invalidatesTags: ["lists"],
     }),
     getUserLists: builder.query<List[], number>({
       query(userId) {
         return `bookshelves/user/${userId}`;
       },
+      providesTags: ["lists"]
     }),
   }),
 });
