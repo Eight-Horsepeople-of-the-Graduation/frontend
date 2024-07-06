@@ -39,11 +39,11 @@ const AddBookToListsModal = () => {
 
   const closeModal = () => dispatch(closeAddBookToListModal());
 
-  const [addBookToList, { isSuccess: bookAdded, isError: ErrorAddingBook }] =
+  const [addBookToList, { isError: ErrorAddingBook,isLoading:isAddingBook }] =
     useAddBookToListMutation();
   const [
     removeBookFromList,
-    { isSuccess: bookRemoved, isError: errorRemovingBook },
+    { isError: errorRemovingBook,isLoading:isRemovingBook },
   ] = useRemoveBookFromListMutation();
 
   const { handleSubmit } = form;
@@ -86,7 +86,7 @@ const AddBookToListsModal = () => {
         showAlert({ message: "Something went wrong", severity: "error" })
       );
 
-    if (bookAdded || bookRemoved) {
+    if (!ErrorAddingBook || !errorRemovingBook) {
       dispatch(
         showAlert({ message: "Book added to lists", severity: "success" })
       );
@@ -143,6 +143,7 @@ const AddBookToListsModal = () => {
                 variant="contained"
                 type="submit"
                 color="primary"
+                disabled={isAddingBook  || isRemovingBook}
               >
                 Add
               </Button>
