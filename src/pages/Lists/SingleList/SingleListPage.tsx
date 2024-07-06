@@ -8,6 +8,7 @@ import PrivacySwitch from "../../../components/PrivacySwitch/PrivacySwitch";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+import BinIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {
   useEditListMutation,
   useGetListByIdQuery,
@@ -113,9 +114,32 @@ const SingleListPage = () => {
               {list.title}
             </h1>
             {list.userId === currentUserId && <div className={classes.Controllers}>
+              <div style={{
+                display: "flex",
+                gap:24
+              }}>
+                <Button
+                  title={isEditingName ? "Save" : "Edit list name"}
+                  aria-label="edit"
+                  sx={{
+                    fontSize: "24px",
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "50%",
+                    minWidth: "36px",
+                  }}
+                  color="primary"
+                  onClick={isEditingName ? finishEditName : startEditName}
+                >
+                  {isEditingName ? <CheckIcon /> : <EditIcon />}
+                </Button>
+                <PrivacySwitch
+                  list={list}
+                />
+              </div>
               <Button
-                title={isEditingName ? "Save" : "Edit list name"}
-                aria-label="edit"
+                title={"Delete list"}
+                area-label="delete"
                 sx={{
                   fontSize: "24px",
                   width: "32px",
@@ -123,14 +147,12 @@ const SingleListPage = () => {
                   borderRadius: "50%",
                   minWidth: "36px",
                 }}
-                color="primary"
-                onClick={isEditingName ? finishEditName : startEditName}
+                color="error"
+
               >
-                {isEditingName ? <CheckIcon /> : <EditIcon />}
+                <BinIcon />
               </Button>
-              <PrivacySwitch
-                list={list}
-              />
+
             </div>}
           </div>
 

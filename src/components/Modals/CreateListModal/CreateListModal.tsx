@@ -15,13 +15,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateListMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { createListPayload } from "../../../Types/lists.types";
+import { Privacy, createListPayload } from "../../../Types/lists.types";
 import { closeCreateListModal } from "../../../redux/features/modals/modalsSlice";
 
 const CreateListModal = () => {
   const userId = useAppSelector((state) => state.authUser).user?.id ?? 0;
-  const [listPrivacy, setListPricvacy] = useState<"private" | "puplic">(
-    "puplic"
+  const [listPrivacy, setListPricvacy] = useState<Privacy>(
+    "PUBLIC"
   );
   const dispatch = useAppDispatch();
   const [createList, { isSuccess, isError }] = useCreateListMutation();

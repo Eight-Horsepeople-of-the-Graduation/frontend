@@ -12,6 +12,7 @@ interface WarningModalProps {
   warningMessage: string;
   confermText?: string;
   cancelText?: string;
+  confirmButtonDisabled?: boolean;
 }
 
 const WarningModal = ({
@@ -21,6 +22,7 @@ const WarningModal = ({
   warningMessage,
   confermText,
   cancelText,
+  confirmButtonDisabled
 }: WarningModalProps) => {
   const buttonSx = {
     width: "128px",
@@ -45,6 +47,7 @@ const WarningModal = ({
               color: "white",
               backgroundColor: "var(--dark-error-color) !important",
             }}
+            disabled={confirmButtonDisabled}
             variant="contained"
             color="error"
             onClick={onConfirm}

@@ -53,25 +53,25 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists"],
     }),
-    addBookToList: builder.mutation<null, { listId: number; bookId: number }>({
-      query({ listId, bookId }) {
+    addBookToList: builder.mutation<null, { listId: number; bookIds: number[] }>({
+      query({ listId, bookIds }) {
         return {
           url: `bookshelves/add-books/${listId}`,
           method: "PATCH",
-          body: { bookId },
+          body: { bookIds },
         };
       },
       invalidatesTags: ["lists", "books"],
     }),
     removeBookFromList: builder.mutation<
       null,
-      { listId: number; bookId: number }
+      { listId: number; bookIds: number[] }
     >({
-      query({ listId, bookId }) {
+      query({ listId, bookIds }) {
         return {
           url: `bookshelves/remove-books/${listId}`,
           method: "PATCH",
-          body: { bookId },
+          body: { bookIds },
         };
       },
       invalidatesTags: ["lists", "books"],
