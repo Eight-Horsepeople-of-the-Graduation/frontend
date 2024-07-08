@@ -1,0 +1,28 @@
+.Form {
+    margin: 24px auto;
+    width: 90%;
+    border: var(--border);
+    border-radius: var(--large-border-radius);
+    padding: 24px;
+}
+
+.Form>div {
+    margin: 24px 0;
+}
+
+.Avatar {
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+}
+
+.Avatar *{
+    margin : 8px 0;
+}
+
+.Actions {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    flex-direction: row-reverse;
+}

@@ -17,11 +17,6 @@ export const booksApi = createApi({
         return `books/${id}`;
       },
     }),
-    getBookByTitle: builder.query<Book, string>({
-      query(title) {
-        return `books/title/${title}`;
-      },
-    }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
         return {
@@ -54,7 +49,6 @@ export const booksApi = createApi({
 export const {
   useGetAllBooksQuery,
   useGetBookByIdQuery,
-  useGetBookByTitleQuery,
   useCreateBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,

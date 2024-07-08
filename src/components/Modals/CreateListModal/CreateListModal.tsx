@@ -26,7 +26,7 @@ interface FormValues {
 }
 
 const CreateListModal = () => {
-  const userId = useAppSelector((state) => state.authUser).user!.id;
+  const userId = useAppSelector((state) => state.authUser).user?.id;
   const [listPrivacy, setListPricvacy] = useState<"private" | "puplic">(
     "puplic"
   );
@@ -53,6 +53,7 @@ const CreateListModal = () => {
   const closeModal = () => dispatch(closeCreateListModal());
 
   const onSubmit = async (data: FormValues) => {
+    if (!userId) return;
     await createList({
       title: data.title,
       userId,
@@ -80,6 +81,8 @@ const CreateListModal = () => {
     width: "128px",
     height: "42px",
   };
+
+  if (!userId) return <></>;
 
   return (
     <CustomModal isModalOpen={modalOpen} closeModal={closeModal}>

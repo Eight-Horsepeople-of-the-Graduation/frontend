@@ -17,6 +17,7 @@ import CreateReadingChallengeModal from "./components/Modals/CreateReadingChalle
 import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
 import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal/RemoveBookFromListModal";
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
+import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
           <Route element={<SingleBookPage />} path="/books/:bookId" />
 
           <Route element={<ProfilePage />} path="/profile/:username" />
+
+          <Route element={<EditProfilePage />} path="/profile/:username/edit" />
 
           <Route element={<AllChallengesPage />} path="/challenges" />
           <Route

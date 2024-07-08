@@ -1,8 +1,21 @@
+export type Gender = "MALE" | "FEMALE";
+
 export interface User {
+  id: number;
   name: string;
   username: string;
   email: string;
-  image: string;
-  role: string;
-  id: number;
+  country: string;
+  gender: Gender;
+  birthDate: string;
+  joinDate: string;
+  profilePicture?: string;
+  isAdmin: boolean;
 }
+
+export interface UserCredintials {
+  email: string;
+  password: string;
+}
+
+export type SignUpUser = Omit<User, "id" | "joinDate"> & { password: string };
