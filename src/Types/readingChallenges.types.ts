@@ -1,13 +1,15 @@
 import { Book } from "./books.types";
 export type ChallengeType = "ANNUAL" | "MONTHLY" | "WEEKLY";
+
 export interface Challenge {
   id: number;
-  type: ChallengeType;
+  title: string;
   userId: number;
+  type: ChallengeType;
+  startDate: string;
+  endDate: string;
   goal: number;
   books: Book[];
-  period: string;
-  endDate: string;
 }
 export type UpdateChallengePayload = Partial<CreateChallengePayload>;
 
