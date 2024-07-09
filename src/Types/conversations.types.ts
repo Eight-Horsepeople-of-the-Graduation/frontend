@@ -1,9 +1,8 @@
 export interface Message {
   id: number;
-  createdOn: string;
-  role: "human" | "ai";
   content: string;
-  conversationId: number;
+  role: "human" | "ai";
+  createdOn: string;
 }
 
 export interface Conversation {

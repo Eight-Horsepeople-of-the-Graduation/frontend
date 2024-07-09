@@ -9,7 +9,7 @@ export const conversationsApi = createApi({
     endpoints: (builder) => ({
         getBookConversation: builder.query<Conversation, { userId: number, bookId: number }>({
             query(data) {
-                return `conversations/userId/${data.userId}/book/${data.bookId}`;
+                return `conversations/user/${data.userId}/book/${data.bookId}`;
             }
         }),
     }),

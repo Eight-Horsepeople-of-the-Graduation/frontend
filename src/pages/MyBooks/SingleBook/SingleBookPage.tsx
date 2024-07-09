@@ -7,7 +7,7 @@ import BookReader from "../../../components/BookReader/BookReader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import PageNotFoundPage from "../../PageNotFound/PageNotFoundPage";
@@ -15,17 +15,22 @@ import {
   startLoading,
   stopLoading,
 } from "../../../redux/features/modals/modalsSlice";
+import { useEffect, useState } from "react";
+import { useGetBookConversationQuery } from "../../../redux/services/conversationApiSlice";
+import { Message } from "../../../Types/conversations.types";
 
 const SingleBookPage = () => {
   document.title = "Readify";
 
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
-  // const user = useAppSelector(state => state.authUser.user);
+  const user = useAppSelector(state => state.authUser.user);
 
-  // const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
- 
+
+
+
   const {
     data: book,
     isSuccess,
@@ -33,12 +38,15 @@ const SingleBookPage = () => {
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
+  const { data: conversation } = useGetBookConversationQuery({
+    userId: user?.id ?? 0,
+    bookId: +(bookId ?? 0)
+  })
 
-  // const { data: bookConversation } = useGetBookConversationQuery({
-  //   userId: user?.id ?? 0,
-  //   bookId: book?.id ?? 0
-  // });
-
+  useEffect(() => {
+    if (conversation)
+      setMessages(conversation.messages);
+  }, [messages])
 
   if (isError) {
     dispatch(stopLoading());
@@ -110,14 +118,22 @@ const SingleBookPage = () => {
           <section id="chat" className={classes.Chat}>
             <h1>Chat with {book.title}</h1>
             <main>
-              <div>
-
+              <div className={classes.messagesContainer}>
                 <ChatMessage
                   message={
                     "Hello, I'm Ai, I'm here to help you with this book."
                   }
                   fromAi={true}
                 />
+                {
+                  messages.map((message) =>
+                    <ChatMessage
+                      key={message.id}
+                      message={message.content}
+                      fromAi={message.role === "ai"}
+                    />
+                  )
+                }
               </div>
               <MessageField />
             </main>

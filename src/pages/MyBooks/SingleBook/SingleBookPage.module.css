@@ -50,19 +50,23 @@
   color: var(--dark-gray-color);
 }
 
-.Content > div {
+.Content>div {
   height: 80%;
 }
-.Content > div > div {
+
+.Content>div>div {
   margin-bottom: 16px;
 }
+
 .Title {
   display: flex;
   align-items: baseline;
 }
+
 .Title h1 {
   flex: 1;
 }
+
 .Title button {
   color: var(--light-primary-color);
   box-shadow: var(--shadow-near);
@@ -93,6 +97,7 @@
 .Desc p::-webkit-scrollbar {
   display: none;
 }
+
 .Desc p:hover::-webkit-scrollbar {
   display: block;
 }
@@ -102,11 +107,13 @@
   height: calc(100vh - 64px);
   padding-top: 32px;
 }
-.Chat > h1,
-.Reader > h1 {
+
+.Chat>h1,
+.Reader>h1 {
   padding: 0 128px;
   margin-bottom: 24px;
 }
+
 .Chat main,
 .Reader main {
   width: 100%;
@@ -120,12 +127,12 @@
   padding: 0 48px;
 }
 
-.Chat main > div {
+.Chat main>div {
   height: calc(100% - 50px);
   overflow-y: scroll;
   padding: 0 56px;
 }
 
-.Chat main > div::-webkit-scrollbar {
+.Chat main>div::-webkit-scrollbar {
   display: none;
 }
