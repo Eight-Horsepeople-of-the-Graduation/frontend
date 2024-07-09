@@ -1,0 +1,74 @@
+.Container {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.Info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 auto 20px;
+  padding: 12px;
+  min-width: 800px;
+  width: 900px;
+  height: fit-content;
+  background-image: linear-gradient(
+    to right,
+    var(--light-primary-color),
+    white
+  );
+}
+.Info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+}
+.List {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  flex-wrap: wrap;
+  border-bottom: var(--border);
+  padding: 36px;
+}
+.ListHeader {
+  display: flex;
+  flex-direction: row;
+  padding: 36px 0px;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.Data {
+  display: flex;
+  justify-content: start;
+  gap: 128px;
+  border-bottom: var(--border);
+}
+.Data p {
+  font-weight: 700;
+}
+.Progress {
+  margin-top: 32px;
+  width: 50%;
+  position: relative;
+  padding: auto 0px;
+}
+.ListTitle {
+  margin: 28px 44px 8px;
+  font-weight: 700;
+  font-size: 32px;
+  padding: 4px;
+  border-radius: var(--large-border-radius);
+}
+.Controllers {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}

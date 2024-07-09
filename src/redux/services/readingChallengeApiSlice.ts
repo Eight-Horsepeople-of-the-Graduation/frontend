@@ -3,6 +3,7 @@ import { baseUrl } from "../config";
 import {
   Challenge,
   CreateChallengePayload,
+  UpdateChallengePayload,
 } from "../../Types/readingChallenges.types";
 
 export const readingChallengeApi = createApi({
@@ -34,7 +35,7 @@ export const readingChallengeApi = createApi({
     ),
     editReadingChallenge: builder.mutation<
       Challenge,
-      { id: number; challengeData: Challenge }
+      { id: number; challengeData: UpdateChallengePayload }
     >({
       query({ id, challengeData }) {
         return {
@@ -44,7 +45,7 @@ export const readingChallengeApi = createApi({
         };
       },
     }),
-    deleteReadingChallenge: builder.mutation<null, string>({
+    deleteReadingChallenge: builder.mutation<null, number>({
       query(id) {
         return {
           url: `reading-challenges/${id}`,

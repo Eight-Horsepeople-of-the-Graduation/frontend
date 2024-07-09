@@ -18,7 +18,6 @@ const RemoveBookFromListModal = () => {
     if (!bookId || !listId) return;
 
     await removeBookFromList({ bookId, listId });
-    console.log("te");
 
     if (isSuccess) {
       dispatch(

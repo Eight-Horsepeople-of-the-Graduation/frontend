@@ -5,21 +5,28 @@
   flex-wrap: wrap;
   margin: 40px;
 }
-.Title {
-  margin: 20px;
-  padding: 20px;
-  font-weight: 800;
-  font-size: 36px;
-}
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: var(--border);
   background-image: linear-gradient(
     to right,
     var(--light-primary-color),
     white
   );
+  margin-bottom: 30px;
+    padding: 0px auto;
+  border-bottom: var(--border);
+
+}
+.Title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  margin: 20px;
+  padding: 20px;
+  font-weight: 800;
+  font-size: 36px;
 }
