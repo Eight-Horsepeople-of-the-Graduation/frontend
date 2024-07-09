@@ -1,29 +1,31 @@
-import { dummyBooks, dummyLists } from "../../../dummyData";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { closeRemoveBookFromListModal } from "../../../redux/features/modals/modalsSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { useRemoveBookFromListMutation } from "../../../redux/services/listsApiSlice";
+import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
+import { useGetListByIdQuery, useRemoveBookFromListMutation } from "../../../redux/services/listsApiSlice";
 import WarningModal from "../../UI/WarningModal/WarningModal";
 
 const RemoveBookFromListModal = () => {
-  const bookId = useAppSelector((state) => state.modals.bookToRemoveFromListId);
-  const listId = useAppSelector((state) => state.modals.listToRemoveBookFromId);
   const dispatch = useAppDispatch();
-  const [removeBookFromList, { isSuccess, isError }] =
-    useRemoveBookFromListMutation();
+  const bookId = useAppSelector((state) => state.modals.bookToRemoveFromListId) ?? 0;
+  const listId = useAppSelector((state) => state.modals.listToRemoveBookFromId) ?? 0;
+  const { data: list, isSuccess: listFitched } = useGetListByIdQuery(listId, { skip: !listId });
+  const { data: book, isSuccess: bookFetched } = useGetBookByIdQuery(bookId, { skip: !bookId });
 
-  const closeModal = () => dispatch(closeRemoveBookFromListModal());
+
+  const [removeBookFromList, { isError, isLoading: isRemoving }] =
+    useRemoveBookFromListMutation();
 
   const onConfirm = async () => {
     if (!bookId || !listId) return;
 
-    await removeBookFromList({ bookId, listId });
 
-    if (isSuccess) {
+    await removeBookFromList({ bookIds: [bookId], listId });
+    if (!isError) {
       dispatch(
         showAlert({ message: "Book removed from list", severity: "success" })
       );
-      closeModal();
+      dispatch(closeRemoveBookFromListModal())
     }
 
     if (isError) {
@@ -33,21 +35,16 @@ const RemoveBookFromListModal = () => {
     }
   };
 
-  const book = dummyBooks.find((book) => book.id === bookId);
-  const list = dummyLists.find((list) => list.id === listId);
 
-  if (!book || !list) {
-    closeModal();
-    return null;
-  }
 
   return (
-    <WarningModal
+    bookFetched && listFitched ? <WarningModal
       modalOpen={!!(bookId && listId)}
-      closeModal={closeModal}
+      closeModal={() => dispatch(closeRemoveBookFromListModal())}
       onConfirm={onConfirm}
       warningMessage={`Are you sure you want to remove ${book.title} from ${list.title}`}
-    />
+      confirmButtonDisabled={isRemoving}
+    /> : <></>
   );
 };
 

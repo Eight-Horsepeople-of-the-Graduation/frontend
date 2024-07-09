@@ -13,6 +13,9 @@ import { openCreateListModal } from "../../redux/features/modals/modalsSlice";
 import AuthSwitch from "./Auth/AuthSwitch";
 import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
 import { List } from "../../Types/lists.types";
+import { Button } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { logout } from "../../redux/features/users/authSlice";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -38,14 +41,33 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
         <>
           <div className={classes.user}>
             <div>
-              <CustomAvatar user={user} size="m" />
+              <div>
+                <CustomAvatar user={user} size="m" />
+              </div>
+              <div className={classes.info}>
+                <h2>{user.name}</h2>
+                <Link to={`/profile/${user.username}`} title="Go to profile">
+                  @{user.username}
+                </Link>
+              </div>
             </div>
-            <div className={classes.info}>
-              <h2>{user.name}</h2>
-              <Link to={`/profile/${user.username}`} title="Go to profile">
-                @{user.username}
-              </Link>
-            </div>
+
+            <Button
+              title={"Log out"}
+              area-label="logout"
+              sx={{
+                fontSize: "24px",
+                width: "32px",
+                height: "32px",
+                borderRadius: "50%",
+                minWidth: "36px",
+              }}
+              color="error"
+              onClick={()=> dispatch(logout())}
+            >
+              <LogoutIcon />
+            </Button>
+
           </div>
 
           <ReadingChallenge />

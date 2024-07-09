@@ -197,6 +197,9 @@ const EditProfilePage = () => {
             type="submit"
             variant="contained"
             color="success"
+            style={{
+              color: "white"
+            }}
           >
             Save Changes
           </Button>

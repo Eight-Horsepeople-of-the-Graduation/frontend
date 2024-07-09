@@ -1,26 +1,28 @@
-import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
+import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import classes from "./SingleBookPage.module.css";
 import { Button } from "@mui/material";
-import ChatMessage from "../../../components/Chat/ChatMessage/ChatMessage";
-import MessageField from "../../../components/Chat/MessageField/MessageField";
-import BookReader from "../../../components/BookReader/BookReader";
+import BookReader from "../../components/BookReader/BookReader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../redux/hooks";
-import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import PageNotFoundPage from "../../PageNotFound/PageNotFoundPage";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useGetBookByIdQuery } from "../../redux/services/booksApiSlice";
+import { showAlert } from "../../redux/features/alerts/alertsSlice";
+import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
   startLoading,
   stopLoading,
-} from "../../../redux/features/modals/modalsSlice";
+} from "../../redux/features/modals/modalsSlice";
+import ChatSection from "./ChatSection/ChatSection";
 
 const SingleBookPage = () => {
   document.title = "Readify";
 
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.authUser.user);
+
+
 
   const {
     data: book,
@@ -28,6 +30,8 @@ const SingleBookPage = () => {
     isError,
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
+
+  
 
   if (isError) {
     dispatch(stopLoading());
@@ -96,20 +100,7 @@ const SingleBookPage = () => {
             </section>
           )}
 
-          <section id="chat" className={classes.Chat}>
-            <h1>Chat with {book.title}</h1>
-            <main>
-              <div>
-                <ChatMessage
-                  message={
-                    "Hello, I'm Ai, I'm here to help you with this book."
-                  }
-                  fromAi={true}
-                />
-              </div>
-              <MessageField />
-            </main>
-          </section>
+          {user && <ChatSection user={user} book={book} />}
         </main>
       </SidePannelLayout>
     );

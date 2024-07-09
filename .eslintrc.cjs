@@ -27,6 +27,7 @@ module.exports = {
       {
         checksVoidReturn: false,
       },
+      
     ],
   },
 };

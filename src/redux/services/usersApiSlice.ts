@@ -16,11 +16,13 @@ export const usersApi = createApi({
       query(id) {
         return `users/${id}`;
       },
+      providesTags: ["users"]
     }),
     getUserByUsername: builder.query<User, string>({
       query(username) {
         return `users/username/${username}`;
       },
+      providesTags: ["users"]
     }),
     logIn: builder.mutation<User, UserCredintials>({
       query(loginData) {
@@ -30,6 +32,7 @@ export const usersApi = createApi({
           body: loginData,
         };
       },
+      invalidatesTags: ["users"],
       onQueryStarted: async (_, { queryFulfilled }) => {
         try {
           await queryFulfilled;
@@ -46,6 +49,7 @@ export const usersApi = createApi({
           body: userData,
         };
       },
+      invalidatesTags: ["users"]
     }),
     editUser: builder.mutation<User, { id: string; info: FormData }>({
       query({ id, info }) {
@@ -64,6 +68,7 @@ export const usersApi = createApi({
           method: "DELETE",
         };
       },
+      invalidatesTags:["users"]
     }),
   }),
 });

@@ -17,8 +17,10 @@ import { useCreateReadingChallengeMutation } from "../../../redux/services/readi
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { ChallengeType } from "../../../Types/readingChallenges.types";
 import { closeCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
+import convertFirstLetterToUppercase from "../../../helperFuctions/convertFirstLetterToUppercase";
 
 interface FormValues {
+  title: string;
   type: ChallengeType;
   goal: number;
 }
@@ -36,7 +38,8 @@ const CreateReadingChallengeModal = () => {
   const dispatch = useAppDispatch();
   const form = useForm<FormValues>({
     defaultValues: {
-      type: "ANNUAL",
+      title: convertFirstLetterToUppercase((challengeType).toLowerCase()) + " Challenge",
+      type: challengeType,
       goal: 1,
     },
   });
@@ -56,7 +59,7 @@ const CreateReadingChallengeModal = () => {
     await createReadingChallenge({
       ...data,
       userId,
-      startDate: new Date().toISOString(),
+      startDate: new Date().toISOString()
     });
 
     if (isSuccess) {
@@ -105,6 +108,15 @@ const CreateReadingChallengeModal = () => {
         <h1>Create reading challenge</h1>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <div className={classes.Inputs}>
+            <TextField
+              type="text"
+              label="Title"
+              variant="outlined"
+              fullWidth
+              {...register("title")}
+            />
+            <Box sx={{ height: "24px" }} />
+
             <FormControl fullWidth>
               <InputLabel id="type-label">Type</InputLabel>
               <Select

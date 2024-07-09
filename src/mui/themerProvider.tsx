@@ -119,7 +119,7 @@ const theme = createTheme({
           color: "var(--dark-primary-color)",
           fontWeight: 600,
 
-          "&:first-child": {
+          "&:first-of-type": {
             marginTop: 0,
           },
           "&:last-child": {
@@ -142,6 +142,12 @@ const theme = createTheme({
           borderRadius: "var(--large-border-radius)",
           fontSize: "20px",
           fontWeight: 700,
+          boxShadow: "none",
+
+          "&:hover":{
+            boxShadow: "none"
+          },
+
           "&.MuiButton-textError": {
             color: "var(--dark-gray-color)",
           },

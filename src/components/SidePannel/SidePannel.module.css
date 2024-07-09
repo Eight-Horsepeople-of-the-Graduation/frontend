@@ -23,12 +23,18 @@
 }
 
 .user {
-  padding: 0 24px;
-  display: flex;
   width: 100%;
-  height: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
   margin-bottom: 32px;
 }
+
+.user>div {
+  display: flex;
+  width: 90%;
+}
+
 .info {
   display: flex;
   flex-direction: column;
@@ -115,6 +121,7 @@
   color: var(--dark-primary-color);
   transition: all 0.3s;
 }
+
 .myLists hr {
   margin: 0 24px 4px;
   border: 0.5px solid var(--dark-gray-color);
@@ -130,6 +137,7 @@
 .lists:hover {
   overflow-y: scroll;
 }
+
 .lists li {
   list-style: none;
   padding: 0 8px;
@@ -165,17 +173,20 @@
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
+
   100% {
     -webkit-transform: translateX(500px);
     transform: translateX(500px);
     display: none;
   }
 }
+
 @keyframes slide-right {
   0% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
+
   100% {
     -webkit-transform: translateX(500px);
     transform: translateX(500px);
@@ -188,6 +199,7 @@
     -webkit-transform: translateX(500px);
     transform: translateX(500px);
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -199,6 +211,7 @@
     -webkit-transform: translateX(500px);
     transform: translateX(500px);
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);

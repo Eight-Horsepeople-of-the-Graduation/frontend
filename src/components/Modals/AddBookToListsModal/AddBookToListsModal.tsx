@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import CustomModal from "../../UI/CustomModal/CustomModal";
 import classes from "./AddBookToListsModal.module.css";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import { dummyLists } from "../../../dummyData";
 import { List } from "../../../Types/lists.types";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import {
@@ -21,15 +20,16 @@ interface FormValues {
 const AddBookToListsModal = () => {
   const dispatch = useAppDispatch();
   const bookId = useAppSelector((state) => state.modals.bookToAddToListId);
-  const { data: book } = useGetBookByIdQuery(bookId!, { skip: !bookId });
-  const currentUserId = useAppSelector((state) => state.authUser.user)?.id;
+  const { data: book, isSuccess: bookDataFetched } = useGetBookByIdQuery(bookId!, { skip: !bookId });
+  const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
 
-  const { data: userLists } = useGetUserListsQuery(currentUserId!, {
+
+  const { data: userLists, isSuccess: userListsFetched } = useGetUserListsQuery(currentUserId, {
     skip: !currentUserId,
   });
 
-  const currentBookLists =
-    userLists?.filter((list) => list.books.includes(book!)) ?? [];
+  const currentBookLists = (bookDataFetched && userListsFetched) ? userLists?.filter(
+    (list) => list.books.includes((list.books.find(book => book.id === bookId) ?? book))) : [];
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -39,11 +39,11 @@ const AddBookToListsModal = () => {
 
   const closeModal = () => dispatch(closeAddBookToListModal());
 
-  const [addBookToList, { isSuccess: bookAdded, isError: ErrorAddingBook }] =
+  const [addBookToList, { isError: ErrorAddingBook,isLoading:isAddingBook }] =
     useAddBookToListMutation();
   const [
     removeBookFromList,
-    { isSuccess: bookRemoved, isError: errorRemovingBook },
+    { isError: errorRemovingBook,isLoading:isRemovingBook },
   ] = useRemoveBookFromListMutation();
 
   const { handleSubmit } = form;
@@ -51,7 +51,7 @@ const AddBookToListsModal = () => {
   const onSubmit = (data: FormValues) => {
     if (!bookId || !book) return;
 
-    const currentListsIds = currentBookLists.map((list) => list.id);
+    const currentListsIds = (currentBookLists ?? []).map((list) => list.id);
     const newListsIds = data.lists.map((list) => list.id);
 
     if (
@@ -71,13 +71,13 @@ const AddBookToListsModal = () => {
 
     if (addedListsIds.length) {
       addedListsIds.forEach(async (listId) => {
-        await addBookToList({ listId, bookId });
+        await addBookToList({ listId, bookIds: [bookId] });
       });
     }
 
     if (removedListsIds.length) {
       removedListsIds.forEach(async (listId) => {
-        await removeBookFromList({ listId, bookId });
+        await removeBookFromList({ listId, bookIds: [bookId] });
       });
     }
 
@@ -86,7 +86,7 @@ const AddBookToListsModal = () => {
         showAlert({ message: "Something went wrong", severity: "error" })
       );
 
-    if (bookAdded || bookRemoved) {
+    if (!ErrorAddingBook || !errorRemovingBook) {
       dispatch(
         showAlert({ message: "Book added to lists", severity: "success" })
       );
@@ -115,7 +115,7 @@ const AddBookToListsModal = () => {
                 <Autocomplete
                   multiple
                   id="lists-input"
-                  options={dummyLists}
+                  options={userLists ?? []}
                   getOptionLabel={(option) => option.title}
                   filterSelectedOptions
                   renderInput={(params) => (
@@ -143,6 +143,7 @@ const AddBookToListsModal = () => {
                 variant="contained"
                 type="submit"
                 color="primary"
+                disabled={isAddingBook  || isRemovingBook}
               >
                 Add
               </Button>

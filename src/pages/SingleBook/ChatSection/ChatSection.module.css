@@ -1,0 +1,66 @@
+.Chat,
+.Reader {
+  height: calc(100vh - 64px);
+  padding-top: 32px;
+}
+
+.Chat>h1,
+.Reader>h1 {
+  padding: 0 128px;
+  margin-bottom: 24px;
+}
+
+.Chat main,
+.Reader main {
+  width: 100%;
+  height: calc(100% - 46px);
+  background-color: var(--light-primary-color);
+  padding: 46px 200px;
+}
+
+.Reader main {
+  background-color: white;
+  padding: 0 48px;
+}
+
+.Chat main>div {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  padding: 0 56px;
+}
+
+.Chat main>div::-webkit-scrollbar {
+  display: none;
+}
+
+.MessageField {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    max-height: 95px;
+  }
+  .MessageField form {
+    width: 100%;
+  }
+  
+  .Send {
+    height: 42px;
+    width: 42px;
+    border-radius: var(--large-border-radius);
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: large;
+    transition: all 0.2s;
+  }
+  
+  .Send:hover {
+    background-color: var(--dark-primary-color);
+    box-shadow: var(--shadow-near);
+  }
+  
+  .Send:active {
+    transform: scale(0.9);
+  }
+  

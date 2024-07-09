@@ -3,7 +3,7 @@ import HomePage from "./pages/Home/Home";
 import ListsPage from "./pages/Lists/Lists";
 import ProfilePage from "./pages/Profile/Profile";
 import LibraryPage from "./pages/MyBooks/LibraryPage";
-import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBookPage";
+import SingleBookPage from "./pages/SingleBook/SingleBookPage";
 import SingleListPage from "./pages/Lists/SingleList/SingleListPage";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
 import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingPage/CurrentlyReadingPage";
@@ -17,16 +17,19 @@ import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBook
 import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal/RemoveBookFromListModal";
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
+import { useAppSelector } from "./redux/hooks";
 
 function App() {
+
+  const modalsStates = useAppSelector(state => state.modals);
   return (
     <>
-      <LoadingSpinner />
-      <RemoveBookFromListModal />
       <CustomAlert />
+      <LoadingSpinner />
       <CreateListModal />
       <CreateReadingChallengeModal />
-      <AddBookToListsModal />
+      {modalsStates.bookToRemoveFromListId && modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
+      {modalsStates.bookToAddToListId && <AddBookToListsModal />}
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />

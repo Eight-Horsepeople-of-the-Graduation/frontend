@@ -9,16 +9,19 @@
   padding: 4px;
   border-radius: var(--large-border-radius);
 }
+
 .ListHeader {
   display: flex;
   justify-content: start;
   align-items: baseline;
   border-bottom: var(--border);
 }
+
 .Controllers {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .List {
