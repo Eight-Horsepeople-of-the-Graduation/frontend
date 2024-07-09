@@ -46,7 +46,7 @@ const SingleBookPage = () => {
   useEffect(() => {
     if (conversation)
       setMessages(conversation.messages);
-  }, [])
+  }, []);
 
   if (isError) {
     dispatch(stopLoading());
