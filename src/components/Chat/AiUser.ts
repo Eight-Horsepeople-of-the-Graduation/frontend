@@ -4,10 +4,14 @@ import logo from "../../../src/assets/images/logo.png";
 export const AiUser: User = {
   email: "ai@readify.com",
   id: 0,
-  image: logo,
+  profilePicture: logo,
   name: "A I",
-  role: "Ai",
   username: "Ai",
+  isAdmin: false,
+  birthDate: "",
+  country: "egy",
+  gender: "MALE",
+  joinDate: "",
 };
 
 export default AiUser;

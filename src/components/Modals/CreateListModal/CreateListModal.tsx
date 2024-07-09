@@ -15,27 +15,20 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateListMutation } from "../../../redux/services/listsApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { Privacy } from "../../../Types/lists.types";
+import { Privacy, createListPayload } from "../../../Types/lists.types";
 import { closeCreateListModal } from "../../../redux/features/modals/modalsSlice";
 
-interface FormValues {
-  title: string;
-  privacy: Privacy;
-  userId: number;
-  description: string;
-}
-
 const CreateListModal = () => {
-  const userId = useAppSelector((state) => state.authUser).user?.id;
-  const [listPrivacy, setListPricvacy] = useState<"private" | "puplic">(
-    "puplic"
+  const userId = useAppSelector((state) => state.authUser).user?.id ?? 0;
+  const [listPrivacy, setListPricvacy] = useState<Privacy>(
+    "PUBLIC"
   );
   const dispatch = useAppDispatch();
   const [createList, { isSuccess, isError }] = useCreateListMutation();
 
   const modalOpen = useAppSelector((state) => state.modals.createListModalOpen);
 
-  const form = useForm<FormValues>({
+  const form = useForm<createListPayload>({
     defaultValues: {
       title: "",
       description: "",
@@ -52,14 +45,9 @@ const CreateListModal = () => {
 
   const closeModal = () => dispatch(closeCreateListModal());
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: createListPayload) => {
     if (!userId) return;
-    await createList({
-      title: data.title,
-      userId,
-      privacy: data.privacy,
-      description: data.description,
-    });
+    await createList({ ...data, userId });
 
     if (isError)
       dispatch(
@@ -119,7 +107,7 @@ const CreateListModal = () => {
                 {...register("privacy")}
                 onChange={handleSelectPrivacy}
               >
-                <MenuItem value={"PUPLIC"}>Public</MenuItem>
+                <MenuItem value={"PUBLIC"}>Public</MenuItem>
                 <MenuItem value={"PRIVATE"}>Private</MenuItem>
               </Select>
             </FormControl>

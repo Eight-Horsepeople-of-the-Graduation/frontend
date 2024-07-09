@@ -15,6 +15,8 @@ import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+import BinIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
 
 interface ListProps {
   list: List;
@@ -124,24 +126,41 @@ const SingleListComponent: React.FC<ListProps> = ({
           </h1>
           {isEditable && (
             <div className={classes.Controllers}>
-              {isEditable.canEditName && (
-                <Button
-                  title={isEditingName ? "Save" : "Edit list name"}
-                  aria-label="edit"
-                  sx={{
-                    fontSize: "24px",
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "50%",
-                    minWidth: "36px",
-                  }}
-                  color="primary"
-                  onClick={isEditingName ? finishEditName : startEditName}
-                >
-                  {isEditingName ? <CheckIcon /> : <EditIcon />}
-                </Button>
-              )}
-              {isEditable.canEditPrivacy && <PrivacySwitch list={list} />}
+              <div>
+                {isEditable.canEditName && (
+                  <Button
+                    title={isEditingName ? "Save" : "Edit list name"}
+                    aria-label="edit"
+                    sx={{
+                      fontSize: "24px",
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      minWidth: "36px",
+                    }}
+                    color="primary"
+                    onClick={isEditingName ? finishEditName : startEditName}
+                  >
+                    {isEditingName ? <CheckIcon /> : <EditIcon />}
+                  </Button>
+                )}
+                {isEditable.canEditPrivacy && <PrivacySwitch list={list} />}
+              </div>
+              {isEditable.canDelete && <Button
+                title={"Delete list"}
+                area-label="delete"
+                sx={{
+                  fontSize: "24px",
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  minWidth: "36px",
+                }}
+                color="error"
+
+              >
+                <BinIcon />
+              </Button>}
             </div>
           )}
         </div>
