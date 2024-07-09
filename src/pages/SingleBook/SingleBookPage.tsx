@@ -1,23 +1,19 @@
-import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
+import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import classes from "./SingleBookPage.module.css";
 import { Button } from "@mui/material";
-import ChatMessage from "../../../components/Chat/ChatMessage/ChatMessage";
-import MessageField from "../../../components/Chat/MessageField/MessageField";
-import BookReader from "../../../components/BookReader/BookReader";
+import BookReader from "../../components/BookReader/BookReader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import PageNotFoundPage from "../../PageNotFound/PageNotFoundPage";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useGetBookByIdQuery } from "../../redux/services/booksApiSlice";
+import { showAlert } from "../../redux/features/alerts/alertsSlice";
+import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
   startLoading,
   stopLoading,
-} from "../../../redux/features/modals/modalsSlice";
-import { useEffect, useState } from "react";
-import { useGetBookConversationQuery } from "../../../redux/services/conversationApiSlice";
-import { Message } from "../../../Types/conversations.types";
+} from "../../redux/features/modals/modalsSlice";
+import ChatSection from "./ChatSection/ChatSection";
 
 const SingleBookPage = () => {
   document.title = "Readify";
@@ -25,9 +21,6 @@ const SingleBookPage = () => {
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.authUser.user);
-
-  const [messages, setMessages] = useState<Message[]>([]);
-
 
 
 
@@ -38,15 +31,7 @@ const SingleBookPage = () => {
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
-  const { data: conversation } = useGetBookConversationQuery({
-    userId: user?.id ?? 0,
-    bookId: +(bookId ?? 0)
-  })
-
-  useEffect(() => {
-    if (conversation)
-      setMessages(conversation.messages);
-  }, [conversation]);
+  
 
   if (isError) {
     dispatch(stopLoading());
@@ -115,29 +100,7 @@ const SingleBookPage = () => {
             </section>
           )}
 
-          <section id="chat" className={classes.Chat}>
-            <h1>Chat with {book.title}</h1>
-            <main>
-              <div className={classes.messagesContainer}>
-                <ChatMessage
-                  message={
-                    "Hello, I'm Ai, I'm here to help you with this book."
-                  }
-                  fromAi={true}
-                />
-                {
-                  messages.map((message) =>
-                    <ChatMessage
-                      key={message.id}
-                      message={message.content}
-                      fromAi={message.role === "ai"}
-                    />
-                  )
-                }
-              </div>
-              <MessageField />
-            </main>
-          </section>
+          {user && <ChatSection user={user} book={book} />}
         </main>
       </SidePannelLayout>
     );

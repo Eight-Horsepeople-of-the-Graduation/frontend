@@ -12,9 +12,23 @@ export const conversationsApi = createApi({
                 return `conversations/user/${data.userId}/book/${data.bookId}`;
             }
         }),
+        sendMessage: builder.mutation<{ answer: string }, { userId: number, bookId: number, question: string }>({
+
+            query(data) {
+                return {
+                    url: `conversations/chat/user/${data.userId}/book/${data.bookId}`,
+                    method: "POST",
+                    body: {
+                        question: data.question
+                    }
+                }
+            }
+        })
+
     }),
 });
 
 export const {
-    useGetBookConversationQuery
+    useGetBookConversationQuery,
+    useSendMessageMutation
 } = conversationsApi;

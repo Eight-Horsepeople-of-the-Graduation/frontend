@@ -3,7 +3,7 @@ import HomePage from "./pages/Home/Home";
 import ListsPage from "./pages/Lists/Lists";
 import ProfilePage from "./pages/Profile/Profile";
 import LibraryPage from "./pages/MyBooks/LibraryPage";
-import SingleBookPage from "./pages/MyBooks/SingleBook/SingleBookPage";
+import SingleBookPage from "./pages/SingleBook/SingleBookPage";
 import SingleListPage from "./pages/Lists/SingleList/SingleListPage";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
 import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingPage/CurrentlyReadingPage";
