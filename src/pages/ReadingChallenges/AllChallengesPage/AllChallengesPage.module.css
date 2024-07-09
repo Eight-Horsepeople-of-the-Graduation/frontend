@@ -1,4 +1,3 @@
-
 .Header {
   display: flex;
   flex-direction: row;
@@ -13,10 +12,46 @@
   margin-bottom: 30px;
 }
 .Title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
   margin: 20px;
   padding: 20px;
   font-weight: 800;
   font-size: 36px;
+}
+.Container {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.Info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 auto 20px;
+  padding: 12px;
+  min-width: 800px;
+  width: 900px;
+  height: fit-content;
+  background-image: linear-gradient(
+    to right,
+    var(--light-primary-color),
+    white
+  );
+  border-radius: var(--large-border-radius);
+}
+.Info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
 }
 .List {
   display: flex;
@@ -25,38 +60,4 @@
   flex-wrap: wrap;
   border-bottom: var(--border);
   padding: 36px;
-}
-
-/* .List:not(:last-child) {
-} */
-
-.Container{
-   padding: 20px 40px ;
-  display: flex;
-  flex-direction: column;
-
-}
-.Info{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-   font-size: 24px;
-   font-weight: 700;
-   background-color: var(--primary-color);
-   margin: 0 auto 20px;
-   padding: 12px;
-   width: 600px;
-   max-width: 700px;
-   box-shadow: var(--shadow-far);
-   height: fit-content;
-}
-.Info > div {
-   display: flex;
-      flex-direction: column;
-gap: 12px;
-justify-content: space-between;
-justify-items: center;
-align-items: center;
-padding: 20px;
-
 }
