@@ -1,26 +1,20 @@
 import {
-  Autocomplete,
-  Box,
   Button,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
 import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
-import { Gender, SignUpUser } from "../../../Types/users.types";
+import { SignUpUser } from "../../../Types/users.types";
 import { useAppDispatch } from "../../../redux/hooks";
 import {
   startLoading,
-  stopLoading,
 } from "../../../redux/features/modals/modalsSlice";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { setLogedInUser } from "../../../redux/features/users/authSlice";
 import CountrySelector from "../../UI/CountrySelector/CountrySelector";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -30,8 +24,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
 
 const genders = [
-  { value: "MALE", title: "Mail" },
-  { value: "FEMAIL", title: "Femail" },
+  { value: "MALE", title: "Male" },
+  { value: "FEMALE", title: "Female" },
 ];
 
 const SignupForm = () => {
@@ -40,7 +34,7 @@ const SignupForm = () => {
   const [confirmPasword, setConfirmPassword] = useState<string>("");
   const [birthdate, setbirthdate] = useState<Dayjs | null>(null);
 
-  const [signUp, { data: newUser, isError, isSuccess }] = useSignUpMutation();
+  const [signUp] = useSignUpMutation();
 
   const matchPasswordError = Boolean(
     confirmPasword && !password.includes(confirmPasword)
@@ -69,21 +63,6 @@ const SignupForm = () => {
 
     await signUp(newUserData);
 
-    dispatch(stopLoading());
-
-    if (isError) {
-      dispatch(showAlert({ message: "Error signing up", severity: "error" }));
-    }
-
-    if (isSuccess) {
-      dispatch(
-        showAlert({ message: "Sign up successful", severity: "success" })
-      );
-
-      dispatch(setLogedInUser(newUser));
-
-      localStorage.setItem("user", JSON.stringify(newUser));
-    }
   };
 
   return (

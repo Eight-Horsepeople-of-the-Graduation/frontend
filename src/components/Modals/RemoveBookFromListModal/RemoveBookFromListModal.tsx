@@ -46,8 +46,6 @@ const RemoveBookFromListModal = () => {
     }
   };
 
-  console.log(bookId, listId);
-
   return (
     <WarningModal
       modalOpen={!!(bookId && listId)}
