@@ -1,6 +1,7 @@
 import { List } from "../../Types/lists.types";
 import { useAppDispatch } from "../../redux/hooks";
 import {
+  openDeleteListModal,
   startLoading,
   stopLoading,
 } from "../../redux/features/modals/modalsSlice";
@@ -14,8 +15,7 @@ import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
-import BinIcon from '@mui/icons-material/DeleteOutlineOutlined';
-
+import BinIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 interface ListProps {
   list: List;
@@ -45,7 +45,6 @@ const SingleListComponent: React.FC<ListProps> = ({
     setISEditngName(true);
   };
   const finishEditName = async () => {
-    dispatch(startLoading());
     setISEditngName(false);
     if (!list) return;
 
@@ -57,6 +56,7 @@ const SingleListComponent: React.FC<ListProps> = ({
     }
 
     if (title === list.title) return;
+    dispatch(startLoading());
 
     await editList({
       id: list.id,
@@ -70,7 +70,7 @@ const SingleListComponent: React.FC<ListProps> = ({
       titleRef.current.innerText = list.title;
     }
 
-    if (isSuccess) {
+    if (isSuccess || !isError) {
       dispatch(
         showAlert({
           message: "List name updated successfully",
@@ -145,21 +145,23 @@ const SingleListComponent: React.FC<ListProps> = ({
                 )}
                 {isEditable.canEditPrivacy && <PrivacySwitch list={list} />}
               </div>
-              {isEditable.canDelete && <Button
-                title={"Delete list"}
-                area-label="delete"
-                sx={{
-                  fontSize: "24px",
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
-                  minWidth: "36px",
-                }}
-                color="error"
-
-              >
-                <BinIcon />
-              </Button>}
+              {isEditable.canDelete && (
+                <Button
+                  title={"Delete list"}
+                  area-label="delete"
+                  sx={{
+                    fontSize: "24px",
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "50%",
+                    minWidth: "36px",
+                  }}
+                  color="error"
+                  onClick={() => dispatch(openDeleteListModal(list.id))}
+                >
+                  <BinIcon />
+                </Button>
+              )}
             </div>
           )}
         </div>

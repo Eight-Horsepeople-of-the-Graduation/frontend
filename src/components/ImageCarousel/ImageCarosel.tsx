@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Card, CardMedia, IconButton } from "@mui/material";
-import { Images } from "../../Types/Images.types";
-import { dummyImages } from "../../dummyData";
+import image1 from "../../assets/CarouselImages/to READIFY (1).png";
+import image2 from "../../assets/CarouselImages/to READIFY (2).png";
+import image3 from "../../assets/CarouselImages/to READIFY.png";
 
-interface Image {
-  url: string;
-}
+const images = [image1, image2, image3];
 
-const ImageCarousel: React.FC<Images> = () => {
+const ImageCarousel: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null); // Reference for autoplay
 
@@ -18,20 +17,18 @@ const ImageCarousel: React.FC<Images> = () => {
   useEffect(() => {
     const carouselContainer = carouselRef.current;
     if (carouselContainer) {
-      // Move autoplay logic inside useEffect for controlled execution
       const intervalId = setInterval(() => {
-        setCurrentImageIndex(
-          (prevIndex) => (prevIndex + 1) % dummyImages.length
-        );
-      }, 3000); // Adjust interval as needed
-
-      // Cleanup function to clear interval on unmount
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      }, 3000);
       return () => clearInterval(intervalId);
     }
-  }, [carouselRef]); // Dependency on carouselRef
+  }, [carouselRef]);
 
   const backgroundImageStyle: React.CSSProperties = {
-    backgroundImage: `url(${(dummyImages[currentImageIndex] as Image).url})`, // Template literal for string interpolation
+    backgroundImage: `url(${(images[currentImageIndex])})`,
+    //  {images.map((image, index) => (
+    //   <img key={index} src={image} alt={`Image ${index + 1} description`} />
+    // ))}
     width: "100%",
     height: "100%",
     backgroundSize: "cover",
@@ -42,7 +39,7 @@ const ImageCarousel: React.FC<Images> = () => {
       <Card sx={{ maxWidth: 1024, maxHeight: 256 }}>
         <CardMedia
           component="img"
-          image={(dummyImages[currentImageIndex] as Image).url} // Access image URL using interface
+          image={(images[currentImageIndex])}
           alt="Carousel Image"
           style={backgroundImageStyle}
         />
@@ -55,9 +52,9 @@ const ImageCarousel: React.FC<Images> = () => {
             justifyContent: "space-between",
           }}
         >
-          {dummyImages.map((_, index) => (
+          {images.map((_, index) => (
             <IconButton
-              key={`${index}-${(dummyImages[index] as Image).url}`} // Descriptive key
+              key={`${index}-${(images[index])}`}
               onClick={() => handleDotClick(index)}
             >
               <Box

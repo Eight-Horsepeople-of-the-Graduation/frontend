@@ -19,19 +19,22 @@ import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useAppSelector } from "./redux/hooks";
 import RemoveChallengeModal from "./components/Modals/RemoveChallengeModal/RemoveChallengeModal";
+import DeleteListModal from "./components/Modals/DeleteListModal/DeleteListModal";
 
 function App() {
-
-  const modalsStates = useAppSelector(state => state.modals);
+  const modalsStates = useAppSelector((state) => state.modals);
   return (
     <>
       <CustomAlert />
       <LoadingSpinner />
       <CreateListModal />
       <CreateReadingChallengeModal />
-      <RemoveChallengeModal/>
-      {modalsStates.bookToRemoveFromListId && modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
+      <RemoveChallengeModal />
+      {modalsStates.bookToRemoveFromListId &&
+        modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
       {modalsStates.bookToAddToListId && <AddBookToListsModal />}
+
+      {modalsStates.listToDeleteId && <DeleteListModal />}
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />
@@ -55,10 +58,6 @@ function App() {
           <Route element={<EditProfilePage />} path="/profile/:username/edit" />
 
           <Route element={<AllChallengesPage />} path="/challenges" />
-          <Route
-            element={<div>Single Challenge</div>}
-            path="/challenges/:challengeId"
-          />
 
           <Route path="/*" element={<PageNotFoundPage />} />
         </Routes>

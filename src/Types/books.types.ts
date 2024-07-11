@@ -11,6 +11,7 @@ export interface Book {
   language: string;
   country: string;
   numOfPages: number;
+  rating: number;
   pdfLink?: string;
   authors: Author[];
   genres: Genre[];
