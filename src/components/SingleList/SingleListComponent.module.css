@@ -20,6 +20,11 @@
   flex-grow: 1;
   justify-content: space-between;
 }
+.Controllers div {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
 .List {
   display: flex;
   flex-direction: row;

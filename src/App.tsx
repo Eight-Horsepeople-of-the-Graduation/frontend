@@ -19,6 +19,7 @@ import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useAppSelector } from "./redux/hooks";
 import RemoveChallengeModal from "./components/Modals/RemoveChallengeModal/RemoveChallengeModal";
+import DeleteListModal from "./components/Modals/DeleteListModal/DeleteListModal";
 
 function App() {
   const modalsStates = useAppSelector((state) => state.modals);
@@ -32,6 +33,8 @@ function App() {
       {modalsStates.bookToRemoveFromListId &&
         modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
       {modalsStates.bookToAddToListId && <AddBookToListsModal />}
+
+      {modalsStates.listToDeleteId && <DeleteListModal />}
       <BrowserRouter>
         <Routes>
           <Route element={<HomePage />} path="/" />
