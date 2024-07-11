@@ -7,6 +7,7 @@ export interface Modals {
   bookToRemoveFromListId?: number;
   listToRemoveBookFromId?: number;
   isLoading: boolean;
+  challengeToRemoveId?: number;
 }
 
 const initialState: Modals = {
@@ -16,6 +17,7 @@ const initialState: Modals = {
   bookToRemoveFromListId: undefined,
   listToRemoveBookFromId: undefined,
   isLoading: false,
+  challengeToRemoveId: undefined
 };
 
 export const modalsSlice = createSlice({
@@ -59,6 +61,15 @@ export const modalsSlice = createSlice({
       state.bookToRemoveFromListId = undefined;
       state.listToRemoveBookFromId = undefined;
     },
+    openRemoveChallengeModel: (
+      state: Modals,
+      action: PayloadAction< number>
+    ) => {
+      state.challengeToRemoveId = action.payload;
+    },
+    closeRemoveChallengeModel: (state: Modals) => {
+      state.challengeToRemoveId = undefined;
+    },
     startLoading: (state: Modals) => {
       state.isLoading = true;
     },
@@ -77,6 +88,7 @@ export const {
   closeAddBookToListModal,
   openRemoveBookFromListModal,
   closeRemoveBookFromListModal,
+  openRemoveChallengeModel,
   startLoading,
   stopLoading,
 } = modalsSlice.actions;

@@ -7,7 +7,6 @@ import {
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import { useEditListMutation } from "../../redux/services/listsApiSlice";
 import PageNotFoundPage from "../../pages/PageNotFound/PageNotFoundPage";
-
 import BookComponent from "../BookComponent/BookComponent";
 import classes from "./SingleListComponent.module.css";
 import EditIcon from "@mui/icons-material/Edit";

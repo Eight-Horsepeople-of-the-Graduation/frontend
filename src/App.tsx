@@ -11,7 +11,6 @@ import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage
 import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
 import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
-import SingleChallengePage from "./pages/ReadingChallenges/SingleChallengePage/SingleChallengePage";
 import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
 import CreateReadingChallengeModal from "./components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
 import AddBookToListsModal from "./components/Modals/AddBookToListsModal/AddBookToListsModal";
@@ -19,6 +18,7 @@ import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useAppSelector } from "./redux/hooks";
+import RemoveChallengeModal from "./components/Modals/RemoveChallengeModal/RemoveChallengeModal";
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
       <LoadingSpinner />
       <CreateListModal />
       <CreateReadingChallengeModal />
+      <RemoveChallengeModal/>
       {modalsStates.bookToRemoveFromListId && modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
       {modalsStates.bookToAddToListId && <AddBookToListsModal />}
       <BrowserRouter>
@@ -56,10 +57,6 @@ function App() {
           <Route element={<AllChallengesPage />} path="/challenges" />
           <Route
             element={<div>Single Challenge</div>}
-            path="/challenges/:challengeId"
-          />
-          <Route
-            element={<SingleChallengePage />}
             path="/challenges/:challengeId"
           />
 
