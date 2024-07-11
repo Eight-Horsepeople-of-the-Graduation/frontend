@@ -10,6 +10,7 @@ import { useGetBookByIdQuery } from "../../redux/services/booksApiSlice";
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
+  openAddBookToListModal,
   startLoading,
   stopLoading,
 } from "../../redux/features/modals/modalsSlice";
@@ -31,7 +32,7 @@ const SingleBookPage = () => {
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
-  
+
 
   if (isError) {
     dispatch(stopLoading());
@@ -55,8 +56,8 @@ const SingleBookPage = () => {
         <main style={{ width: "100%" }}>
           <section id="info" className={classes.Info}>
             <div className={classes.Content}>
-              {book.cover ? (
-                <img src={book.cover} title={book.title} />
+              {book.coverPicture ? (
+                <img src={book.coverPicture} title={book.title} />
               ) : (
                 <div className={classes.NoCover} title={book.title}>
                   <FontAwesomeIcon icon={faBookOpen} />
@@ -65,7 +66,9 @@ const SingleBookPage = () => {
               <div>
                 <div className={classes.Title}>
                   <h1>{book.title}</h1>
-                  <Button variant="contained" title="Add to list">
+                  <Button onClick={() => dispatch(openAddBookToListModal({
+                    bookToAddToListId: book.id
+                  }))} variant="contained" title="Add to list">
                     +
                   </Button>
                 </div>
