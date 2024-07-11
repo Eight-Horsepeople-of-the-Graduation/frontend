@@ -23,10 +23,16 @@
 .NotAuthMessage {
   display: flex;
   flex-direction: row;
-  gap: 4;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
+  z-index: 1;
+  padding: 30px;
+}
+.image {
+  width: fit-content;
+  height: fit-content;
+  transform: scaleX(-1);
 }

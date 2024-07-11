@@ -7,7 +7,7 @@ import ChallengeComponent from "../../../components/ChallengeComponent/Challenge
 import { IconButton } from "@mui/material";
 import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
 import { useGetUserReadingChallengesQuery } from "../../../redux/services/readingChallengeApiSlice";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import signupVector from "../../../assets/images/singupVector.png"
 
 const AllChallengesPage = () => {
   const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
@@ -27,18 +27,12 @@ const AllChallengesPage = () => {
       <main style={{ width: "100%" }}>
         {currentUserId === 0 ? (
           <div className={classes.NotAuthMessage}>
-            <p>Please log in to view your challenges.</p>
-            <img src=""/>
-            <ArrowRightAltIcon
-              sx={{
-                fontSize: "large",
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                minWidth: "36px",
-              }}
-              color="primary"
+            <img
+              src={signupVector}
+              className={classes.image}
+              alt="Signup Vector"
             />
+            <p>Please log in or register to view your challenges.</p>
           </div>
         ) : (
           <>
