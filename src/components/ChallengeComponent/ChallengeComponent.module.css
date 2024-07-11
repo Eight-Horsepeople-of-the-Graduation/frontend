@@ -4,6 +4,9 @@
   flex-direction: column;
   width: 100%;
 }
+.Expired {
+    color: var(--dark-gray-color);
+}
 .ChallengeHeader {
   display: flex;
   flex-direction: row;
@@ -35,7 +38,13 @@
   padding: 12px 0;
   justify-items: center;
   color: var(--dark-primary-color);
+  font-size: 18px;
 }
+.Data p.Expired {
+    color: var(--dark-gray-color);
+
+}
+
 .Progress {
   padding: 0px 36px;
   align-items: center;
