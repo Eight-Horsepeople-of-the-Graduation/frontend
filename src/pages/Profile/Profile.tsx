@@ -139,7 +139,7 @@ const ProfilePage = () => {
                   key={challenge.id}
                   challenge={challenge}
                   selected={false}
-                  onClickAction={() => navigate(`/challenges/${challenge.id}`)}
+                  onClickAction={() => navigate(`/challenges`)}
                 />
               ))}
             </div>
