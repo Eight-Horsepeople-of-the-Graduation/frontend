@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Card, CardMedia, IconButton } from "@mui/material";
 import { Images } from "../../Types/Images.types";
-import { dummyImages } from "../../dummyData";
+import { dummyImages } from "../../data/dummyData";
 
 interface Image {
   url: string;

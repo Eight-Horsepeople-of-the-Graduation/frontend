@@ -17,7 +17,7 @@ export const readingChallengeApi = createApi({
       },
       providesTags: ["challenges"],
     }),
-    getReadingChallengeById: builder.query<Challenge, string>({
+    getReadingChallengeById: builder.query<Challenge, number>({
       query(id) {
         return `reading-challenges/${id}`;
       },
