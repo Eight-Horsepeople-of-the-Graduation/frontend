@@ -1,12 +1,11 @@
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import classes from "./AllChallengesPage.module.css";
 import AddIcon from "@mui/icons-material/Add";
-import CreateReadingChallengeModal from "../../../components/Modals/CreateReadingChallengeModal/CreateReadingChallengeModal";
 import { openCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ChallengeComponent from "../../../components/ChallengeComponent/ChallengeComponent";
 import { IconButton } from "@mui/material";
-import { formatISODateToDDMMYYYY } from '../../../helperFuctions/formatISODateToDDMMYYYY';
+import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
 import { useGetUserReadingChallengesQuery } from "../../../redux/services/readingChallengeApiSlice";
 
 const AllChallengesPage = () => {
@@ -24,7 +23,7 @@ const AllChallengesPage = () => {
 
   return (
     <SidePannelLayout>
-      <main style={{width: "100%"}}>
+      <main style={{ width: "100%" }}>
         <div className={classes.Header}>
           <div className={classes.Title}>
             <p>Your Challenges</p>
@@ -39,7 +38,6 @@ const AllChallengesPage = () => {
                 }}
                 color="primary"
               />
-              <CreateReadingChallengeModal />
             </IconButton>
           </div>
           <p>You participated in {userChallenges?.length ?? 0} challenges.</p>
@@ -61,7 +59,7 @@ const AllChallengesPage = () => {
             )}
           </div>
         )}
-        </main>
+      </main>
     </SidePannelLayout>
   );
 };

@@ -20,11 +20,10 @@ import { closeCreateListModal } from "../../../redux/features/modals/modalsSlice
 
 const CreateListModal = () => {
   const userId = useAppSelector((state) => state.authUser).user?.id ?? 0;
-  const [listPrivacy, setListPricvacy] = useState<Privacy>(
-    "PUBLIC"
-  );
+  const [listPrivacy, setListPricvacy] = useState<Privacy>("PUBLIC");
   const dispatch = useAppDispatch();
-  const [createList, { isSuccess, isError }] = useCreateListMutation();
+  const [createList, { isSuccess, isError, isLoading }] =
+    useCreateListMutation();
 
   const modalOpen = useAppSelector((state) => state.modals.createListModalOpen);
 
@@ -54,14 +53,15 @@ const CreateListModal = () => {
         showAlert({ message: "Faild to create list", severity: "error" })
       );
 
-    if (isSuccess) {
+    if (isSuccess || !isError) {
+      closeModal();
+      form.reset();
       dispatch(
         showAlert({
           message: "List created successfully",
           severity: "success",
         })
       );
-      closeModal();
     }
   };
 
@@ -119,6 +119,7 @@ const CreateListModal = () => {
             alignItems="flex-end"
           >
             <Button
+              disabled={isLoading}
               sx={buttonSx}
               variant="contained"
               type="submit"

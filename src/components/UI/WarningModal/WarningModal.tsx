@@ -22,7 +22,7 @@ const WarningModal = ({
   warningMessage,
   confermText,
   cancelText,
-  confirmButtonDisabled
+  confirmButtonDisabled,
 }: WarningModalProps) => {
   const buttonSx = {
     width: "128px",
@@ -42,6 +42,7 @@ const WarningModal = ({
           alignItems="flex-end"
         >
           <Button
+            autoFocus
             sx={{
               ...buttonSx,
               color: "white",

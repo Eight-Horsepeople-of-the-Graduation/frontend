@@ -38,26 +38,23 @@ const ReadingChallengeCard = ({
     >
       <div className={classes.Info}>
         <div className={classes.ChallengeInfo}>
-          <p>
-            {convertFirstLetterToUppercase(challenge.type.toLowerCase())}{" "}
-            Challenge
-          </p>
-          <Link
+          <Link to={`/challenges/${challenge.id}`} title={challenge.title}>
+            {challenge.title}
+          </Link>
+          <p
             style={{
               maxWidth: "150px",
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
             }}
-            to={`/challenges/${challenge.id}`}
-            title={challenge.title}
           >
-            {convertFirstLetterToUppercase(challenge.title)}
-          </Link>
+            {convertFirstLetterToUppercase(challenge.timeframe)}
+          </p>
         </div>
 
         <p className={classes.ChallengeCounter}>
-          {challenge.books.length}{" "}
+          {challenge.progress}{" "}
           {challenge.goal ? `of ${challenge.goal}` : "Read"}
         </p>
       </div>
@@ -65,7 +62,7 @@ const ReadingChallengeCard = ({
       <div className={classes.Progress}>
         <ProgressBar
           color={getProgressBarColor(done, expired)}
-          progress={(challenge.books.length / challenge.goal) * 100}
+          progress={(challenge.progress / challenge.goal) * 100}
         />
       </div>
     </div>

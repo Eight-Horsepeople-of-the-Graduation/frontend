@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import { SignUpUser, User, UserCredintials } from "../../Types/users.types";
+import { setLogedInUser } from "../features/users/authSlice";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -16,26 +17,28 @@ export const usersApi = createApi({
       query(id) {
         return `users/${id}`;
       },
-      providesTags: ["users"]
+      providesTags: ["users"],
     }),
     getUserByUsername: builder.query<User, string>({
       query(username) {
         return `users/username/${username}`;
       },
-      providesTags: ["users"]
+      providesTags: ["users"],
     }),
     logIn: builder.mutation<User, UserCredintials>({
       query(loginData) {
         return {
-          url: "users/login",
-          method: "GET",
+          url: "auth/login",
+          method: "POST",
           body: loginData,
         };
       },
       invalidatesTags: ["users"],
-      onQueryStarted: async (_, { queryFulfilled }) => {
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
-          await queryFulfilled;
+          const response = await queryFulfilled;
+          localStorage.setItem("user", JSON.stringify(response.data));
+          dispatch(setLogedInUser(response.data));
         } catch (error) {
           localStorage.removeItem("user");
         }
@@ -49,7 +52,7 @@ export const usersApi = createApi({
           body: userData,
         };
       },
-      invalidatesTags: ["users"]
+      invalidatesTags: ["users"],
     }),
     editUser: builder.mutation<User, { id: string; info: FormData }>({
       query({ id, info }) {
@@ -68,7 +71,7 @@ export const usersApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags:["users"]
+      invalidatesTags: ["users"],
     }),
   }),
 });

@@ -5,6 +5,8 @@ import {
   createListPayload,
   updateListPayload,
 } from "../../Types/lists.types";
+import { showAlert } from "../features/alerts/alertsSlice";
+import { closeDeleteListModal } from "../features/modals/modalsSlice";
 
 export const listsApi = createApi({
   reducerPath: "listsApi",
@@ -46,12 +48,24 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists"],
     }),
-    deleteList: builder.mutation<null, string>({
+    deleteList: builder.mutation<null, number>({
       query(id) {
         return {
           url: `bookshelves/${id}`,
           method: "DELETE",
         };
+      },
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(closeDeleteListModal());
+          location.replace("/");
+          dispatch(showAlert({ message: "List removed", severity: "success" }));
+        } catch (error) {
+          dispatch(
+            showAlert({ message: "Something went wrong", severity: "error" })
+          );
+        }
       },
       invalidatesTags: ["lists"],
     }),
@@ -83,7 +97,7 @@ export const listsApi = createApi({
     }),
     getUserLists: builder.query<List[], number>({
       query(userId) {
-        return `bookshelves/user/${userId}`;
+        return `users/${userId}/bookshelves`;
       },
       providesTags: ["lists"],
     }),

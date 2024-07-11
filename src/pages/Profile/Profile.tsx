@@ -13,7 +13,6 @@ import { Challenge } from "../../Types/readingChallenges.types";
 import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
 import { List } from "../../Types/lists.types";
 import { useGetUserReadingChallengesQuery } from "../../redux/services/readingChallengeApiSlice";
-import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -27,7 +26,7 @@ const ProfilePage = () => {
 
   const currentUser = useAppSelector((state) => state.authUser.user);
 
-  const { data: user } = useGetUserByUsernameQuery(username!, {
+  const { data: user, isSuccess } = useGetUserByUsernameQuery(username!, {
     skip: !username,
   });
 
@@ -70,84 +69,85 @@ const ProfilePage = () => {
   });
 
   const isMyProfile = Boolean(currentUser && username === currentUser.username);
-  if (!user) return <PageNotFoundPage />;
 
-  return (
-    <>
-      <Header />
-      <div className={classes.ProfilePage}>
-        <main>
-          <div className={classes.ProfileHeader}>
-            <div className={classes.ProfileInfo}>
-              <CustomAvatar
-                user={user}
-                size="l"
-                style={{
-                  boxShadow: "var(--shadow-near)",
-                }}
-              />
-              <div className={classes.Info}>
-                <h1>{user.name}</h1>
-                <p>@{user.username}</p>
+  if (isSuccess)
+    return (
+      <>
+        <Header />
+        <div className={classes.ProfilePage}>
+          <main>
+            <div className={classes.ProfileHeader}>
+              <div className={classes.ProfileInfo}>
+                <CustomAvatar
+                  user={user}
+                  size="l"
+                  style={{
+                    boxShadow: "var(--shadow-near)",
+                  }}
+                />
+                <div className={classes.Info}>
+                  <h1>{user.name}</h1>
+                  <p>@{user.username}</p>
+                </div>
+              </div>
+
+              {isMyProfile && (
+                <Button
+                  title={"Edit Profile"}
+                  aria-label="edit-profile"
+                  sx={{
+                    fontSize: "24px",
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "50%",
+                    minWidth: "36px",
+                  }}
+                  color="primary"
+                  onClick={() => {
+                    navigate("edit");
+                  }}
+                >
+                  {<EditIcon />}
+                </Button>
+              )}
+            </div>
+
+            <section className={classes.PageContent}>
+              {(userLists ?? ([] as List[])).map(
+                (list) =>
+                  list.books.length && <ListPreview key={list.id} list={list} />
+              )}
+            </section>
+          </main>
+
+          <aside>
+            <div className={classes.Challenges}>
+              <div className={classes.ChallengesHeader}>
+                <h2>My Challenges</h2>
+                <button
+                  disabled={activeChallenges.length >= 3}
+                  title="Create new challenge"
+                  onClick={() => dispath(openCreateChallengeModal())}
+                >
+                  +
+                </button>
+              </div>
+              <div className={classes.ChallengesList}>
+                {sortedChallenges?.map((challenge: Challenge) => (
+                  <ReadingChallengeCard
+                    key={challenge.id}
+                    challenge={challenge}
+                    selected={false}
+                    onClickAction={() => navigate(`/challenges`)}
+                  />
+                ))}
               </div>
             </div>
-
-            {isMyProfile && (
-              <Button
-                title={"Edit Profile"}
-                aria-label="edit-profile"
-                sx={{
-                  fontSize: "24px",
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
-                  minWidth: "36px",
-                }}
-                color="primary"
-                onClick={() => {
-                  navigate("edit");
-                }}
-              >
-                {<EditIcon />}
-              </Button>
-            )}
-          </div>
-
-          <section className={classes.PageContent}>
-            {(userLists ?? ([] as List[])).map(
-              (list) =>
-                list.books.length && <ListPreview key={list.id} list={list} />
-            )}
-          </section>
-        </main>
-
-        <aside>
-          <div className={classes.Challenges}>
-            <div className={classes.ChallengesHeader}>
-              <h2>My Challenges</h2>
-              <button
-                disabled={activeChallenges.length >= 3}
-                title="Create new challenge"
-                onClick={() => dispath(openCreateChallengeModal())}
-              >
-                +
-              </button>
-            </div>
-            <div className={classes.ChallengesList}>
-              {sortedChallenges?.map((challenge: Challenge) => (
-                <ReadingChallengeCard
-                  key={challenge.id}
-                  challenge={challenge}
-                  selected={false}
-                  onClickAction={() => navigate(`/challenges/${challenge.id}`)}
-                />
-              ))}
-            </div>
-          </div>
-        </aside>
-      </div>
-    </>
-  );
+          </aside>
+        </div>
+      </>
+    );
+  return <></>;
 };
 
 export default ProfilePage;
