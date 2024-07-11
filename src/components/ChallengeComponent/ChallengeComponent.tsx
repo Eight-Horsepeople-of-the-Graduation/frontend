@@ -15,9 +15,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ProgressBar from "../UI/ProgressBar/ProgressBar";
 import { openRemoveChallengeModel } from "../../redux/features/modals/modalsSlice";
-
+import { formatISODateToDDMMYYYY } from "../../helperFuctions/formatISODateToDDMMYYYY";
+import { toProperCase } from "../../helperFuctions/properCase";
 interface ChallengeProps {
   challenge: Challenge;
+  formatISODateToDDMMYYYY?: (dateString: string) => string; // Optional formatting function
 }
 
 const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
@@ -26,8 +28,7 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [editChallengeTitle, { isSuccess, isError }] =
     useEditReadingChallengeMutation();
-
-        
+     
     const removeChallenge = () => {
       dispatch(openRemoveChallengeModel(challenge.id));
    };
@@ -40,7 +41,6 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
     dispatch(startLoading());
     setISEditngTitle(false);
     if (!challenge) return;
-
  
     const title = titleRef.current?.innerText;
 
@@ -90,75 +90,81 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
   });
 
   return (
-    <div>
-      <div key={challenge.id} className={classes.Container}>
-        <div className={classes.ListHeader}>
-          <h1
-            className={classes.ListTitle}
-            ref={titleRef}
-            contentEditable={isEditingTitle}
+    <div key={challenge.id} className={classes.Container}>
+      <div className={classes.ChallengeHeader}>
+        <h1
+          className={classes.ChallengeTitle}
+          ref={titleRef}
+          contentEditable={isEditingTitle}
+        >
+          {challenge.title}
+        </h1>
+        <div className={classes.Controllers}>
+          <Button
+            title={isEditingTitle ? "Save" : "Edit Challenge name"}
+            aria-label="edit"
+            sx={{
+              fontSize: "24px",
+              width: "36px",
+              height: "36px",
+              borderRadius: "50%",
+              minWidth: "36px",
+            }}
+            color="primary"
+            onClick={isEditingTitle ? finishEditName : startEditName}
           >
-            {challenge.title}
-          </h1>
-          <div className={classes.Controllers}>
-            <Button
-              title={isEditingTitle ? "Save" : "Edit Challenge name"}
-              aria-label="edit"
-              sx={{
-                fontSize: "24px",
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                minWidth: "36px",
-              }}
-              color="primary"
-              onClick={isEditingTitle ? finishEditName : startEditName}
-            >
-              {isEditingTitle ? <CheckIcon /> : <EditIcon />}
-            </Button>
-            <IconButton
-              aria-label="delete"
-              sx={{
-                fontSize: "24px",
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                minWidth: "36px",
-              }}
-              color="primary"
-              onClick={removeChallenge}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
-        </div>
-        <div className={classes.Data}>
-          <div>
-            <h3>Started on</h3>
-            <p>{challenge.startDate}</p>
-          </div>
-          <div>
-            <h3>Ends on</h3>
-            <p>{challenge.endDate}</p>
-          </div>
-          <div>
-            <h3>Type</h3>
-            <p>{challenge.type}</p>
-          </div>
-          <div>
-            <h3>Goal</h3>
-            <p>{challenge.goal === 1 ? "1 book" : challenge.goal + " books"}</p>
-          </div>
+            {isEditingTitle ? <CheckIcon /> : <EditIcon />}
+          </Button>
+          <IconButton
+            aria-label="delete"
+            sx={{
+              fontSize: "24px",
+              width: "36px",
+              height: "36px",
+              borderRadius: "50%",
+              minWidth: "36px",
+            }}
+            color="primary"
+            onClick={removeChallenge}
+          >
+            <DeleteIcon />
+          </IconButton>
         </div>
       </div>
-      <div>
-        <ProgressBar
-          progress={
-            ((challenge.books?.length || 0) / (challenge.goal || 1)) * 100
-          }
-        />
+      <div className={classes.Data}>
+        <div>
+          <h3>Started on</h3>
+          <p>
+            {formatISODateToDDMMYYYY?.(challenge.startDate) ||
+              challenge.startDate}
+          </p>
+        </div>
+        <div>
+          <h3>Ends on</h3>
+          <p>
+            {formatISODateToDDMMYYYY?.(challenge.endDate) || challenge.endDate}
+          </p>
+        </div>
+        <div>
+          <h3>Type</h3>
+          <p>{toProperCase(challenge.type)}</p>
+        </div>
+        <div>
+          <h3>Goal</h3>
+          <p>{challenge.goal === 1 ? "1 book" : challenge.goal + " books"}</p>
+        </div>
       </div>
-      <div className={classes.List}>
+      <div className={classes.Progress}>
+        <p>Progress:</p>
+        <div className={classes.Bar}>
+          <ProgressBar
+            progress={
+              ((challenge.books?.length || 0) / (challenge.goal || 1)) * 100
+            }
+          />
+        </div>
+      </div>
+      <div className={classes.BookList}>
         {challenge?.books.map((book) => (
           <BookComponent key={book.id} book={book} />
         ))}

@@ -18,6 +18,7 @@ import RemoveBookFromListModal from "./components/Modals/RemoveBookFromListModal
 import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useAppSelector } from "./redux/hooks";
+import RemoveChallengeModal from "./components/Modals/RemoveChallengeModal/RemoveChallengeModal";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
       <LoadingSpinner />
       <CreateListModal />
       <CreateReadingChallengeModal />
+      <RemoveChallengeModal/>
       {modalsStates.bookToRemoveFromListId && modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
       {modalsStates.bookToAddToListId && <AddBookToListsModal />}
       <BrowserRouter>

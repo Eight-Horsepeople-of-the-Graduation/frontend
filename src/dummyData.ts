@@ -189,7 +189,7 @@ export const dummyChallenges: Challenge[] = [
   {
     id: 1,
     title: "Reading Challenge 2024",
-    goal: 100,
+    goal: 1,
     type: "ANNUAL",
     userId: 1,
     books: dummyBooks.slice(0, 50),

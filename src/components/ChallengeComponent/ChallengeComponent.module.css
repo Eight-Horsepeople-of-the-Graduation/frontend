@@ -2,73 +2,62 @@
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
-.Info {
+.ChallengeHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  font-size: 24px;
-  font-weight: 500;
-  margin: 0 auto 20px;
-  padding: 12px;
-  min-width: 800px;
-  width: 900px;
-  height: fit-content;
-  background-image: linear-gradient(
-    to right,
-    var(--light-primary-color),
-    white
-  );
-}
-.Info > div {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  justify-content: space-between;
-  justify-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-bottom: var(--border);
+  padding: 24px 36px;
   align-items: center;
-  padding: 20px;
 }
-.List {
+.ChallengeTitle {
+  font-weight: 700;
+  font-size: 32px;
+}
+.Controllers {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.Data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 24px 36px 0px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark-gray-color);
+}
+.Data p {
+  padding: 12px 0;
+  justify-items: center;
+  color: var(--dark-primary-color);
+}
+.Progress {
+  padding: 0px 36px;
+  align-items: center;
+  justify-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.Bar {
+  width: 100%;
+}
+.Progress p {
+  padding: 12px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark-gray-color);
+}
+.BookList {
   display: flex;
   flex-direction: row;
   gap: 36px;
   flex-wrap: wrap;
   border-bottom: var(--border);
   padding: 36px;
-}
-.ListHeader {
-  display: flex;
-  flex-direction: row;
-  padding: 36px 0px;
-  gap: 20px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-.Data {
-  display: flex;
-  justify-content: start;
-  gap: 128px;
-  border-bottom: var(--border);
-}
-.Data p {
-  font-weight: 700;
-}
-.Progress {
-  margin-top: 32px;
-  width: 50%;
-  position: relative;
-  padding: auto 0px;
-}
-.ListTitle {
-  margin: 28px 44px 8px;
-  font-weight: 700;
-  font-size: 32px;
-  padding: 4px;
-  border-radius: var(--large-border-radius);
-}
-.Controllers {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
 }
