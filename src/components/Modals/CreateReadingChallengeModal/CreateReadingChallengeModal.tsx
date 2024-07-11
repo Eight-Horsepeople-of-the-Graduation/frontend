@@ -38,7 +38,9 @@ const CreateReadingChallengeModal = () => {
   const dispatch = useAppDispatch();
   const form = useForm<FormValues>({
     defaultValues: {
-      title: convertFirstLetterToUppercase((challengeType).toLowerCase()) + " Challenge",
+      title:
+        convertFirstLetterToUppercase(challengeType.toLowerCase()) +
+        " Challenge",
       type: challengeType,
       goal: 1,
     },
@@ -59,7 +61,6 @@ const CreateReadingChallengeModal = () => {
     await createReadingChallenge({
       ...data,
       userId,
-      startDate: new Date().toISOString()
     });
 
     if (isSuccess) {
