@@ -15,13 +15,13 @@ export const readingChallengeApi = createApi({
       query() {
         return "reading-challenges";
       },
-      providesTags:["challenges"]
+      providesTags: ["challenges"],
     }),
     getReadingChallengeById: builder.query<Challenge, string>({
       query(id) {
         return `reading-challenges/${id}`;
       },
-      providesTags:["challenges"]
+      providesTags: ["challenges"],
     }),
     createReadingChallenge: builder.mutation<Challenge, CreateChallengePayload>(
       {
@@ -46,7 +46,7 @@ export const readingChallengeApi = createApi({
           body: challengeData,
         };
       },
-      invalidatesTags:["challenges"]
+      invalidatesTags: ["challenges"],
     }),
     deleteReadingChallenge: builder.mutation<null, number>({
       query(id) {
@@ -55,13 +55,13 @@ export const readingChallengeApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["challenges"]
+      invalidatesTags: ["challenges"],
     }),
     getUserReadingChallenges: builder.query<Challenge[], number>({
       query(userId) {
-        return `reading-challenges/user/${userId}`;
+        return `users/${userId}/readingChallenges`;
       },
-      providesTags: ["challenges"]
+      providesTags: ["challenges"],
     }),
     addBookToReadingChallenge: builder.mutation<
       Challenge[],
@@ -74,7 +74,7 @@ export const readingChallengeApi = createApi({
           body: { bookId },
         };
       },
-      invalidatesTags: ["challenges"]
+      invalidatesTags: ["challenges"],
     }),
   }),
 });

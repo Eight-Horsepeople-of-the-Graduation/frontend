@@ -28,20 +28,19 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [editChallengeTitle, { isSuccess, isError }] =
     useEditReadingChallengeMutation();
-     
-    const removeChallenge = () => {
-      dispatch(openRemoveChallengeModel(challenge.id));
-   };
-   
+
+  const removeChallenge = () => {
+    dispatch(openRemoveChallengeModel(challenge.id));
+  };
+
   const startEditName = () => {
     setISEditngTitle(true);
-   };
-   
+  };
+
   const finishEditName = async () => {
-    dispatch(startLoading());
     setISEditngTitle(false);
     if (!challenge) return;
- 
+
     const title = titleRef.current?.innerText;
 
     if (!title) {
@@ -50,6 +49,8 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
     }
 
     if (title === challenge.title) return;
+
+    dispatch(startLoading());
 
     await editChallengeTitle({
       id: challenge.id,
