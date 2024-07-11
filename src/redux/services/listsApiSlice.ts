@@ -83,7 +83,7 @@ export const listsApi = createApi({
     }),
     getUserLists: builder.query<List[], number>({
       query(userId) {
-        return `bookshelves/user/${userId}`;
+        return `users/${userId}/bookshelves`;
       },
       providesTags: ["lists"],
     }),
