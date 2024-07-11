@@ -30,8 +30,7 @@ function App() {
       <CreateListModal />
       <CreateReadingChallengeModal />
       <RemoveChallengeModal />
-      {modalsStates.bookToRemoveFromListId &&
-        modalsStates.listToRemoveBookFromId && <RemoveBookFromListModal />}
+      <RemoveBookFromListModal />
       {modalsStates.bookToAddToListId && <AddBookToListsModal />}
 
       {modalsStates.listToDeleteId && <DeleteListModal />}

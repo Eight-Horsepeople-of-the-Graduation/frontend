@@ -17,7 +17,7 @@ export const readingChallengeApi = createApi({
       },
       providesTags: ["challenges"],
     }),
-    getReadingChallengeById: builder.query<Challenge, string>({
+    getReadingChallengeById: builder.query<Challenge, number>({
       query(id) {
         return `reading-challenges/${id}`;
       },
@@ -63,15 +63,14 @@ export const readingChallengeApi = createApi({
       },
       providesTags: ["challenges"],
     }),
-    addBookToReadingChallenge: builder.mutation<
+    addBookToActiveChallenges: builder.mutation<
       Challenge[],
-      { challengeId: number; bookId: number }
+      { userId: number; bookId: number }
     >({
-      query({ challengeId, bookId }) {
+      query({ userId, bookId }) {
         return {
-          url: `reading-challenges/add-books/${challengeId}`,
-          method: "POST",
-          body: { bookId },
+          url: `reading-challenges/${userId}/add-books/${bookId}`,
+          method: "PATCH",
         };
       },
       invalidatesTags: ["challenges"],
@@ -86,4 +85,5 @@ export const {
   useEditReadingChallengeMutation,
   useDeleteReadingChallengeMutation,
   useGetUserReadingChallengesQuery,
+  useAddBookToActiveChallengesMutation,
 } = readingChallengeApi;
