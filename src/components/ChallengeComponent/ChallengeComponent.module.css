@@ -1,0 +1,63 @@
+.Container {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ChallengeHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-bottom: var(--border);
+  padding: 24px 36px;
+  align-items: center;
+}
+.ChallengeTitle {
+  font-weight: 700;
+  font-size: 32px;
+}
+.Controllers {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.Data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 24px 36px 0px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark-gray-color);
+}
+.Data p {
+  padding: 12px 0;
+  justify-items: center;
+  color: var(--dark-primary-color);
+}
+.Progress {
+  padding: 0px 36px;
+  align-items: center;
+  justify-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.Bar {
+  width: 100%;
+}
+.Progress p {
+  padding: 12px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark-gray-color);
+}
+.BookList {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  flex-wrap: wrap;
+  border-bottom: var(--border);
+  padding: 36px;
+}
