@@ -1,9 +1,9 @@
-import * as React from "react";
 import { useAutocomplete } from "@mui/base/useAutocomplete";
 import { styled } from "@mui/system";
 import classes from "./SearchBar.module.css";
 import { useGetAllListsQuery } from "../../../redux/services/listsApiSlice";
 import { useGetAllBooksQuery } from "../../../redux/services/booksApiSlice";
+import { useNavigate } from "react-router-dom";
 
 const Label = styled("label")({
   display: "block",
@@ -47,8 +47,11 @@ const Listbox = styled("ul")(() => ({
 
     cursor: "pointer",
   },
+  "& li:focus": {
+    backgroundColor: "var(--gray-color)",
+  },
   "& li:active": {
-    backgroundColor: "var(--primary-color",
+    backgroundColor: "var(--primary-color)",
     color: "white",
   },
   "&::-webkit-scrollbar": {
@@ -57,11 +60,35 @@ const Listbox = styled("ul")(() => ({
 }));
 
 export default function SearchBar() {
+  const navigate = useNavigate();
   const { data: lists } = useGetAllListsQuery();
   const { data: books } = useGetAllBooksQuery();
 
-  const results = [...lists ?? [], ...books ?? []].sort();
+  const results = [...lists ?? [], ...books ?? []].sort((a, b) => {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  });
 
+ 
+
+  const goToResult = (option: any) => {
+    if (option.isbn) {
+      navigate(`/books/${option.id}`)
+    } else {
+      navigate(`/lists/${option.id}`)
+    }
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLLIElement>) => {
+    if(e.key==="enter"){
+
+    }
+  }
 
   const {
     getRootProps,
@@ -72,6 +99,10 @@ export default function SearchBar() {
     groupedOptions,
   } = useAutocomplete({
     id: "search-bar",
+    autoComplete: true,
+    autoHighlight: true,
+    autoSelect: true,
+    selectOnFocus: true,
     options: results.slice(0, 7),
     getOptionLabel: (option) => option.title,
   });
@@ -80,12 +111,13 @@ export default function SearchBar() {
     <div>
       <div {...getRootProps()}>
         <Label {...getInputLabelProps()}></Label>
-        <Input {...getInputProps()} placeholder="Search for books and lists" />
+        <Input {...getInputProps()} placeholder="Search for books and lists"/>
       </div>
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
           {(groupedOptions as typeof results).map((option, index) => (
-            <li {...getOptionProps({ option, index })}>{option.title}</li>
+            <li {...getOptionProps({ option, index })} key={index} onClick={() => goToResult(option)}
+            >{option.title}</li>
           ))}
           <button className={classes.More}>See more results</button>
         </Listbox>

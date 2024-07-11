@@ -17,3 +17,7 @@
   background-color: var(--gray-color);
   transition: all 0.3s;
 }
+
+.active {
+  background-color: red;
+}

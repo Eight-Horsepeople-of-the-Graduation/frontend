@@ -75,8 +75,8 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
     <>
       <div className={classes.book} onClick={BookClick} title={book.title}>
         <div className={classes.cover}>
-          {book.cover ? (
-            <img src={book.cover} alt={book.title} />
+          {book.coverPicture ? (
+            <img src={book.coverPicture} alt={book.title} />
           ) : (
             <div className={classes.noCover}>
               <FontAwesomeIcon icon={faBookOpen} />

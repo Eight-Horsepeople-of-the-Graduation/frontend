@@ -14,7 +14,7 @@ export interface Book {
   pdfLink?: string;
   authors: Author[];
   genres: Genre[];
-  cover?: string;
+  coverPicture?: string;
 }
 
 export type CreateBookPayload = Omit<Book, "id">;
