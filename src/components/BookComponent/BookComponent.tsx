@@ -9,11 +9,12 @@ import {
   faBookOpen,
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   openAddBookToListModal,
   openRemoveBookFromListModal,
 } from "../../redux/features/modals/modalsSlice";
+import { useGetListByIdQuery } from "../../redux/services/listsApiSlice";
 
 interface BookProps {
   book: Book;
@@ -23,9 +24,14 @@ interface BookProps {
 const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
+  const { data: list } = useGetListByIdQuery(currentListId ?? 0, {
+    skip: !currentListId,
+  });
   const BookClick = () => navigate(`/books/${book.id}`);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
 
@@ -43,10 +49,11 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
   const removeBookFromList = () => {
     dispatch(
       openRemoveBookFromListModal({
-        bookToRemoveFromListId: book.id,
-        listToRemoveBookFromId: currentListId!,
+        bookId: book.id,
+        listId: currentListId!,
       })
     );
+
     closeMenu();
   };
 
@@ -63,7 +70,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
     },
   ];
 
-  if (currentListId) {
+  if (currentListId && list?.userId === currentUserId) {
     menuOptions.push({
       title: "Remove from list",
       action: removeBookFromList,

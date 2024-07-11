@@ -1,6 +1,6 @@
-import {  dummyChallenges } from "../../../dummyData";
+import { dummyChallenges } from "../../../dummyData";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { closeRemoveBookFromListModal } from "../../../redux/features/modals/modalsSlice";
+import { closeRemoveChallengeModal } from "../../../redux/features/modals/modalsSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useDeleteReadingChallengeMutation } from "../../../redux/services/readingChallengeApiSlice";
 import WarningModal from "../../UI/WarningModal/WarningModal";
@@ -11,14 +11,14 @@ const RemoveChallengeModal = () => {
   );
   const dispatch = useAppDispatch();
   const [removeChallenge, { isSuccess, isError }] =
-      useDeleteReadingChallengeMutation();
+    useDeleteReadingChallengeMutation();
 
-  const closeModal = () => dispatch(closeRemoveBookFromListModal());
+  const closeModal = () => dispatch(closeRemoveChallengeModal());
 
   const onConfirm = async () => {
     if (!challengeID) return;
 
-    await removeChallenge(challengeID );
+    await removeChallenge(challengeID);
 
     if (isSuccess) {
       dispatch(
@@ -45,7 +45,7 @@ const RemoveChallengeModal = () => {
 
   return (
     <WarningModal
-      modalOpen={!!(challengeID)}
+      modalOpen={!!challengeID}
       closeModal={closeModal}
       onConfirm={onConfirm}
       warningMessage={`Are you sure you want to remove ${challenge.title} from your challenges`}
