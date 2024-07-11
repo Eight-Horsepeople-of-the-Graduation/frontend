@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./ReadingChallengeCard.module.css";
 import ProgressBar from "../../../UI/ProgressBar/ProgressBar";
 import { Link } from "react-router-dom";

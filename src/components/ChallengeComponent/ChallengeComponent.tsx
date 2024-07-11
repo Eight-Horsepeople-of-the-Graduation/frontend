@@ -6,7 +6,7 @@ import {
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import BookComponent from "../BookComponent/BookComponent";
 import classes from "./ChallengeComponent.module.css";
-import { Button, IconButton } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { useEditReadingChallengeMutation } from "../../redux/services/readingChallengeApiSlice";
@@ -56,6 +56,7 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
       id: challenge.id,
       challengeData: {
         title: challenge.title,
+        goal: 0,
       },
     });
     if (isError) {
@@ -89,86 +90,102 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
       setISEditngTitle(false);
     }
   });
+  const expired = challenge.hasEnded;
 
   return (
     <div key={challenge.id} className={classes.Container}>
-      <div className={classes.ChallengeHeader}>
-        <h1
-          className={classes.ChallengeTitle}
-          ref={titleRef}
-          contentEditable={isEditingTitle}
-        >
-          {challenge.title}
-        </h1>
-        <div className={classes.Controllers}>
-          <Button
-            title={isEditingTitle ? "Save" : "Edit Challenge name"}
-            aria-label="edit"
-            sx={{
-              fontSize: "24px",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              minWidth: "36px",
-            }}
-            color="primary"
-            onClick={isEditingTitle ? finishEditName : startEditName}
+      <div className={expired ? classes.Expired : ""}>
+        <div className={classes.ChallengeHeader}>
+          <h1
+            className={classes.ChallengeTitle}
+            ref={titleRef}
+            contentEditable={isEditingTitle}
           >
-            {isEditingTitle ? <CheckIcon /> : <EditIcon />}
-          </Button>
-          <IconButton
-            aria-label="delete"
-            sx={{
-              fontSize: "24px",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              minWidth: "36px",
-            }}
-            color="primary"
-            onClick={removeChallenge}
-          >
-            <DeleteIcon />
-          </IconButton>
+            {challenge.title}
+          </h1>
+          <div className={classes.Controllers}>
+            <IconButton
+              title={isEditingTitle ? "Save" : "Edit Challenge name"}
+              aria-label="edit"
+              sx={{
+                fontSize: "24px",
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                minWidth: "36px",
+                color: expired ? "gray" : "primary", // Change background color if expired
+              }}
+              color="primary"
+              onClick={isEditingTitle ? finishEditName : startEditName}
+            >
+              {isEditingTitle ? <CheckIcon /> : <EditIcon />}
+            </IconButton>
+            <IconButton
+              aria-label="delete"
+              sx={{
+                fontSize: "24px",
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                minWidth: "36px",
+                color: expired ? "gray" : "primary", // Change background color if expired
+              }}
+              color="primary"
+              onClick={removeChallenge}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+          {expired && (
+            <div>
+              <Chip label="Expired" />
+            </div>
+          )}
         </div>
-      </div>
-      <div className={classes.Data}>
-        <div>
-          <h3>Started on</h3>
-          <p>
-            {formatISODateToDDMMYYYY?.(challenge.startDate) ||
-              challenge.startDate}
-          </p>
+        <div className={classes.Data}>
+          <div>
+            <h3>Started on</h3>
+            <p className={expired ? classes.Expired : ""}>
+              {formatISODateToDDMMYYYY?.(challenge.startDate) ||
+                challenge.startDate}
+            </p>
+          </div>
+          <div>
+            <h3>{expired ? "Ended on" : "Ends on"}</h3>{" "}
+            <p className={expired ? classes.Expired : ""}>
+              {formatISODateToDDMMYYYY?.(challenge.endDate) ||
+                challenge.endDate}
+            </p>
+          </div>
+          <div>
+            <h3>Type</h3>
+            <p className={expired ? classes.Expired : ""}>
+              {toProperCase(challenge.type)}
+            </p>
+          </div>
+          <div>
+            <h3>Goal</h3>
+            <p className={expired ? classes.Expired : ""}>
+              {challenge.goal === 1 ? "1 book" : challenge.goal + " books"}
+            </p>
+          </div>
         </div>
-        <div>
-          <h3>Ends on</h3>
-          <p>
-            {formatISODateToDDMMYYYY?.(challenge.endDate) || challenge.endDate}
-          </p>
+        <div className={classes.Progress}>
+          <p>Progress:</p>
+          <div className={classes.Bar}>
+            <ProgressBar
+              color={expired ? "gray" : "primary"}
+              progress={
+                ((challenge.books?.length || 0) / (challenge.goal || 1)) * 100
+              }
+            />
+          </div>
         </div>
-        <div>
-          <h3>Type</h3>
-          <p>{toProperCase(challenge.type)}</p>
+        <div className={classes.BookList}>
+          {challenge?.books.map((book) => (
+            <BookComponent key={book.id} book={book} />
+          ))}
         </div>
-        <div>
-          <h3>Goal</h3>
-          <p>{challenge.goal === 1 ? "1 book" : challenge.goal + " books"}</p>
-        </div>
-      </div>
-      <div className={classes.Progress}>
-        <p>Progress:</p>
-        <div className={classes.Bar}>
-          <ProgressBar
-            progress={
-              ((challenge.books?.length || 0) / (challenge.goal || 1)) * 100
-            }
-          />
-        </div>
-      </div>
-      <div className={classes.BookList}>
-        {challenge?.books.map((book) => (
-          <BookComponent key={book.id} book={book} />
-        ))}
       </div>
     </div>
   );

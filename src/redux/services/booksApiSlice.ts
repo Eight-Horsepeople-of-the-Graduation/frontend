@@ -11,13 +11,18 @@ export const booksApi = createApi({
       query() {
         return "books";
       },
-      providesTags: ["books"]
+      providesTags: ["books"],
+    }),
+    getUserBooks: builder.query<Book[], number>({
+      query(userId) {
+        return `users/${userId}/books`;
+      },
     }),
     getBookById: builder.query<Book, number>({
       query(id) {
         return `books/${id}`;
       },
-      providesTags: []
+      providesTags: [],
     }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
@@ -27,7 +32,7 @@ export const booksApi = createApi({
           body: data,
         };
       },
-      invalidatesTags: ['books']
+      invalidatesTags: ["books"],
     }),
     editBook: builder.mutation<Book, { id: string; formData: FormData }>({
       query({ id, formData }) {
@@ -37,7 +42,7 @@ export const booksApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ["books"]
+      invalidatesTags: ["books"],
     }),
     deleteBook: builder.mutation<null, string>({
       query(id) {
@@ -46,7 +51,7 @@ export const booksApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["books"]
+      invalidatesTags: ["books"],
     }),
   }),
 });
@@ -54,6 +59,7 @@ export const booksApi = createApi({
 export const {
   useGetAllBooksQuery,
   useGetBookByIdQuery,
+  useGetUserBooksQuery,
   useCreateBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,
