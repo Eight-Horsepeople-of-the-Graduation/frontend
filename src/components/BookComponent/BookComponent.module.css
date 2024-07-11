@@ -87,9 +87,13 @@
   text-overflow: ellipsis;
 }
 
-.info p {
+.info div {
   font-size: 14px;
   color: var(--dark-gray-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
 
 .info *:hover {

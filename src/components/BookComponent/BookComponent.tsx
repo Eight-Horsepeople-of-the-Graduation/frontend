@@ -14,6 +14,7 @@ import {
   openAddBookToListModal,
   openRemoveBookFromListModal,
 } from "../../redux/features/modals/modalsSlice";
+import { Rating } from "@mui/material";
 
 interface BookProps {
   book: Book;
@@ -97,7 +98,11 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
         </div>
         <div className={classes.info}>
           <h2>{book.title}</h2>
-          {book.authors && <p>{book.authors[0].name}</p>}
+          <div>
+            <p>{book.rating}</p>
+            <Rating name="read-only" max={1} value={1} readOnly size="small" />
+            {true && <p>Test</p>}
+          </div>
         </div>
       </div>
       <Menu

@@ -7,6 +7,7 @@ import ChallengeComponent from "../../../components/ChallengeComponent/Challenge
 import { IconButton } from "@mui/material";
 import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
 import { useGetUserReadingChallengesQuery } from "../../../redux/services/readingChallengeApiSlice";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const AllChallengesPage = () => {
   const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
@@ -24,40 +25,58 @@ const AllChallengesPage = () => {
   return (
     <SidePannelLayout>
       <main style={{ width: "100%" }}>
-        <div className={classes.Header}>
-          <div className={classes.Title}>
-            <p>Your Challenges</p>
-            <IconButton onClick={handleOpenModal}>
-              <AddIcon
-                sx={{
-                  fontSize: "24px",
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
-                  minWidth: "36px",
-                }}
-                color="primary"
-              />
-            </IconButton>
+        {currentUserId === 0 ? (
+          <div className={classes.NotAuthMessage}>
+            <p>Please log in to view your challenges.</p>
+            <img src=""/>
+            <ArrowRightAltIcon
+              sx={{
+                fontSize: "large",
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                minWidth: "36px",
+              }}
+              color="primary"
+            />
           </div>
-          <p>You participated in {userChallenges?.length ?? 0} challenges.</p>
-          {/* <p>You participated in {dummyChallenges.length} challenges.</p> */}
-        </div>
-        {challengeFetched && (
-          <div>
-            {[...userChallenges].map(
-              (challenge) =>
-                challenge && (
-                  <div key={challenge.id}>
-                    <ChallengeComponent
-                      key={challenge.id}
-                      challenge={challenge}
-                      formatISODateToDDMMYYYY={formatISODateToDDMMYYYY}
-                    />
-                  </div>
-                )
+        ) : (
+          <>
+            <div className={classes.Header}>
+              <div className={classes.Title}>
+                <p>Your Challenges</p>
+                <IconButton onClick={handleOpenModal}>
+                  <AddIcon
+                    sx={{
+                      fontSize: "24px",
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      minWidth: "36px",
+                    }}
+                    color="primary"
+                  />
+                </IconButton>
+              </div>
+              <p>
+                You participated in {userChallenges?.length ?? 0} challenges.
+              </p>
+            </div>
+            {challengeFetched && (
+              <div>
+                {userChallenges.map(
+                  (challenge) =>
+                    challenge && (
+                      <ChallengeComponent
+                        key={challenge.id}
+                        challenge={challenge}
+                        formatISODateToDDMMYYYY={formatISODateToDDMMYYYY}
+                      />
+                    )
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </main>
     </SidePannelLayout>

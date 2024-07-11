@@ -16,9 +16,8 @@
     white
   );
   margin-bottom: 30px;
-    padding: 0px auto;
+  padding: 0px auto;
   border-bottom: var(--border);
-
 }
 .Title {
   display: flex;
@@ -29,4 +28,13 @@
   padding: 20px;
   font-weight: 800;
   font-size: 36px;
+}
+.NotAuthMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 4;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 30px;
 }

@@ -20,3 +20,13 @@
   font-weight: 800;
   font-size: 36px;
 }
+.NotAuthMessage {
+  display: flex;
+  flex-direction: row;
+  gap: 4;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 30px;
+  font-weight: 700;
+}
