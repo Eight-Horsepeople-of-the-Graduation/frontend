@@ -15,13 +15,13 @@ export const listsApi = createApi({
       query() {
         return "bookshelves";
       },
-      providesTags: ["lists"]
+      providesTags: ["lists"],
     }),
     getListById: builder.query<List, number>({
       query(id) {
         return `bookshelves/${id}`;
       },
-      providesTags: ["lists"]
+      providesTags: ["lists"],
     }),
     createList: builder.mutation<List, createListPayload>({
       query(data) {
@@ -55,7 +55,10 @@ export const listsApi = createApi({
       },
       invalidatesTags: ["lists"],
     }),
-    addBookToList: builder.mutation<null, { listId: number; bookIds: number[] }>({
+    addBookToList: builder.mutation<
+      null,
+      { listId: number; bookIds: number[] }
+    >({
       query({ listId, bookIds }) {
         return {
           url: `bookshelves/add-books/${listId}`,
@@ -82,7 +85,7 @@ export const listsApi = createApi({
       query(userId) {
         return `bookshelves/user/${userId}`;
       },
-      providesTags: ["lists"]
+      providesTags: ["lists"],
     }),
   }),
 });
