@@ -2,16 +2,17 @@
   display: flex;
   gap: 24px;
   height: fit-content;
-  margin: 30px;
 }
 .reviewContent {
   border: 3px solid var(--dark-gray-color);
   padding: 20px;
-  /*   box-shadow: var(--shadow-near); */
   padding: 12px 24px;
   border-radius: var(--large-border-radius);
   border: var(--border);
   margin-bottom: 24px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 .reviewHeader {
   display: flex;

@@ -4,8 +4,10 @@ export interface Modals {
   createListModalOpen: boolean;
   createChallengeModalOpen: boolean;
   bookToAddToListId?: number;
-  bookToRemoveFromListId?: number;
-  listToRemoveBookFromId?: number;
+  removeBookFromListValues?: {
+    bookId: number;
+    listId: number;
+  };
   isLoading: boolean;
   challengeToRemoveId?: number;
   listToDeleteId?: number;
@@ -15,8 +17,7 @@ const initialState: Modals = {
   createListModalOpen: false,
   createChallengeModalOpen: false,
   bookToAddToListId: undefined,
-  bookToRemoveFromListId: undefined,
-  listToRemoveBookFromId: undefined,
+  removeBookFromListValues: undefined,
   isLoading: false,
   challengeToRemoveId: undefined,
   listToDeleteId: undefined,
@@ -52,16 +53,14 @@ export const modalsSlice = createSlice({
     openRemoveBookFromListModal: (
       state: Modals,
       action: PayloadAction<{
-        bookToRemoveFromListId: number;
-        listToRemoveBookFromId: number;
+        bookId: number;
+        listId: number;
       }>
     ) => {
-      state.bookToRemoveFromListId = action.payload.bookToRemoveFromListId;
-      state.listToRemoveBookFromId = action.payload.listToRemoveBookFromId;
+      state.removeBookFromListValues = action.payload;
     },
     closeRemoveBookFromListModal: (state: Modals) => {
-      state.bookToRemoveFromListId = undefined;
-      state.listToRemoveBookFromId = undefined;
+      state.removeBookFromListValues = undefined;
     },
     openRemoveChallengeModel: (
       state: Modals,
@@ -69,7 +68,7 @@ export const modalsSlice = createSlice({
     ) => {
       state.challengeToRemoveId = action.payload;
     },
-    closeRemoveChallengeModel: (state: Modals) => {
+    closeRemoveChallengeModal: (state: Modals) => {
       state.challengeToRemoveId = undefined;
     },
     openDeleteListModal: (state: Modals, action: PayloadAction<number>) => {
@@ -97,6 +96,7 @@ export const {
   openRemoveBookFromListModal,
   closeRemoveBookFromListModal,
   openRemoveChallengeModel,
+  closeRemoveChallengeModal,
   openDeleteListModal,
   closeDeleteListModal,
   startLoading,

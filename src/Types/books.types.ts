@@ -1,5 +1,6 @@
 import { Author } from "./authors.types";
 import { Genre } from "./genres.types";
+import { User } from "./users.types";
 
 export interface Book {
   id: number;
@@ -16,6 +17,21 @@ export interface Book {
   authors: Author[];
   genres: Genre[];
   coverPicture?: string;
+}
+
+export interface Review {
+  id: number;
+  title: string;
+  description: string;
+  rating: number;
+  createdAt: string;
+  userId: number;
+  bookId: number;
+  user: Omit<
+    User,
+    "id" | "email" | "country" | "gender" | "birthDate" | "joinDate" | "isAdmin"
+  >;
+  book: Book;
 }
 
 export type CreateBookPayload = Omit<Book, "id">;

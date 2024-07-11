@@ -20,16 +20,27 @@ interface FormValues {
 const AddBookToListsModal = () => {
   const dispatch = useAppDispatch();
   const bookId = useAppSelector((state) => state.modals.bookToAddToListId);
-  const { data: book, isSuccess: bookDataFetched } = useGetBookByIdQuery(bookId!, { skip: !bookId });
+  const { data: book, isSuccess: bookDataFetched } = useGetBookByIdQuery(
+    bookId!,
+    { skip: !bookId }
+  );
   const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
 
+  const { data: userLists, isSuccess: userListsFetched } = useGetUserListsQuery(
+    currentUserId,
+    {
+      skip: !currentUserId,
+    }
+  );
 
-  const { data: userLists, isSuccess: userListsFetched } = useGetUserListsQuery(currentUserId, {
-    skip: !currentUserId,
-  });
-
-  const currentBookLists = (bookDataFetched && userListsFetched) ? userLists?.filter(
-    (list) => list.books.includes((list.books.find(book => book.id === bookId) ?? book))) : [];
+  const currentBookLists =
+    bookDataFetched && userListsFetched
+      ? userLists?.filter((list) =>
+          list.books.includes(
+            list.books.find((book) => book.id === bookId) ?? book
+          )
+        )
+      : [];
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -39,11 +50,11 @@ const AddBookToListsModal = () => {
 
   const closeModal = () => dispatch(closeAddBookToListModal());
 
-  const [addBookToList, { isError: ErrorAddingBook,isLoading:isAddingBook }] =
+  const [addBookToList, { isError: ErrorAddingBook, isLoading: isAddingBook }] =
     useAddBookToListMutation();
   const [
     removeBookFromList,
-    { isError: errorRemovingBook,isLoading:isRemovingBook },
+    { isError: errorRemovingBook, isLoading: isRemovingBook },
   ] = useRemoveBookFromListMutation();
 
   const { handleSubmit } = form;
@@ -68,7 +79,6 @@ const AddBookToListsModal = () => {
     const removedListsIds = currentListsIds.filter(
       (id) => !newListsIds.includes(id)
     );
-
     if (addedListsIds.length) {
       addedListsIds.forEach(async (listId) => {
         await addBookToList({ listId, bookIds: [bookId] });
@@ -143,7 +153,7 @@ const AddBookToListsModal = () => {
                 variant="contained"
                 type="submit"
                 color="primary"
-                disabled={isAddingBook  || isRemovingBook}
+                disabled={isAddingBook || isRemovingBook}
               >
                 Add
               </Button>

@@ -24,11 +24,11 @@ const HomePage = () => {
             justifyContent: "center",
           }}
         >
-          <ImageCarousel url={""} />
+          {/* <ImageCarousel url={""} /> */}
         </section>
         {(lists ?? ([] as List[]))
           .filter((list) => list.books.length)
-          .map((list,idx) => (
+          .map((list, idx) => (
             <ListPreview key={idx} list={list} />
           ))}
       </main>

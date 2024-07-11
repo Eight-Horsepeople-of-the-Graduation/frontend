@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import { SignUpUser, User, UserCredintials } from "../../Types/users.types";
 import { setLogedInUser } from "../features/users/authSlice";
+import { startLoading, stopLoading } from "../features/modals/modalsSlice";
+import { showAlert } from "../features/alerts/alertsSlice";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -47,10 +49,25 @@ export const usersApi = createApi({
     signUp: builder.mutation<User, SignUpUser>({
       query(userData) {
         return {
-          url: "users",
+          url: "auth/signup",
           method: "POST",
           body: userData,
         };
+      },
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          dispatch(startLoading());
+          const response = await queryFulfilled;
+          const user = response.data;
+          dispatch(setLogedInUser(user));
+          localStorage.setItem("user", JSON.stringify(user));
+          dispatch(stopLoading());
+        } catch (error) {
+          dispatch(stopLoading());
+          dispatch(
+            showAlert({ message: "something went wrong", severity: "error" })
+          );
+        }
       },
       invalidatesTags: ["users"],
     }),

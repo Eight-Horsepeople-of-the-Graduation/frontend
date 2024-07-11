@@ -7,57 +7,47 @@ import { Button, Rating } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { Review } from "../../Types/books.types";
+import { formatISODateToDDMMYYYY } from "../../helperFuctions/formatISODateToDDMMYYYY";
 //import CheckIcon from "@mui/icons-material/Check";
 //import { useAppDispatch } from "../../../redux/hooks";
 //import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 interface ReviewProps {
-  user: User;
-  rating: number;
-  date: string;
-  text: string;
-  showMore?: boolean; // Optional prop for controlling text visibility
+ review : Review
 }
-const Review: React.FC<ReviewProps> = ({
-  user,
-  rating,
-  date,
-  text,
-  showMore = false,
-}) => {
+const ReviewComponent: React.FC<ReviewProps> = ({review}) => {
 
-  const [isExpanded, setIsExpanded] = useState(showMore);
+  const [isExpanded, setIsExpanded] = useState(false);
   const toggleTextVisibility = () => setIsExpanded(!isExpanded);
-  const reviewText = isExpanded ? text : text.slice(0, 250) + "..."; 
+  const reviewText = isExpanded ? review.description : review.description.slice(0, 201) + "..."; 
 
   //const [isEditingReview, setISEditngReview] = useState(false);
   //const [editReview, { isSuccess, isError }] = useEditListMutation();
 
-  if (!user) return <></>;
-
   return (
     <div className={classes.review}>
       <div>
-        <CustomAvatar user={user} size="m" />
+        <CustomAvatar user={review.user as User} size="m" />
       </div>
       <div className={classes.reviewContent}>
         <div className={classes.reviewHeader}>
           <div className={classes.info}>
-            <span className={classes.reviewName}>{user.name}</span>
+            <span className={classes.reviewName}>{review.user.name}</span>
             <div className={classes.reviewRating}>
               <Rating
                 name="read-only"
-                value={rating}
+                value={review.rating}
                 readOnly
                 precision={0.5}
               />
             </div>
           </div>
-          <span className={classes.reviewDate}>{date}</span>
+          <span className={classes.reviewDate}>{formatISODateToDDMMYYYY(review.createdAt)}</span>
         </div>
         <div className={classes.reviewText}>{reviewText}</div>
         <div className={classes.buttons}>
-          {text.length > 100 && (
+          {review.description.length >= 200 && (
             <Button
               variant="text"
               size="small"
@@ -89,4 +79,4 @@ const Review: React.FC<ReviewProps> = ({
   );
 };
 
-export default Review;
+export default ReviewComponent;

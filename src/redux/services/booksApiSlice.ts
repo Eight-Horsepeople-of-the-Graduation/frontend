@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { Book } from "../../Types/books.types";
+import { Book, Review } from "../../Types/books.types";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["books"],
+  tagTypes: ["books", "reviews"],
   endpoints: (builder) => ({
     getAllBooks: builder.query<Book[], void>({
       query() {
@@ -23,6 +23,12 @@ export const booksApi = createApi({
         return `books/${id}`;
       },
       providesTags: [],
+    }),
+    getBookReviews: builder.query<Review[], number>({
+      query(bookId) {
+        return `books/${bookId}/reviews`;
+      },
+      providesTags: ["reviews"],
     }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
@@ -63,4 +69,5 @@ export const {
   useCreateBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,
+  useGetBookReviewsQuery,
 } = booksApi;

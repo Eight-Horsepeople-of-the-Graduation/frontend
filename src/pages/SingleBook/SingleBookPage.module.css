@@ -101,3 +101,7 @@
 .Desc p:hover::-webkit-scrollbar {
   display: block;
 }
+.ReviewSection{
+  width: 100%;
+  padding: 46px 256px;
+}

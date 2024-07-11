@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { useGetBookByIdQuery } from "../../redux/services/booksApiSlice";
+import { useGetBookByIdQuery, useGetBookReviewsQuery } from "../../redux/services/booksApiSlice";
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
@@ -15,6 +15,7 @@ import {
   stopLoading,
 } from "../../redux/features/modals/modalsSlice";
 import ChatSection from "./ChatSection/ChatSection";
+import ReviewComponent from "../../components/Review/Review";
 
 const SingleBookPage = () => {
   document.title = "Readify";
@@ -32,7 +33,7 @@ const SingleBookPage = () => {
     isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
-
+  const { data: reviews } = useGetBookReviewsQuery(+bookId!, { skip: !bookId });
 
   if (isError) {
     dispatch(stopLoading());
@@ -51,6 +52,8 @@ const SingleBookPage = () => {
   if (isSuccess) {
     document.title = `Readify | ${book.title}`;
     dispatch(stopLoading());
+
+
     return (
       <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
         <main style={{ width: "100%" }}>
@@ -66,9 +69,17 @@ const SingleBookPage = () => {
               <div>
                 <div className={classes.Title}>
                   <h1>{book.title}</h1>
-                  <Button onClick={() => dispatch(openAddBookToListModal({
-                    bookToAddToListId: book.id
-                  }))} variant="contained" title="Add to list">
+                  <Button
+                    onClick={() =>
+                      dispatch(
+                        openAddBookToListModal({
+                          bookToAddToListId: book.id,
+                        })
+                      )
+                    }
+                    variant="contained"
+                    title="Add to list"
+                  >
                     +
                   </Button>
                 </div>
@@ -104,6 +115,11 @@ const SingleBookPage = () => {
           )}
 
           {user && <ChatSection user={user} book={book} />}
+          <section className={classes.ReviewSection}>
+           {reviews?.map((review) =>
+            <ReviewComponent review={review} key={review.id}/>
+            )}
+          </section>
         </main>
       </SidePannelLayout>
     );
