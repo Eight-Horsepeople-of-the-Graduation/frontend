@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { SignUpUser, User, UserCredintials } from "../../Types/users.types";
+import {
+  LoginRespose,
+  SignUpUser,
+  User,
+  UserCredintials,
+} from "../../Types/users.types";
 import { setLogedInUser } from "../features/users/authSlice";
 import { startLoading, stopLoading } from "../features/modals/modalsSlice";
 import { showAlert } from "../features/alerts/alertsSlice";
@@ -27,7 +32,7 @@ export const usersApi = createApi({
       },
       providesTags: ["users"],
     }),
-    logIn: builder.mutation<User, UserCredintials>({
+    logIn: builder.mutation<LoginRespose, UserCredintials>({
       query(loginData) {
         return {
           url: "auth/login",
@@ -39,10 +44,12 @@ export const usersApi = createApi({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const response = await queryFulfilled;
-          localStorage.setItem("user", JSON.stringify(response.data));
-          dispatch(setLogedInUser(response.data));
+          localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          dispatch(setLogedInUser(response.data.user));
         } catch (error) {
           localStorage.removeItem("user");
+          localStorage.removeItem("tokens");
         }
       },
     }),

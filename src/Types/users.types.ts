@@ -1,5 +1,10 @@
 export type Gender = "MALE" | "FEMALE";
 
+export interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -13,6 +18,10 @@ export interface User {
   isAdmin: boolean;
 }
 
+export interface LoginRespose{
+  user: User;
+  tokens: Tokens;
+} 
 export interface UserCredintials {
   email: string;
   password: string;

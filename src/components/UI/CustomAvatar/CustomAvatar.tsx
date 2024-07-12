@@ -1,4 +1,3 @@
-import React from "react";
 import { Avatar, SxProps, Theme } from "@mui/material";
 import classes from "./CustomAvatar.module.css";
 import { User } from "../../../Types/users.types";
@@ -15,44 +14,47 @@ const avatarSizes = {
   l: "192px",
 };
 
-function stringToColor(string: string) {
+function stringToColor(string: string): string {
   let hash = 0;
-  let i;
 
-  for (i = 0; i < string.length; i += 1) {
+  for (let i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
   let color = "#";
 
-  for (i = 0; i < 3; i += 1) {
+  for (let i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
 
   return color;
 }
-function stringAvatar(name: string) {
-  let aprev = "";
 
-  if (name.includes(" "))
-    aprev = `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
-  else aprev = name.slice(0, 2);
+function stringAvatar(name: string) {
+  const initials = name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2);
+
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: aprev,
+    children: initials,
   };
 }
 
-const CustomAvatar = ({ user, size, style }: CustomAvatarProps) => {
+const CustomAvatar = ({ user, size = "m", style }: CustomAvatarProps) => {
+  const avatarProps = stringAvatar(user.name ?? user.username);
+
   return (
     <Avatar
-      {...stringAvatar(user.name ?? user.username)}
+      {...avatarProps}
       sx={{
-        width: avatarSizes[size ?? "m"],
-        height: avatarSizes[size ?? "m"],
+        width: avatarSizes[size],
+        height: avatarSizes[size],
         ...style,
       }}
       className={classes.avatar}
