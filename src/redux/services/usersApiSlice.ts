@@ -46,6 +46,8 @@ export const usersApi = createApi({
           const response = await queryFulfilled;
           localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
           localStorage.setItem("user", JSON.stringify(response.data.user));
+          document.cookie = `accessToken = ${response.data.tokens.accessToken}`;
+          document.cookie = `refreshToken = ${response.data.tokens.refreshToken}`;
           dispatch(setLogedInUser(response.data.user));
         } catch (error) {
           localStorage.removeItem("user");
@@ -78,11 +80,19 @@ export const usersApi = createApi({
       },
       invalidatesTags: ["users"],
     }),
+    logout: builder.mutation<void, void>({
+      query() {
+        return {
+          url: "auth/logout",
+          method: "DELETE",
+        };
+      },
+    }),
     editUser: builder.mutation<User, { id: string; info: FormData }>({
       query({ id, info }) {
         return {
           url: `users/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: info,
         };
       },
@@ -106,6 +116,7 @@ export const {
   useGetUserByUsernameQuery,
   useLogInMutation,
   useSignUpMutation,
+  useLogoutMutation,
   useEditUserMutation,
   useRemoveUserByIdMutation,
 } = usersApi;

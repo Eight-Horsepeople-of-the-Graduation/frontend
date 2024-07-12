@@ -42,7 +42,7 @@ export const listsApi = createApi({
       query({ id, listData }) {
         return {
           url: `bookshelves/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: listData,
         };
       },

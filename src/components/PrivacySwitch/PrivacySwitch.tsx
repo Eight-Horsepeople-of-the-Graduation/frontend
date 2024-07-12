@@ -5,7 +5,10 @@ import { useEditListMutation } from "../../redux/services/listsApiSlice";
 import { List } from "../../Types/lists.types";
 import { useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
-import { startLoading, stopLoading } from "../../redux/features/modals/modalsSlice";
+import {
+  startLoading,
+  stopLoading,
+} from "../../redux/features/modals/modalsSlice";
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 interface SwitchProps {
   list: List;
@@ -75,7 +78,14 @@ export default function PrivacySwitch({ list }: SwitchProps) {
 
     const newPrivacy = isPrivate ? "PUBLIC" : "PRIVATE";
 
-    await editList({ id: list.id, listData: { title: list.title, description: list.description, privacy: newPrivacy } });
+    await editList({
+      id: list.id,
+      listData: {
+        title: list.title,
+        description: list.description,
+        privacy: newPrivacy,
+      },
+    });
 
     if (isError) {
       dispatch(
@@ -90,7 +100,7 @@ export default function PrivacySwitch({ list }: SwitchProps) {
           severity: "success",
         })
       );
-      setIsPrivate(prev => !prev);
+      setIsPrivate((prev) => !prev);
     }
 
     dispatch(stopLoading());
@@ -99,7 +109,12 @@ export default function PrivacySwitch({ list }: SwitchProps) {
   return (
     <div>
       <FormControlLabel
-        control={<MaterialUISwitch checked={isPrivate} onChange={handleChangePrivacy} />}
+        control={
+          <MaterialUISwitch
+            checked={isPrivate}
+            onChange={handleChangePrivacy}
+          />
+        }
         label={isPrivate ? "Private" : "Public"}
       />
     </div>

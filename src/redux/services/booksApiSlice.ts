@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { Book, Review } from "../../Types/books.types";
+import { AddReview, Book, Review } from "../../Types/books.types";
+import { showAlert } from "../features/alerts/alertsSlice";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
@@ -24,12 +25,6 @@ export const booksApi = createApi({
       },
       providesTags: [],
     }),
-    getBookReviews: builder.query<Review[], number>({
-      query(bookId) {
-        return `books/${bookId}/reviews`;
-      },
-      providesTags: ["reviews"],
-    }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
         return {
@@ -44,7 +39,7 @@ export const booksApi = createApi({
       query({ id, formData }) {
         return {
           url: `books/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: formData,
         };
       },
@@ -59,6 +54,43 @@ export const booksApi = createApi({
       },
       invalidatesTags: ["books"],
     }),
+    getBookReviews: builder.query<Review[], number>({
+      query(bookId) {
+        return `books/${bookId}/reviews`;
+      },
+      providesTags: ["reviews"],
+    }),
+    addReview: builder.mutation<Review, AddReview>({
+      query(data) {
+        return {
+          url: `reviews`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews"],
+    }),
+    deleteReview: builder.mutation<Review, number>({
+      query(reviewId) {
+        return {
+          url: `reviews/${reviewId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["reviews"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(
+            showAlert({ message: "Review is deleted", severity: "success" })
+          );
+        } catch (e) {
+          dispatch(
+            showAlert({ message: "Error deleting review", severity: "error" })
+          );
+        }
+      },
+    }),
   }),
 });
 
@@ -70,4 +102,6 @@ export const {
   useEditBookMutation,
   useDeleteBookMutation,
   useGetBookReviewsQuery,
+  useAddReviewMutation,
+  useDeleteReviewMutation,
 } = booksApi;

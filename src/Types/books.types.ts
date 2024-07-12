@@ -34,6 +34,8 @@ export interface Review {
   book: Book;
 }
 
+export type AddReview = Omit<Review, "id" | "createdAt" | "user" | "book">;
+
 export type CreateBookPayload = Omit<Book, "id">;
 
 export type UpdateBookPayload = Partial<CreateBookPayload>;

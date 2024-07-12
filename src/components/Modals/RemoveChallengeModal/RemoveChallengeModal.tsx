@@ -11,7 +11,7 @@ const RemoveChallengeModal = () => {
   const challengeID =
     useAppSelector((state) => state.modals.challengeToRemoveId) ?? 0;
 
-  const { data: challenge } = useGetReadingChallengeByIdQuery(challengeID!, {
+  const { data: challenge } = useGetReadingChallengeByIdQuery(challengeID, {
     skip: !challengeID,
   });
   const dispatch = useAppDispatch();

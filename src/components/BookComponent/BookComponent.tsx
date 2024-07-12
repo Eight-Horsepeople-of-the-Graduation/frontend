@@ -79,6 +79,10 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
     });
   }
 
+  const authorsNames = book.authors
+    ? book.authors.map((author) => author.name).join(", ")
+    : "";
+
   return (
     <>
       <div className={classes.book} onClick={BookClick} title={book.title}>
@@ -108,7 +112,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
           <div>
             <p>{book.rating}</p>
             <Rating name="read-only" max={1} value={1} readOnly size="small" />
-            {true && <p>Test</p>}
+            {book.authors && <p>{authorsNames}</p>}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { User } from "../../Types/users.types";
 //import { useAppSelector } from "../../redux/hooks";
 import CustomAvatar from "../UI/CustomAvatar/CustomAvatar";
@@ -9,21 +9,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Review } from "../../Types/books.types";
 import { formatISODateToDDMMYYYY } from "../../helperFuctions/formatISODateToDDMMYYYY";
+import { useAppSelector } from "../../redux/hooks";
+import { useDeleteReviewMutation } from "../../redux/services/booksApiSlice";
 //import CheckIcon from "@mui/icons-material/Check";
 //import { useAppDispatch } from "../../../redux/hooks";
 //import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
 interface ReviewProps {
- review : Review
+  review: Review;
+  editReview: React.Dispatch<SetStateAction<number>>;
 }
-const ReviewComponent: React.FC<ReviewProps> = ({review}) => {
-
+const ReviewComponent: React.FC<ReviewProps> = ({ review, editReview }) => {
+  const currentUserId = useAppSelector((state) => state.authUser.user)?.id ?? 0;
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleTextVisibility = () => setIsExpanded(!isExpanded);
-  const reviewText = isExpanded ? review.description : review.description.slice(0, 201) + "..."; 
+  const reviewText =
+    isExpanded || review.description.length < 200
+      ? review.description
+      : review.description.slice(0, 201) + "...";
 
-  //const [isEditingReview, setISEditngReview] = useState(false);
-  //const [editReview, { isSuccess, isError }] = useEditListMutation();
+  const [deleteReview] = useDeleteReviewMutation();
 
   return (
     <div className={classes.review}>
@@ -43,7 +48,9 @@ const ReviewComponent: React.FC<ReviewProps> = ({review}) => {
               />
             </div>
           </div>
-          <span className={classes.reviewDate}>{formatISODateToDDMMYYYY(review.createdAt)}</span>
+          <span className={classes.reviewDate}>
+            {formatISODateToDDMMYYYY(review.createdAt)}
+          </span>
         </div>
         <div className={classes.reviewText}>{reviewText}</div>
         <div className={classes.buttons}>
@@ -59,20 +66,27 @@ const ReviewComponent: React.FC<ReviewProps> = ({review}) => {
             </Button>
           )}
 
-          <div className={classes.iconButtons}>
-            <IconButton aria-label="delete" size="small" color="primary">
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              // title={isEditingReview ? "Save" : "Edit list name"}
-              aria-label="edit"
-              size="small"
-              color="primary"
-              //onClick={isEditingName ? finishEditName : startEditName}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          </div>
+          {review.userId === currentUserId && (
+            <div className={classes.iconButtons}>
+              <IconButton
+                aria-label="delete"
+                size="small"
+                color="primary"
+                onClick={() => deleteReview(review.id)}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                title="Edit review"
+                aria-label="edit"
+                size="small"
+                color="primary"
+                onClick={() => editReview(review.id)}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -14,8 +14,9 @@ import AuthSwitch from "./Auth/AuthSwitch";
 import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
 import { List } from "../../Types/lists.types";
 import { Button } from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
+import { useLogoutMutation } from "../../redux/services/usersApiSlice";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -30,6 +31,13 @@ const navItems = [
 const SidePannel = ({ isHiden }: SidePannelProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
+
+  const [sendLogoutRequest] = useLogoutMutation();
+
+  const logoutUser = async () => {
+    dispatch(logout());
+    await sendLogoutRequest();
+  };
 
   const { data: lists, isSuccess } = useGetUserListsQuery(user?.id ?? 0);
 
@@ -63,11 +71,10 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
                 minWidth: "36px",
               }}
               color="error"
-              onClick={()=> dispatch(logout())}
+              onClick={logoutUser}
             >
               <LogoutIcon />
             </Button>
-
           </div>
 
           <ReadingChallenge />

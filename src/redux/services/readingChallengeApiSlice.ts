@@ -42,7 +42,7 @@ export const readingChallengeApi = createApi({
       query({ id, challengeData }) {
         return {
           url: `reading-challenges/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: challengeData,
         };
       },
