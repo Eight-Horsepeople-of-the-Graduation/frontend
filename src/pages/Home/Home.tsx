@@ -24,7 +24,7 @@ const HomePage = () => {
             justifyContent: "center",
           }}
         >
-          {/* <ImageCarousel url={""} /> */}
+          <ImageCarousel />
         </section>
         {(lists ?? ([] as List[]))
           .filter((list) => list.books.length)
