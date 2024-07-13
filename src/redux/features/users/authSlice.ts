@@ -3,11 +3,11 @@ import { User } from "../../../Types/users.types";
 // import { dummyUser } from "../../../dummyData";
 
 interface AuthState {
-  user?: User | null;
+  user?: User;
 }
 
 const currentUser = localStorage.getItem("user");
-const user = currentUser ? (JSON.parse(currentUser) as User) : null;
+const user = currentUser ? (JSON.parse(currentUser) as User) : undefined;
 
 const initialState: AuthState = {
   user,
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
     logout: () => {
       localStorage.removeItem("user");
       location.reload();
-      return initialState
+      return initialState;
     },
     setLogedInUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;

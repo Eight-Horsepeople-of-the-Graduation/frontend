@@ -32,6 +32,7 @@ function stringToColor(string: string): string {
 }
 
 function stringAvatar(name: string) {
+  if (!name) return { sx: { bgcolor: "#000" }, children: "U" };
   const initials = name
     .split(" ")
     .map((word) => word[0])

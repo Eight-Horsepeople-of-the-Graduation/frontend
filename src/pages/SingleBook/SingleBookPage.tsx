@@ -20,7 +20,7 @@ import {
 import ChatSection from "./ChatSection/ChatSection";
 import ReviewComponent from "../../components/Review/Review";
 import AddReviewComponent from "../../components/Review/AddReview/AddReview";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SingleBookPage = () => {
   document.title = "Readify";
