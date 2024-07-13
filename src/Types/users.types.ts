@@ -18,10 +18,10 @@ export interface User {
   isAdmin: boolean;
 }
 
-export interface LoginRespose{
+export interface AuthResponse {
   user: User;
   tokens: Tokens;
-} 
+}
 export interface UserCredintials {
   email: string;
   password: string;

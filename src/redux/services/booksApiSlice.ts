@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { AddReview, Book, Review } from "../../Types/books.types";
+import {
+  AddReview,
+  Book,
+  EditReviewContentPayload,
+  EditReviewRatingPayload,
+  Review,
+} from "../../Types/books.types";
 import { showAlert } from "../features/alerts/alertsSlice";
 
 export const booksApi = createApi({
@@ -70,6 +76,26 @@ export const booksApi = createApi({
       },
       invalidatesTags: ["reviews"],
     }),
+    editReviewContent: builder.mutation<Review, EditReviewContentPayload>({
+      query(data) {
+        return {
+          url: `reviews/${data.id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews"],
+    }),
+    editReviewRating: builder.mutation<Review, EditReviewRatingPayload>({
+      query(data) {
+        return {
+          url: `reviews/${data.id}/rating`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews"],
+    }),
     deleteReview: builder.mutation<Review, number>({
       query(reviewId) {
         return {
@@ -103,5 +129,7 @@ export const {
   useDeleteBookMutation,
   useGetBookReviewsQuery,
   useAddReviewMutation,
+  useEditReviewContentMutation,
+  useEditReviewRatingMutation,
   useDeleteReviewMutation,
 } = booksApi;

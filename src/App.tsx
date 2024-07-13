@@ -6,9 +6,7 @@ import LibraryPage from "./pages/MyBooks/LibraryPage";
 import SingleBookPage from "./pages/SingleBook/SingleBookPage";
 import SingleListPage from "./pages/Lists/SingleList/SingleListPage";
 import PageNotFoundPage from "./pages/PageNotFound/PageNotFoundPage";
-import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingPage/CurrentlyReadingPage";
-import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage/WantToReadPage";
-import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage/DoneReadingPage";
+import WantToReadPage from "./pages/Lists/SingleList/SpecialLists/WantToReadPage";
 import CustomAlert from "./components/UI/CustomAlert/CustomAlert";
 import AllChallengesPage from "./pages/ReadingChallenges/AllChallengesPage/AllChallengesPage";
 import CreateListModal from "./components/Modals/CreateListModal/CreateListModal";
@@ -20,6 +18,8 @@ import EditProfilePage from "./pages/Profile/EditProfilePage/EditProfilePage";
 import { useAppSelector } from "./redux/hooks";
 import RemoveChallengeModal from "./components/Modals/RemoveChallengeModal/RemoveChallengeModal";
 import DeleteListModal from "./components/Modals/DeleteListModal/DeleteListModal";
+import CurrentlyReadingPage from "./pages/Lists/SingleList/SpecialLists/CurrentlyReadingList";
+import DoneReadingPage from "./pages/Lists/SingleList/SpecialLists/DoneReadingPage";
 
 function App() {
   const modalsStates = useAppSelector((state) => state.modals);

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import {
-  LoginRespose,
+  AuthResponse,
   SignUpUser,
   User,
   UserCredintials,
@@ -32,7 +32,7 @@ export const usersApi = createApi({
       },
       providesTags: ["users"],
     }),
-    logIn: builder.mutation<LoginRespose, UserCredintials>({
+    logIn: builder.mutation<AuthResponse, UserCredintials>({
       query(loginData) {
         return {
           url: "auth/login",
@@ -55,7 +55,7 @@ export const usersApi = createApi({
         }
       },
     }),
-    signUp: builder.mutation<User, SignUpUser>({
+    signUp: builder.mutation<AuthResponse, SignUpUser>({
       query(userData) {
         return {
           url: "auth/signup",
@@ -67,9 +67,10 @@ export const usersApi = createApi({
         try {
           dispatch(startLoading());
           const response = await queryFulfilled;
-          const user = response.data;
-          dispatch(setLogedInUser(user));
-          localStorage.setItem("user", JSON.stringify(user));
+          const data = response.data;
+          dispatch(setLogedInUser(data.user));
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("tokens", JSON.stringify(data.tokens));
           dispatch(stopLoading());
         } catch (error) {
           dispatch(stopLoading());

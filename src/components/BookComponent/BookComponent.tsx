@@ -15,7 +15,12 @@ import {
   openRemoveBookFromListModal,
 } from "../../redux/features/modals/modalsSlice";
 import { Rating } from "@mui/material";
-import { useGetListByIdQuery } from "../../redux/services/listsApiSlice";
+import {
+  useAddBookToListMutation,
+  useGetListByIdQuery,
+  useGetUserListsQuery,
+} from "../../redux/services/listsApiSlice";
+import { showAlert } from "../../redux/features/alerts/alertsSlice";
 
 interface BookProps {
   book: Book;
@@ -29,22 +34,92 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
   const { data: list } = useGetListByIdQuery(currentListId ?? 0, {
     skip: !currentListId,
   });
+  const { data: lists } = useGetUserListsQuery(currentUserId ?? 0, {
+    skip: !currentUserId,
+  });
+
+  const wantToReadList = lists?.find(
+    (list) => list.title.toLowerCase() === "want to read"
+  );
+
+  const currentlyReadingList = lists?.find(
+    (list) => list.title.toLowerCase() === "currently reading"
+  );
+
+  const doneReadingList = lists?.find(
+    (list) => list.title.toLowerCase() === "done reading"
+  );
+
   const BookClick = () => navigate(`/books/${book.id}`);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const [addBookToList] = useAddBookToListMutation();
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChooseOption = (action: () => void) => {
+    action();
+    closeMenu();
+  };
+
+  const markAsWantToRead = async () => {
+    const listId = wantToReadList?.id;
+
+    if (!listId) {
+      dispatch(
+        showAlert({ message: "Something went wrong", severity: "error" })
+      );
+      return;
+    }
+
+    await addBookToList({
+      listId,
+      bookIds: [book.id],
+    });
+  };
+
+  const markAsReading = async () => {
+    const listId = currentlyReadingList?.id;
+
+    if (!listId) {
+      dispatch(
+        showAlert({ message: "Something went wrong", severity: "error" })
+      );
+      return;
+    }
+
+    await addBookToList({
+      listId,
+      bookIds: [book.id],
+    });
+  };
+
+  const markAsDoneReading = async () => {
+    const listId = doneReadingList?.id;
+    if (!listId) {
+      dispatch(
+        showAlert({ message: "Something went wrong", severity: "error" })
+      );
+      return;
+    }
+
+    await addBookToList({
+      listId,
+      bookIds: [book.id],
+    });
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
 
     setAnchorEl(event.currentTarget);
   };
-  const closeMenu = () => {
-    setAnchorEl(null);
-  };
 
-  const addBookToList = () => {
+  const openAddToListsModal = () => {
     dispatch(openAddBookToListModal({ bookToAddToListId: book.id }));
-    closeMenu();
   };
 
   const removeBookFromList = () => {
@@ -54,8 +129,6 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
         listId: currentListId!,
       })
     );
-
-    closeMenu();
   };
 
   interface MenuOption {
@@ -64,17 +137,39 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
     variant?: "default" | "danger";
   }
 
-  const menuOptions: MenuOption[] = [
-    {
-      title: "Add to lists",
-      action: addBookToList,
-    },
-  ];
+  const menuOptions: MenuOption[] = [];
+
+  if (!wantToReadList?.books.find((listBook) => listBook.id === book.id)) {
+    menuOptions.push({
+      title: "Mark as want to read",
+      action: () => handleChooseOption(markAsWantToRead),
+    });
+  }
+  if (
+    !currentlyReadingList?.books.find((listBook) => listBook.id === book.id)
+  ) {
+    menuOptions.push({
+      title: "Mark as reading",
+      action: () => handleChooseOption(markAsReading),
+    });
+  }
+
+  if (!doneReadingList?.books.find((listBook) => listBook.id === book.id)) {
+    menuOptions.push({
+      title: "Mark as done",
+      action: () => handleChooseOption(markAsDoneReading),
+    });
+  }
+
+  menuOptions.push({
+    title: "Add to lists",
+    action: () => handleChooseOption(openAddToListsModal),
+  });
 
   if (currentListId && list?.userId === currentUserId) {
     menuOptions.push({
       title: "Remove from list",
-      action: removeBookFromList,
+      action: () => handleChooseOption(removeBookFromList),
       variant: "danger",
     });
   }
@@ -110,7 +205,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
         <div className={classes.info}>
           <h2>{book.title}</h2>
           <div>
-            <p>{book.rating}</p>
+            <p>{book.rating.toFixed(1)}</p>
             <Rating name="read-only" max={1} value={1} readOnly size="small" />
             {book.authors && <p>{authorsNames}</p>}
           </div>

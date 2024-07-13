@@ -2,7 +2,16 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import classes from "./EditProfilePage.module.css";
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import CustomAvatar from "../../../components/UI/CustomAvatar/CustomAvatar";
@@ -13,6 +22,17 @@ import {
   stopLoading,
 } from "../../../redux/features/modals/modalsSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import CountrySelector from "../../../components/UI/CountrySelector/CountrySelector";
+import dayjs, { Dayjs } from "dayjs";
+
+const genders = [
+  { value: "MALE", title: "Male" },
+  { value: "FEMALE", title: "Female" },
+];
 
 const EditProfilePage = () => {
   document.title = `Readify | Edit profile`;
@@ -22,15 +42,23 @@ const EditProfilePage = () => {
   const user = useAppSelector((state) => state.authUser.user);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
   const [enableChangePassword, setEnableChangePassword] = useState(false);
+  const [birthdate, setbirthdate] = useState<Dayjs | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-  } = useForm({ defaultValues: user! });
+  } = useForm<User>({
+    defaultValues: {
+      profilePicture: user?.profilePicture,
+      name: user?.name,
+      username: user?.username,
+      email: user?.email,
+      gender: "MALE",
+      country: user?.country,
+    },
+  });
 
   const [editUser, { isSuccess, isError }] = useEditUserMutation();
 
@@ -44,12 +72,13 @@ const EditProfilePage = () => {
 
   useEffect(() => {
     if (user) {
-      setValue("profilePicture", user.profilePicture ?? "");
-      setValue("name", user.name ?? "");
-      setValue("username", user.username ?? "");
-      setValue("email", user.email ?? "");
+      const userBirthdate = user?.birthDate
+        ? dayjs(new Date(user?.birthDate))
+        : null;
+
+      setbirthdate(userBirthdate);
     }
-  }, [user, setValue]);
+  }, [user]);
 
   if (!user) return <Navigate to="/" />;
 
@@ -151,6 +180,49 @@ const EditProfilePage = () => {
         </div>
 
         <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                sx={{
+                  width: "100%",
+                  "& > div ": {
+                    borderRadius: "var(--large-border-radius)",
+                  },
+                }}
+                label="Birthdate"
+                format="DD/MM/YYYY"
+                value={birthdate}
+                onChange={(newValue) => setbirthdate(newValue)}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+
+        <div>
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">Gender</InputLabel>
+
+            <Select
+              fullWidth
+              labelId="gender-label"
+              id="gender"
+              label="Gender"
+              {...register("gender")}
+            >
+              {genders.map((option, idx) => (
+                <MenuItem value={option.value} key={idx}>
+                  {option.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+
+        <div>
+          <CountrySelector register={{ ...register("country") }} />
+        </div>
+
+        <div>
           <FormControlLabel
             control={
               <Checkbox
@@ -198,7 +270,7 @@ const EditProfilePage = () => {
             variant="contained"
             color="success"
             style={{
-              color: "white"
+              color: "white",
             }}
           >
             Save Changes

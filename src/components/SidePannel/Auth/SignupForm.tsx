@@ -12,9 +12,7 @@ import classes from "./Auth.module.css";
 import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
 import { SignUpUser } from "../../../Types/users.types";
 import { useAppDispatch } from "../../../redux/hooks";
-import {
-  startLoading,
-} from "../../../redux/features/modals/modalsSlice";
+import { startLoading } from "../../../redux/features/modals/modalsSlice";
 import CountrySelector from "../../UI/CountrySelector/CountrySelector";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -62,7 +60,6 @@ const SignupForm = () => {
     };
 
     await signUp(newUserData);
-
   };
 
   return (
@@ -140,6 +137,12 @@ const SignupForm = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DatePicker"]}>
             <DatePicker
+              sx={{
+                width: "100%",
+                "& > div ": {
+                  borderRadius: "var(--large-border-radius)",
+                },
+              }}
               label="Birthdate"
               format="DD/MM/YYYY"
               value={birthdate}

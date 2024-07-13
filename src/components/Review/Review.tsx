@@ -28,7 +28,8 @@ const ReviewComponent: React.FC<ReviewProps> = ({ review, editReview }) => {
       ? review.description
       : review.description.slice(0, 201) + "...";
 
-  const [deleteReview] = useDeleteReviewMutation();
+  const [deleteReview, { isLoading: isDeletingReview }] =
+    useDeleteReviewMutation();
 
   return (
     <div className={classes.review}>
@@ -72,6 +73,7 @@ const ReviewComponent: React.FC<ReviewProps> = ({ review, editReview }) => {
                 aria-label="delete"
                 size="small"
                 color="primary"
+                disabled={isDeletingReview}
                 onClick={() => deleteReview(review.id)}
               >
                 <DeleteIcon fontSize="small" />

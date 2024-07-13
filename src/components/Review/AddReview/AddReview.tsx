@@ -1,14 +1,23 @@
 import classes from "../Review.module.css";
 import { Button, Rating, TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { AddReview, Review } from "../../../Types/books.types";
+import {
+  AddReview,
+  EditReviewContentPayload,
+  EditReviewRatingPayload,
+  Review,
+} from "../../../Types/books.types";
 import CustomAvatar from "../../UI/CustomAvatar/CustomAvatar";
 import { useAppSelector } from "../../../redux/hooks";
 import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
 import CheckIcon from "@mui/icons-material/Check";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useAddReviewMutation } from "../../../redux/services/booksApiSlice";
+import {
+  useAddReviewMutation,
+  useEditReviewContentMutation,
+  useEditReviewRatingMutation,
+} from "../../../redux/services/booksApiSlice";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 
@@ -34,6 +43,11 @@ const AddReviewComponent: React.FC<AddReviewProps> = ({
   const [addNewReview, { isSuccess, isError, isLoading }] =
     useAddReviewMutation();
 
+  const [editReviewContent, { isLoading: isEditingContent }] =
+    useEditReviewContentMutation();
+  const [editReviewRating, { isLoading: isEditingRating }] =
+    useEditReviewRatingMutation();
+
   const handleChangeRating = (value: number | null) => {
     if (value) setRating(value);
   };
@@ -48,9 +62,27 @@ const AddReviewComponent: React.FC<AddReviewProps> = ({
 
   const onSubmit = async (data: formData) => {
     if (reviewToEdit) {
-      return;
+      if (data.description !== reviewToEdit.description) {
+        const newReviewContent: EditReviewContentPayload = {
+          id: reviewToEdit.id,
+          description: data.description,
+          title: user!.name,
+        };
+
+        await editReviewContent(newReviewContent);
+      }
+
+      if (rating !== reviewToEdit.rating) {
+        const newReviewRating: EditReviewRatingPayload = {
+          rating,
+          bookId,
+          id: reviewToEdit.id,
+        };
+
+        await editReviewRating(newReviewRating);
+      }
+      doneEditing && doneEditing();
     } else {
-      console.log(bookId);
       const newReview: AddReview = {
         bookId,
         rating,
@@ -106,11 +138,12 @@ const AddReviewComponent: React.FC<AddReviewProps> = ({
         <div className={classes.buttons}>
           {reviewToEdit ? (
             <IconButton
+              type="submit"
               title="Done Editing"
               aria-label="Done"
               size="small"
               color="primary"
-              onClick={doneEditing}
+              disabled={isEditingContent || isEditingRating}
             >
               <CheckIcon fontSize="small" />
             </IconButton>
