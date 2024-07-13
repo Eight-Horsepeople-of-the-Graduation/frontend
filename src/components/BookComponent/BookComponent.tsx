@@ -207,7 +207,11 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
           <div>
             <p>{book.rating.toFixed(1)}</p>
             <Rating name="read-only" max={1} value={1} readOnly size="small" />
-            {book.authors && <p>{authorsNames}</p>}
+            {book.authors && (
+              <p title={authorsNames} className={classes.Author}>
+                {authorsNames}
+              </p>
+            )}
           </div>
         </div>
       </div>
