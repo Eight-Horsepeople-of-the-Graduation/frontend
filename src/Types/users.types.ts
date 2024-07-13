@@ -27,7 +27,7 @@ export interface UserCredintials {
   password: string;
 }
 
-export type SignUpUserPayload = Omit<User, "id" | "joinDate"> & {
+export type SignUpUserPayload = Omit<User, "id" | "joinDate" | "isAdmin" | "profilePicture"> & {
   password: string;
 };
 export type EditUserPayload = Partial<

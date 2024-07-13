@@ -21,6 +21,7 @@ import ChatSection from "./ChatSection/ChatSection";
 import ReviewComponent from "../../components/Review/Review";
 import AddReviewComponent from "../../components/Review/AddReview/AddReview";
 import { useState } from "react";
+import bookFile from "../../assets/black-holes.pdf"
 
 const SingleBookPage = () => {
   document.title = "Readify";
@@ -119,11 +120,11 @@ const SingleBookPage = () => {
             </div>
           </section>
 
-          {book.pdfLink && (
+          {book.pdfLink && book.id === 1 && (
             <section id="reader" className={classes.Reader}>
               <h1>Read {book.title}</h1>
               <main>
-                <BookReader file={book.pdfLink} language={book.language} />
+                <BookReader file={bookFile} language={book.language} />
               </main>
             </section>
           )}

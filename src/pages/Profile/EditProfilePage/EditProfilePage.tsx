@@ -59,8 +59,8 @@ const EditProfilePage = () => {
   const passwordError = newPassword.length > 0 && newPassword.length < 8;
 
   const confirmPasswordError = newPassword !== confirmNewPassword;
-  const changePasswordError =
-    enableChangePassword && (passwordError || confirmNewPassword);
+
+  const changePasswordError = enableChangePassword && (passwordError || confirmPasswordError);
 
   const preventSupmit =
     !!errors.email || !!errors.name || !!errors.username || changePasswordError;
@@ -97,9 +97,11 @@ const EditProfilePage = () => {
           birthdate?.toISOString() !== user.birthDate
             ? birthdate?.toISOString()
             : undefined,
+        password: enableChangePassword ? newPassword : undefined
       },
     });
   };
+
 
   return (
     <SidePannelLayout>
@@ -109,18 +111,18 @@ const EditProfilePage = () => {
           <TextField
             type="file"
             id="profileImage"
-            // {...register("profilePicture",
-            //   {
-            //   validate: (value) => {
-            //     if (!value?.[0]) {
-            //       return "Please select an image";
-            //     }
-            //     // You can add further validation for image size and type here
-            //     return undefined;
-            //   },
-            // })}
-            // error={!!errors.profilePicture}
-            // helperText={errors.profilePicture?.message}
+          // {...register("profilePicture",
+          //   {
+          //   validate: (value) => {
+          //     if (!value?.[0]) {
+          //       return "Please select an image";
+          //     }
+          //     // You can add further validation for image size and type here
+          //     return undefined;
+          //   },
+          // })}
+          // error={!!errors.profilePicture}
+          // helperText={errors.profilePicture?.message}
           />
         </div>
         <div>
@@ -199,7 +201,6 @@ const EditProfilePage = () => {
             </Select>
           </FormControl>
         </div>
-
         <div>
           <CountrySelector register={{ ...register("country") }} />
         </div>
@@ -235,13 +236,14 @@ const EditProfilePage = () => {
         <div>
           <TextField
             fullWidth
+            required
             label="Confirm New Password"
             id="confirmPassword"
             type="password"
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
-            error={confirmPasswordError}
-            helperText={confirmPasswordError ? "Password unmatched" : ""}
+            error={confirmNewPassword.length > 0 && confirmPasswordError}
+            helperText={confirmNewPassword && confirmPasswordError ? "Password unmatched" : ""}
             disabled={!enableChangePassword}
           />
         </div>
