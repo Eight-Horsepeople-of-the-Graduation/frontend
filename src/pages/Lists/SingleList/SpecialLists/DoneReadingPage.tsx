@@ -17,16 +17,17 @@ const DoneReadingList = () => {
     isError: errorFetchingList,
   } = useGetUserListsQuery(currentUserId, { skip: !currentUserId });
 
+
   if (listFetched) {
+
     const doneReadingList = lists.find(
-      (list) => list.title.toLowerCase() === "done reading"
+      (list) => list.title === "done reading"
     );
 
     if (!doneReadingList) {
       dispatch(showAlert({ message: "List is not found", severity: "error" }));
       return <Navigate to={"/"} />;
     }
-
     return (
       <SidePannelLayout>
         <SingleListComponent

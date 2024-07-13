@@ -7,6 +7,7 @@ import {
 } from "../../Types/lists.types";
 import { showAlert } from "../features/alerts/alertsSlice";
 import { closeDeleteListModal } from "../features/modals/modalsSlice";
+import { readingChallengeApi } from "./readingChallengeApiSlice";
 
 export const listsApi = createApi({
   reducerPath: "listsApi",
@@ -81,6 +82,14 @@ export const listsApi = createApi({
         };
       },
       invalidatesTags: ["lists"],
+      onQueryStarted: async (_,{dispatch,queryFulfilled})=>{
+        try{
+          await queryFulfilled;
+          dispatch(readingChallengeApi.util.invalidateTags(["challenges"]));
+        }catch(e){
+          dispatch(showAlert({message:"Error adding book to list",severity: "error"}))
+        }
+      }
     }),
     removeBookFromList: builder.mutation<
       null,

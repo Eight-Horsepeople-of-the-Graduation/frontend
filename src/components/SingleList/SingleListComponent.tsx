@@ -16,6 +16,7 @@ import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import BinIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import convertFirstLetterToUppercase from "../../helperFuctions/convertFirstLetterToUppercase";
 
 interface ListProps {
   list: List;
@@ -106,7 +107,7 @@ const SingleListComponent: React.FC<ListProps> = ({
   if (listFetched && list) {
     dispatch(stopLoading());
 
-    document.title = `Readify | ${list.title}`;
+    document.title = `Readify | ${convertFirstLetterToUppercase(list.title)}`;
 
     return (
       <main className={classes.SingleListPage}>
@@ -121,7 +122,7 @@ const SingleListComponent: React.FC<ListProps> = ({
               border: isEditingName ? "var(--border)" : "none",
             }}
           >
-            {list.title}
+            {convertFirstLetterToUppercase(list.title)}
           </h1>
           {isEditable && (
             <div className={classes.Controllers}>
