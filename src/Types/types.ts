@@ -1,0 +1,1 @@
+export interface BackendError { error: { data: { message: string, status: number } } }

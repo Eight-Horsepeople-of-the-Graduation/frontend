@@ -1,6 +1,7 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { countries } from "../../../data/countries";
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: any;
 }
 const CountrySelector = ({ register }: Props) => {

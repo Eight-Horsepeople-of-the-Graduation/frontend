@@ -10,6 +10,8 @@ import {
 import { setLogedInUser } from "../features/users/authSlice";
 import { startLoading, stopLoading } from "../features/modals/modalsSlice";
 import { showAlert } from "../features/alerts/alertsSlice";
+import { BackendError } from "../../Types/types";
+import convertFirstLetterToUppercase from "../../helperFuctions/convertFirstLetterToUppercase";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -75,8 +77,10 @@ export const usersApi = createApi({
           dispatch(stopLoading());
         } catch (error) {
           dispatch(stopLoading());
+          const errorMessages = (error as BackendError).error.data.message
+          const firstErrorMessage = errorMessages.split(",")[0];
           dispatch(
-            showAlert({ message: "something went wrong", severity: "error" })
+            showAlert({ message: firstErrorMessage ? convertFirstLetterToUppercase(firstErrorMessage) : "Something went wrong", severity: "error" })
           );
         }
       },
@@ -110,6 +114,7 @@ export const usersApi = createApi({
             showAlert({ message: "User info updated", severity: "success" })
           );
         } catch (e) {
+          dispatch(stopLoading())
           dispatch(
             showAlert({
               message: "Error updating user info",
