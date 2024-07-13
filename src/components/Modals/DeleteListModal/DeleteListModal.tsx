@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
 import { closeDeleteListModal } from "../../../redux/features/modals/modalsSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
