@@ -38,7 +38,7 @@ const ReadingChallengeCard = ({
     >
       <div className={classes.Info}>
         <div className={classes.ChallengeInfo}>
-          <Link to={`/challenges/${challenge.id}`} title={challenge.title}>
+          <Link to={`/challenges`} title={challenge.title}>
             {challenge.title}
           </Link>
           <p

@@ -15,7 +15,7 @@ const RemoveChallengeModal = () => {
     skip: !challengeID,
   });
   const dispatch = useAppDispatch();
-  const [removeChallenge, { isSuccess, isError }] =
+  const [removeChallenge, { isSuccess, isError,isLoading }] =
     useDeleteReadingChallengeMutation();
 
   const closeModal = () => dispatch(closeRemoveChallengeModal());
@@ -44,6 +44,7 @@ const RemoveChallengeModal = () => {
       modalOpen={!!challengeID}
       closeModal={closeModal}
       onConfirm={onConfirm}
+      confirmButtonDisabled={isLoading}
       warningMessage={`Are you sure you want to remove ${
         challenge ? challenge?.title : "this challenge"
       } from your challenges`}

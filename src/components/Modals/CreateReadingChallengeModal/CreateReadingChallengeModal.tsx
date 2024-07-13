@@ -15,15 +15,9 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useCreateReadingChallengeMutation } from "../../../redux/services/readingChallengeApiSlice";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import { ChallengeType } from "../../../Types/readingChallenges.types";
+import { ChallengeType, CreateChallengePayload } from "../../../Types/readingChallenges.types";
 import { closeCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
 import convertFirstLetterToUppercase from "../../../helperFuctions/convertFirstLetterToUppercase";
-
-interface FormValues {
-  title: string;
-  type: ChallengeType;
-  goal: number;
-}
 
 const CreateReadingChallengeModal = () => {
   const userId = useAppSelector((state) => state.authUser).user?.id;
@@ -32,11 +26,11 @@ const CreateReadingChallengeModal = () => {
     (state) => state.modals.createChallengeModalOpen
   );
 
-  const [createReadingChallenge, { isSuccess, isError }] =
+  const [createReadingChallenge, { isSuccess, isError,isLoading }] =
     useCreateReadingChallengeMutation();
 
   const dispatch = useAppDispatch();
-  const form = useForm<FormValues>({
+  const form = useForm<CreateChallengePayload>({
     defaultValues: {
       title:
         convertFirstLetterToUppercase(challengeType.toLowerCase()) +
@@ -56,10 +50,11 @@ const CreateReadingChallengeModal = () => {
     dispatch(closeCreateChallengeModal());
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data:CreateChallengePayload) => {
     if (!userId) return;
     await createReadingChallenge({
       ...data,
+      goal: Number(data.goal),
       userId,
     });
 
@@ -159,6 +154,7 @@ const CreateReadingChallengeModal = () => {
               variant="contained"
               type="submit"
               color="primary"
+              disabled={isLoading}
             >
               Create
             </Button>
@@ -167,6 +163,7 @@ const CreateReadingChallengeModal = () => {
               onClick={closeModal}
               variant="text"
               color="error"
+              disabled={isLoading}
             >
               Cancel
             </Button>
