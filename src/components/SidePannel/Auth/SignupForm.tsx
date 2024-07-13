@@ -38,6 +38,7 @@ const SignupForm = () => {
     confirmPasword && !password.includes(confirmPasword)
   );
 
+
   const SignUpForm = useForm<SignUpUserPayload>({
     defaultValues: {
       name: "",
@@ -47,16 +48,15 @@ const SignupForm = () => {
     },
   });
 
-  const { register, handleSubmit } = SignUpForm;
+  const { register, handleSubmit, formState: { errors } } = SignUpForm;
+
 
   const onSubmit = async (data: SignUpUserPayload) => {
     dispatch(startLoading());
 
     const newUserData: SignUpUserPayload = {
       ...data,
-      isAdmin: false,
-      profilePicture: "",
-      birthDate: dayjs(birthdate, "DD/MM/YYYY").toDate().toISOString(),
+      birthDate: birthdate ? dayjs(birthdate, "DD/MM/YYYY").toDate().toISOString() : "",
     };
 
     await signUp(newUserData);
@@ -70,9 +70,10 @@ const SignupForm = () => {
           label="Name"
           {...register("name", {
             required: "Name is required",
+            min: { value: 6, message: "Username should be at least 6 characters" }
           })}
-          error={Boolean(SignUpForm.formState.errors.name)}
-          helperText={SignUpForm.formState.errors.name?.message}
+          error={Boolean(errors.name)}
+          helperText={errors.name?.message}
         />
       </div>
 
@@ -83,12 +84,13 @@ const SignupForm = () => {
           {...register("username", {
             required: "Username is required",
             pattern: {
-              value: /^[a-zA-Z0-9_]{1,15}$/,
+              value: /^[a-zA-Z0-9_]{8,}$/,
               message: "Invalid username",
             },
+            minLength: { value: 6, message: "Username should be at least 6 characters" }
           })}
-          error={Boolean(SignUpForm.formState.errors.username)}
-          helperText={SignUpForm.formState.errors.username?.message}
+          error={Boolean(errors.username)}
+          helperText={errors.username?.message}
         />
       </div>
 
@@ -100,8 +102,8 @@ const SignupForm = () => {
             required: "Email is required",
             pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
           })}
-          error={Boolean(SignUpForm.formState.errors.email)}
-          helperText={SignUpForm.formState.errors.email?.message}
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
         />
       </div>
 
@@ -112,13 +114,21 @@ const SignupForm = () => {
           type="password"
           {...register("password", {
             required: "Password is required",
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/,
+              message: "Password should contain uppercase and lowercase characters, numbers and special characters"
+            },
             minLength: {
               value: 8,
               message: "Password must be at least 8 characters long",
             },
+            maxLength: {
+              value: 24,
+              message: "Password must be at most 24 characters long",
+            },
           })}
-          error={Boolean(SignUpForm.formState.errors.password)}
-          helperText={SignUpForm.formState.errors.password?.message}
+          error={Boolean(errors.password)}
+          helperText={errors.password?.message}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
@@ -161,7 +171,9 @@ const SignupForm = () => {
             labelId="gender-label"
             id="gender"
             label="Gender"
-            {...register("gender")}
+            {...register("gender", {
+              required: "Gender is required"
+            })}
           >
             {genders.map((option, idx) => (
               <MenuItem value={option.value} key={idx}>
