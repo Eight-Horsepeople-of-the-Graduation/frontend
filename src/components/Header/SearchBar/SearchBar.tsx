@@ -82,6 +82,7 @@ export default function SearchBar() {
     }
   };
 
+
   const {
     getRootProps,
     getInputLabelProps,
