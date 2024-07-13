@@ -66,7 +66,7 @@ export default function SearchBar() {
   const { data: lists } = useGetAllListsQuery();
   const { data: books } = useGetAllBooksQuery();
 
-  const results = [...lists ?? [], ...books ?? []].sort((a, b) => {
+  const results = [...(lists ?? []), ...(books ?? [])].sort((a, b) => {
     if (a.title < b.title) {
       return -1;
     }
@@ -81,10 +81,9 @@ export default function SearchBar() {
     if ((option as Book).isbn) {
       navigate(`/books/${option.id}`)
     } else {
-      navigate(`/lists/${option.id}`)
+      navigate(`/lists/${option.id}`);
     }
   };
-
 
   const {
     getRootProps,
@@ -112,8 +111,13 @@ export default function SearchBar() {
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
           {(groupedOptions as typeof results).map((option, index) => (
-            <li {...getOptionProps({ option, index })} key={index} onClick={() => goToResult(option)}
-            >{option.title}</li>
+            <li
+              {...getOptionProps({ option, index })}
+              key={index}
+              onClick={() => goToResult(option)}
+            >
+              {option.title}
+            </li>
           ))}
           <button className={classes.More}>See more results</button>
         </Listbox>
