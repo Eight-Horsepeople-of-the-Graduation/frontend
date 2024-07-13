@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
 import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
-import { SignUpUser } from "../../../Types/users.types";
+import { SignUpUserPayload } from "../../../Types/users.types";
 import { useAppDispatch } from "../../../redux/hooks";
 import { startLoading } from "../../../redux/features/modals/modalsSlice";
 import CountrySelector from "../../UI/CountrySelector/CountrySelector";
@@ -38,7 +38,7 @@ const SignupForm = () => {
     confirmPasword && !password.includes(confirmPasword)
   );
 
-  const SignUpForm = useForm<SignUpUser>({
+  const SignUpForm = useForm<SignUpUserPayload>({
     defaultValues: {
       name: "",
       username: "",
@@ -49,10 +49,10 @@ const SignupForm = () => {
 
   const { register, handleSubmit } = SignUpForm;
 
-  const onSubmit = async (data: SignUpUser) => {
+  const onSubmit = async (data: SignUpUserPayload) => {
     dispatch(startLoading());
 
-    const newUserData: SignUpUser = {
+    const newUserData: SignUpUserPayload = {
       ...data,
       isAdmin: false,
       profilePicture: "",

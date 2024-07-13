@@ -8,6 +8,7 @@ import {
   Review,
 } from "../../Types/books.types";
 import { showAlert } from "../features/alerts/alertsSlice";
+import { listsApi } from "./listsApiSlice";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
@@ -29,7 +30,7 @@ export const booksApi = createApi({
       query(id) {
         return `books/${id}`;
       },
-      providesTags: [],
+      providesTags: ["books"],
     }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
@@ -74,7 +75,17 @@ export const booksApi = createApi({
           body: data,
         };
       },
-      invalidatesTags: ["reviews"],
+      invalidatesTags: ["reviews", "books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+        } catch (e) {
+          dispatch(
+            showAlert({ message: "Error adding review", severity: "error" })
+          );
+        }
+      },
     }),
     editReviewContent: builder.mutation<Review, EditReviewContentPayload>({
       query(data) {
@@ -94,7 +105,20 @@ export const booksApi = createApi({
           body: data,
         };
       },
-      invalidatesTags: ["reviews"],
+      invalidatesTags: ["reviews", "books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error editing review rating",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     deleteReview: builder.mutation<Review, number>({
       query(reviewId) {
@@ -103,10 +127,12 @@ export const booksApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["reviews"],
+      invalidatesTags: ["reviews", "books"],
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+
           dispatch(
             showAlert({ message: "Review is deleted", severity: "success" })
           );

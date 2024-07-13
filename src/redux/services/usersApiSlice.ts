@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import {
   AuthResponse,
-  SignUpUser,
+  EditUserPayload,
+  SignUpUserPayload,
   User,
   UserCredintials,
 } from "../../Types/users.types";
@@ -55,7 +56,7 @@ export const usersApi = createApi({
         }
       },
     }),
-    signUp: builder.mutation<AuthResponse, SignUpUser>({
+    signUp: builder.mutation<AuthResponse, SignUpUserPayload>({
       query(userData) {
         return {
           url: "auth/signup",
@@ -89,7 +90,7 @@ export const usersApi = createApi({
         };
       },
     }),
-    editUser: builder.mutation<User, { id: string; info: FormData }>({
+    editUser: builder.mutation<User, { id: string; info: EditUserPayload }>({
       query({ id, info }) {
         return {
           url: `users/${id}`,
@@ -98,6 +99,25 @@ export const usersApi = createApi({
         };
       },
       invalidatesTags: ["users"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          dispatch(startLoading());
+          const response = await queryFulfilled;
+          localStorage.setItem("user", JSON.stringify(response.data));
+          dispatch(setLogedInUser(response.data));
+          dispatch(stopLoading());
+          dispatch(
+            showAlert({ message: "User info updated", severity: "success" })
+          );
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error updating user info",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     removeUserById: builder.mutation<null, string>({
       query(id) {

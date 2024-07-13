@@ -3,10 +3,12 @@ import ReadingChallengeSelector from "../ReadingChallengeSelector/ReadingChallen
 import ReadingChallengeCard from "../ReadingChallengeCard/ReadingChallengeCard";
 import { Button } from "@mui/material";
 import { useAppSelector } from "../../../../redux/hooks";
-import checkDatePassed from "../../../../helperFuctions/checkDatePassed";
 import { useGetUserReadingChallengesQuery } from "../../../../redux/services/readingChallengeApiSlice";
+import { useDispatch } from "react-redux";
+import { openCreateChallengeModal } from "../../../../redux/features/modals/modalsSlice";
 
 const ReadingChallenge = () => {
+  const dispatch = useDispatch();
   const [isSelectingChallenge, setIsSelectingChallenge] = useState(false);
   const [selectedReadingChallengeId, setSelectedReadingChallengeId] =
     useState(1);
@@ -18,11 +20,23 @@ const ReadingChallenge = () => {
   });
 
   const activeChallenges =
-    userChallenges?.filter(
-      (challenge) => !checkDatePassed(challenge.endDate)
-    ) ?? [];
+    userChallenges?.filter((challenge) => !challenge.hasEnded) ?? [];
 
-  if (activeChallenges.length === 0) return <Button>Create a challenge</Button>;
+  if (activeChallenges.length === 0)
+    return (
+      <Button
+        sx={{
+          width: "calc(100% - 24px)",
+          margin: "auto",
+          border: "var(--border)",
+        }}
+        onClick={() => {
+          dispatch(openCreateChallengeModal());
+        }}
+      >
+        Create a challenge
+      </Button>
+    );
 
   const selectedChallenge =
     activeChallenges.find(

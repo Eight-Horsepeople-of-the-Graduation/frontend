@@ -50,17 +50,18 @@
   color: var(--dark-gray-color);
 }
 
-.Content>div {
+.Content > div {
   height: 80%;
 }
 
-.Content>div>div {
+.Content > div > div {
   margin-bottom: 16px;
 }
 
 .Title {
   display: flex;
   align-items: baseline;
+  gap: 24px;
 }
 
 .Title h1 {
@@ -101,7 +102,7 @@
 .Desc p:hover::-webkit-scrollbar {
   display: block;
 }
-.ReviewSection{
+.ReviewSection {
   width: 100%;
   padding: 46px 256px;
 }

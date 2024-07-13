@@ -60,6 +60,10 @@ const SingleBookPage = () => {
     const reviewersIds = reviews?.map((review) => review.userId);
     const userReviewed = reviewersIds?.includes(user?.id ?? 0);
 
+    const authorsNames = book.authors.map((author) => author.name).join(", ");
+
+    const generes = book.genres?.map((genere) => genere.title).join(", ");
+
     return (
       <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
         <main style={{ width: "100%" }}>
@@ -91,16 +95,20 @@ const SingleBookPage = () => {
                 </div>
                 <div className={classes.Data}>
                   <div>
+                    <h3>Authors</h3>
+                    <p>{authorsNames}</p>
+                  </div>
+                  <div>
+                    <h3>Genres</h3>
+                    <p>{generes}</p>
+                  </div>
+                  <div>
                     <h3>Pages</h3>
                     <p>{book.numOfPages}</p>
                   </div>
                   <div>
-                    <h3>Author</h3>
-                    <p>{book.authors[0].name}</p>
-                  </div>
-                  <div>
-                    <h3>Genre</h3>
-                    <p>Test</p>
+                    <h3>Rating</h3>
+                    <p>{book.rating.toFixed(1)}</p>
                   </div>
                 </div>
                 <div className={classes.Desc}>

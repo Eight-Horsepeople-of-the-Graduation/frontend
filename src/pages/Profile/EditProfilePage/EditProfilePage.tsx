@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppSelector } from "../../../redux/hooks";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
@@ -16,12 +16,7 @@ import classes from "./EditProfilePage.module.css";
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import CustomAvatar from "../../../components/UI/CustomAvatar/CustomAvatar";
 import { useEditUserMutation } from "../../../redux/services/usersApiSlice";
-import { User } from "../../../Types/users.types";
-import {
-  startLoading,
-  stopLoading,
-} from "../../../redux/features/modals/modalsSlice";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { EditUserPayload } from "../../../Types/users.types";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -37,7 +32,6 @@ const genders = [
 const EditProfilePage = () => {
   document.title = `Readify | Edit profile`;
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.authUser.user);
   const [newPassword, setNewPassword] = useState("");
@@ -49,9 +43,9 @@ const EditProfilePage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<User>({
+  } = useForm<EditUserPayload>({
     defaultValues: {
-      profilePicture: user?.profilePicture,
+      // profilePicture: user?.profilePicture,
       name: user?.name,
       username: user?.username,
       email: user?.email,
@@ -60,13 +54,14 @@ const EditProfilePage = () => {
     },
   });
 
-  const [editUser, { isSuccess, isError }] = useEditUserMutation();
+  const [editUser, { isLoading }] = useEditUserMutation();
 
-  const passwordError = !!newPassword && newPassword.length < 8;
-  const confirmPasswordError =
-    !!confirmNewPassword && newPassword !== confirmNewPassword;
+  const passwordError = newPassword.length > 0 && newPassword.length < 8;
+
+  const confirmPasswordError = newPassword !== confirmNewPassword;
   const changePasswordError =
-    (enableChangePassword && passwordError) || confirmNewPassword;
+    enableChangePassword && (passwordError || confirmNewPassword);
+
   const preventSupmit =
     !!errors.email || !!errors.name || !!errors.username || changePasswordError;
 
@@ -82,42 +77,28 @@ const EditProfilePage = () => {
 
   if (!user) return <Navigate to="/" />;
 
-  const onSubmit = async (data: User) => {
+  const onSubmit = async (data: EditUserPayload) => {
     if (preventSupmit) return;
 
-    const userData = new FormData();
+    // const userData = new FormData();
 
-    userData.append("name", data.name);
-    userData.append("username", data.username);
-    userData.append("email", data.email);
-    userData.append("profilePicture", data.profilePicture ?? "");
+    // userData.append("name", data.name);
+    // userData.append("username", data.username);
+    // userData.append("email", data.email);
+    // userData.append("profilePicture", data.profilePicture ?? "");
 
-    if (enableChangePassword) userData.append("password", newPassword);
+    // if (enableChangePassword) userData.append("password", newPassword);
 
-    dispatch(startLoading());
-
-    await editUser({ id: user.id.toString(), info: userData });
-
-    dispatch(stopLoading());
-
-    if (isSuccess) {
-      dispatch(
-        showAlert({
-          message: "Info updated",
-          severity: "success",
-        })
-      );
-      navigate(`/profile/${user.username}`);
-    }
-
-    if (isError) {
-      dispatch(
-        showAlert({
-          message: "Something happened",
-          severity: "error",
-        })
-      );
-    }
+    await editUser({
+      id: user.id.toString(),
+      info: {
+        ...data,
+        birthDate:
+          birthdate?.toISOString() !== user.birthDate
+            ? birthdate?.toISOString()
+            : undefined,
+      },
+    });
   };
 
   return (
@@ -128,17 +109,18 @@ const EditProfilePage = () => {
           <TextField
             type="file"
             id="profileImage"
-            {...register("profilePicture", {
-              validate: (value) => {
-                if (!value?.[0]) {
-                  return "Please select an image";
-                }
-                // You can add further validation for image size and type here
-                return undefined;
-              },
-            })}
-            error={!!errors.profilePicture}
-            helperText={errors.profilePicture?.message}
+            // {...register("profilePicture",
+            //   {
+            //   validate: (value) => {
+            //     if (!value?.[0]) {
+            //       return "Please select an image";
+            //     }
+            //     // You can add further validation for image size and type here
+            //     return undefined;
+            //   },
+            // })}
+            // error={!!errors.profilePicture}
+            // helperText={errors.profilePicture?.message}
           />
         </div>
         <div>
@@ -265,7 +247,7 @@ const EditProfilePage = () => {
         </div>
         <div className={classes.Actions}>
           <Button
-            disabled={!!preventSupmit}
+            disabled={!!preventSupmit || isLoading}
             type="submit"
             variant="contained"
             color="success"
@@ -282,6 +264,7 @@ const EditProfilePage = () => {
             onClick={() => {
               navigate(`/profile/${user.username}`);
             }}
+            disabled={isLoading}
           >
             Cancel
           </Button>
