@@ -12,18 +12,18 @@ import ReadingChallenge from "./ReadingChallenges/ReadingChallenge/ReadingChalle
 import { openCreateListModal } from "../../redux/features/modals/modalsSlice";
 import AuthSwitch from "./Auth/AuthSwitch";
 import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
-import { List } from "../../Types/lists.types";
 import { Button } from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
+import { useLogoutMutation } from "../../redux/services/usersApiSlice";
 
 interface SidePannelProps {
   isHiden?: boolean;
 }
 
 const navItems = [
-  { icon: faBookOpen, text: "Currently reading", link: "/lists/current" },
   { icon: faBook, text: "Want to read", link: "/lists/to-read" },
+  { icon: faBookOpen, text: "Currently reading", link: "/lists/current" },
   { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
 ];
 
@@ -31,7 +31,21 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
 
+  const [sendLogoutRequest] = useLogoutMutation();
+
+  const logoutUser = async () => {
+    dispatch(logout());
+    await sendLogoutRequest();
+  };
+
   const { data: lists, isSuccess } = useGetUserListsQuery(user?.id ?? 0);
+
+  const userLists = lists?.filter(
+    (list) =>
+      list.title.toLowerCase() !== "want to read" &&
+      list.title.toLowerCase() !== "currently reading" &&
+      list.title.toLowerCase() !== "done reading"
+  );
 
   return (
     <aside className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}>
@@ -63,11 +77,10 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
                 minWidth: "36px",
               }}
               color="error"
-              onClick={()=> dispatch(logout())}
+              onClick={logoutUser}
             >
               <LogoutIcon />
             </Button>
-
           </div>
 
           <ReadingChallenge />
@@ -93,7 +106,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
             <hr />
             <ul className={classes.lists}>
               {isSuccess &&
-                (lists ?? ([] as List[])).map((list) => (
+                userLists?.map((list) => (
                   <li key={list.id}>
                     <Link to={`/lists/${list.id}`}>{list.title}</Link>
                   </li>

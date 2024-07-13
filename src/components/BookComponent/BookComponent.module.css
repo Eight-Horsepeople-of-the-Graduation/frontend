@@ -97,7 +97,9 @@
   gap: 5px;
 }
 
-.info *:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.Author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-wrap: nowrap;
 }

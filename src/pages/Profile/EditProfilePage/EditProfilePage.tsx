@@ -1,94 +1,104 @@
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppSelector } from "../../../redux/hooks";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import classes from "./EditProfilePage.module.css";
 import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import CustomAvatar from "../../../components/UI/CustomAvatar/CustomAvatar";
 import { useEditUserMutation } from "../../../redux/services/usersApiSlice";
-import { User } from "../../../Types/users.types";
-import {
-  startLoading,
-  stopLoading,
-} from "../../../redux/features/modals/modalsSlice";
-import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import { EditUserPayload } from "../../../Types/users.types";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import CountrySelector from "../../../components/UI/CountrySelector/CountrySelector";
+import dayjs, { Dayjs } from "dayjs";
+
+const genders = [
+  { value: "MALE", title: "Male" },
+  { value: "FEMALE", title: "Female" },
+];
 
 const EditProfilePage = () => {
   document.title = `Readify | Edit profile`;
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.authUser.user);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
   const [enableChangePassword, setEnableChangePassword] = useState(false);
+  const [birthdate, setbirthdate] = useState<Dayjs | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-  } = useForm({ defaultValues: user! });
+  } = useForm<EditUserPayload>({
+    defaultValues: {
+      // profilePicture: user?.profilePicture,
+      name: user?.name,
+      username: user?.username,
+      email: user?.email,
+      gender: "MALE",
+      country: user?.country,
+    },
+  });
 
-  const [editUser, { isSuccess, isError }] = useEditUserMutation();
+  const [editUser, { isLoading }] = useEditUserMutation();
 
-  const passwordError = !!newPassword && newPassword.length < 8;
-  const confirmPasswordError =
-    !!confirmNewPassword && newPassword !== confirmNewPassword;
+  const passwordError = newPassword.length > 0 && newPassword.length < 8;
+
+  const confirmPasswordError = newPassword !== confirmNewPassword;
   const changePasswordError =
-    (enableChangePassword && passwordError) || confirmNewPassword;
+    enableChangePassword && (passwordError || confirmNewPassword);
+
   const preventSupmit =
     !!errors.email || !!errors.name || !!errors.username || changePasswordError;
 
   useEffect(() => {
     if (user) {
-      setValue("profilePicture", user.profilePicture ?? "");
-      setValue("name", user.name ?? "");
-      setValue("username", user.username ?? "");
-      setValue("email", user.email ?? "");
+      const userBirthdate = user?.birthDate
+        ? dayjs(new Date(user?.birthDate))
+        : null;
+
+      setbirthdate(userBirthdate);
     }
-  }, [user, setValue]);
+  }, [user]);
 
   if (!user) return <Navigate to="/" />;
 
-  const onSubmit = async (data: User) => {
+  const onSubmit = async (data: EditUserPayload) => {
     if (preventSupmit) return;
 
-    const userData = new FormData();
+    // const userData = new FormData();
 
-    userData.append("name", data.name);
-    userData.append("username", data.username);
-    userData.append("email", data.email);
-    userData.append("profilePicture", data.profilePicture ?? "");
+    // userData.append("name", data.name);
+    // userData.append("username", data.username);
+    // userData.append("email", data.email);
+    // userData.append("profilePicture", data.profilePicture ?? "");
 
-    if (enableChangePassword) userData.append("password", newPassword);
+    // if (enableChangePassword) userData.append("password", newPassword);
 
-    dispatch(startLoading());
-
-    await editUser({ id: user.id.toString(), info: userData });
-
-    dispatch(stopLoading());
-
-    if (isSuccess) {
-      dispatch(
-        showAlert({
-          message: "Info updated",
-          severity: "success",
-        })
-      );
-      navigate(`/profile/${user.username}`);
-    }
-
-    if (isError) {
-      dispatch(
-        showAlert({
-          message: "Something happened",
-          severity: "error",
-        })
-      );
-    }
+    await editUser({
+      id: user.id.toString(),
+      info: {
+        ...data,
+        birthDate:
+          birthdate?.toISOString() !== user.birthDate
+            ? birthdate?.toISOString()
+            : undefined,
+      },
+    });
   };
 
   return (
@@ -99,17 +109,18 @@ const EditProfilePage = () => {
           <TextField
             type="file"
             id="profileImage"
-            {...register("profilePicture", {
-              validate: (value) => {
-                if (!value?.[0]) {
-                  return "Please select an image";
-                }
-                // You can add further validation for image size and type here
-                return undefined;
-              },
-            })}
-            error={!!errors.profilePicture}
-            helperText={errors.profilePicture?.message}
+            // {...register("profilePicture",
+            //   {
+            //   validate: (value) => {
+            //     if (!value?.[0]) {
+            //       return "Please select an image";
+            //     }
+            //     // You can add further validation for image size and type here
+            //     return undefined;
+            //   },
+            // })}
+            // error={!!errors.profilePicture}
+            // helperText={errors.profilePicture?.message}
           />
         </div>
         <div>
@@ -148,6 +159,49 @@ const EditProfilePage = () => {
             error={!!errors.email}
             helperText={errors.email?.message}
           />
+        </div>
+
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                sx={{
+                  width: "100%",
+                  "& > div ": {
+                    borderRadius: "var(--large-border-radius)",
+                  },
+                }}
+                label="Birthdate"
+                format="DD/MM/YYYY"
+                value={birthdate}
+                onChange={(newValue) => setbirthdate(newValue)}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+
+        <div>
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">Gender</InputLabel>
+
+            <Select
+              fullWidth
+              labelId="gender-label"
+              id="gender"
+              label="Gender"
+              {...register("gender")}
+            >
+              {genders.map((option, idx) => (
+                <MenuItem value={option.value} key={idx}>
+                  {option.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+
+        <div>
+          <CountrySelector register={{ ...register("country") }} />
         </div>
 
         <div>
@@ -193,12 +247,12 @@ const EditProfilePage = () => {
         </div>
         <div className={classes.Actions}>
           <Button
-            disabled={!!preventSupmit}
+            disabled={!!preventSupmit || isLoading}
             type="submit"
             variant="contained"
             color="success"
             style={{
-              color: "white"
+              color: "white",
             }}
           >
             Save Changes
@@ -210,6 +264,7 @@ const EditProfilePage = () => {
             onClick={() => {
               navigate(`/profile/${user.username}`);
             }}
+            disabled={isLoading}
           >
             Cancel
           </Button>

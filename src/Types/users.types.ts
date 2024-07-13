@@ -18,13 +18,20 @@ export interface User {
   isAdmin: boolean;
 }
 
-export interface LoginRespose{
+export interface AuthResponse {
   user: User;
   tokens: Tokens;
-} 
+}
 export interface UserCredintials {
   email: string;
   password: string;
 }
 
-export type SignUpUser = Omit<User, "id" | "joinDate"> & { password: string };
+export type SignUpUserPayload = Omit<User, "id" | "joinDate"> & {
+  password: string;
+};
+export type EditUserPayload = Partial<
+  Omit<User, "id" | "joinDate" | "profilePicture" | "isAdmin"> & {
+    password: string;
+  }
+>;

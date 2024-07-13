@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { useGetBookByIdQuery, useGetBookReviewsQuery } from "../../redux/services/booksApiSlice";
+import {
+  useGetBookByIdQuery,
+  useGetBookReviewsQuery,
+} from "../../redux/services/booksApiSlice";
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
@@ -16,15 +19,16 @@ import {
 } from "../../redux/features/modals/modalsSlice";
 import ChatSection from "./ChatSection/ChatSection";
 import ReviewComponent from "../../components/Review/Review";
+import AddReviewComponent from "../../components/Review/AddReview/AddReview";
+import { useState } from "react";
 
 const SingleBookPage = () => {
   document.title = "Readify";
 
   const { bookId } = useParams();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.authUser.user);
-
-
+  const user = useAppSelector((state) => state.authUser.user);
+  const [reviewToEditId, setReviewToEditId] = useState(0);
 
   const {
     data: book,
@@ -53,6 +57,12 @@ const SingleBookPage = () => {
     document.title = `Readify | ${book.title}`;
     dispatch(stopLoading());
 
+    const reviewersIds = reviews?.map((review) => review.userId);
+    const userReviewed = reviewersIds?.includes(user?.id ?? 0);
+
+    const authorsNames = book.authors.map((author) => author.name).join(", ");
+
+    const generes = book.genres?.map((genere) => genere.title).join(", ");
 
     return (
       <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
@@ -85,16 +95,20 @@ const SingleBookPage = () => {
                 </div>
                 <div className={classes.Data}>
                   <div>
+                    <h3>Authors</h3>
+                    <p>{authorsNames}</p>
+                  </div>
+                  <div>
+                    <h3>Genres</h3>
+                    <p>{generes}</p>
+                  </div>
+                  <div>
                     <h3>Pages</h3>
                     <p>{book.numOfPages}</p>
                   </div>
                   <div>
-                    <h3>Author</h3>
-                    <p>{book.authors[0].name}</p>
-                  </div>
-                  <div>
-                    <h3>Genre</h3>
-                    <p>Test</p>
+                    <h3>Rating</h3>
+                    <p>{book.rating.toFixed(1)}</p>
                   </div>
                 </div>
                 <div className={classes.Desc}>
@@ -105,7 +119,7 @@ const SingleBookPage = () => {
             </div>
           </section>
 
-          {book.pdfLink && book.pdfLink.endsWith(".pdf") && (
+          {book.pdfLink && (
             <section id="reader" className={classes.Reader}>
               <h1>Read {book.title}</h1>
               <main>
@@ -115,10 +129,28 @@ const SingleBookPage = () => {
           )}
 
           {user && <ChatSection user={user} book={book} />}
+
           <section className={classes.ReviewSection}>
-           {reviews?.map((review) =>
-            <ReviewComponent review={review} key={review.id}/>
-            )}
+            {user && !userReviewed && <AddReviewComponent bookId={book.id} />}
+            {reviews &&
+              [...reviews]
+                .reverse()
+                .map((review) =>
+                  reviewToEditId === review.id ? (
+                    <AddReviewComponent
+                      bookId={book.id}
+                      reviewToEdit={review}
+                      doneEditing={() => setReviewToEditId(0)}
+                      key={review.id}
+                    />
+                  ) : (
+                    <ReviewComponent
+                      review={review}
+                      key={review.id}
+                      editReview={setReviewToEditId}
+                    />
+                  )
+                )}
           </section>
         </main>
       </SidePannelLayout>

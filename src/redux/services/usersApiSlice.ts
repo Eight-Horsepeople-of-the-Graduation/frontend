@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
 import {
-  LoginRespose,
-  SignUpUser,
+  AuthResponse,
+  EditUserPayload,
+  SignUpUserPayload,
   User,
   UserCredintials,
 } from "../../Types/users.types";
@@ -32,7 +33,7 @@ export const usersApi = createApi({
       },
       providesTags: ["users"],
     }),
-    logIn: builder.mutation<LoginRespose, UserCredintials>({
+    logIn: builder.mutation<AuthResponse, UserCredintials>({
       query(loginData) {
         return {
           url: "auth/login",
@@ -46,6 +47,8 @@ export const usersApi = createApi({
           const response = await queryFulfilled;
           localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
           localStorage.setItem("user", JSON.stringify(response.data.user));
+          document.cookie = `accessToken = ${response.data.tokens.accessToken}`;
+          document.cookie = `refreshToken = ${response.data.tokens.refreshToken}`;
           dispatch(setLogedInUser(response.data.user));
         } catch (error) {
           localStorage.removeItem("user");
@@ -53,7 +56,7 @@ export const usersApi = createApi({
         }
       },
     }),
-    signUp: builder.mutation<User, SignUpUser>({
+    signUp: builder.mutation<AuthResponse, SignUpUserPayload>({
       query(userData) {
         return {
           url: "auth/signup",
@@ -65,9 +68,10 @@ export const usersApi = createApi({
         try {
           dispatch(startLoading());
           const response = await queryFulfilled;
-          const user = response.data;
-          dispatch(setLogedInUser(user));
-          localStorage.setItem("user", JSON.stringify(user));
+          const data = response.data;
+          dispatch(setLogedInUser(data.user));
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("tokens", JSON.stringify(data.tokens));
           dispatch(stopLoading());
         } catch (error) {
           dispatch(stopLoading());
@@ -78,15 +82,42 @@ export const usersApi = createApi({
       },
       invalidatesTags: ["users"],
     }),
-    editUser: builder.mutation<User, { id: string; info: FormData }>({
+    logout: builder.mutation<void, void>({
+      query() {
+        return {
+          url: "auth/logout",
+          method: "DELETE",
+        };
+      },
+    }),
+    editUser: builder.mutation<User, { id: string; info: EditUserPayload }>({
       query({ id, info }) {
         return {
           url: `users/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: info,
         };
       },
       invalidatesTags: ["users"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          dispatch(startLoading());
+          const response = await queryFulfilled;
+          localStorage.setItem("user", JSON.stringify(response.data));
+          dispatch(setLogedInUser(response.data));
+          dispatch(stopLoading());
+          dispatch(
+            showAlert({ message: "User info updated", severity: "success" })
+          );
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error updating user info",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     removeUserById: builder.mutation<null, string>({
       query(id) {
@@ -106,6 +137,7 @@ export const {
   useGetUserByUsernameQuery,
   useLogInMutation,
   useSignUpMutation,
+  useLogoutMutation,
   useEditUserMutation,
   useRemoveUserByIdMutation,
 } = usersApi;

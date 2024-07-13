@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../config";
-import { Book, Review } from "../../Types/books.types";
+import {
+  AddReview,
+  Book,
+  EditReviewContentPayload,
+  EditReviewRatingPayload,
+  Review,
+} from "../../Types/books.types";
+import { showAlert } from "../features/alerts/alertsSlice";
+import { listsApi } from "./listsApiSlice";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
@@ -22,13 +30,7 @@ export const booksApi = createApi({
       query(id) {
         return `books/${id}`;
       },
-      providesTags: [],
-    }),
-    getBookReviews: builder.query<Review[], number>({
-      query(bookId) {
-        return `books/${bookId}/reviews`;
-      },
-      providesTags: ["reviews"],
+      providesTags: ["books"],
     }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {
@@ -44,7 +46,7 @@ export const booksApi = createApi({
       query({ id, formData }) {
         return {
           url: `books/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body: formData,
         };
       },
@@ -59,6 +61,88 @@ export const booksApi = createApi({
       },
       invalidatesTags: ["books"],
     }),
+    getBookReviews: builder.query<Review[], number>({
+      query(bookId) {
+        return `books/${bookId}/reviews`;
+      },
+      providesTags: ["reviews"],
+    }),
+    addReview: builder.mutation<Review, AddReview>({
+      query(data) {
+        return {
+          url: `reviews`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews", "books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+        } catch (e) {
+          dispatch(
+            showAlert({ message: "Error adding review", severity: "error" })
+          );
+        }
+      },
+    }),
+    editReviewContent: builder.mutation<Review, EditReviewContentPayload>({
+      query(data) {
+        return {
+          url: `reviews/${data.id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews"],
+    }),
+    editReviewRating: builder.mutation<Review, EditReviewRatingPayload>({
+      query(data) {
+        return {
+          url: `reviews/${data.id}/rating`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["reviews", "books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error editing review rating",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    deleteReview: builder.mutation<Review, number>({
+      query(reviewId) {
+        return {
+          url: `reviews/${reviewId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["reviews", "books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(listsApi.util.invalidateTags(["lists"]));
+
+          dispatch(
+            showAlert({ message: "Review is deleted", severity: "success" })
+          );
+        } catch (e) {
+          dispatch(
+            showAlert({ message: "Error deleting review", severity: "error" })
+          );
+        }
+      },
+    }),
   }),
 });
 
@@ -70,4 +154,8 @@ export const {
   useEditBookMutation,
   useDeleteBookMutation,
   useGetBookReviewsQuery,
+  useAddReviewMutation,
+  useEditReviewContentMutation,
+  useEditReviewRatingMutation,
+  useDeleteReviewMutation,
 } = booksApi;
