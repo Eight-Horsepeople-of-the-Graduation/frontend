@@ -102,6 +102,10 @@
 .Desc p:hover::-webkit-scrollbar {
   display: block;
 }
+
+.Reader h1{
+  margin-left:  128px;
+}
 .ReviewSection {
   width: 100%;
   padding: 46px 256px;
