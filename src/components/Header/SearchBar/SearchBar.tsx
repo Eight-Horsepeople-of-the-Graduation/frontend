@@ -84,11 +84,6 @@ export default function SearchBar() {
     }
   };
 
-  const handleEnter = (e: React.KeyboardEvent<HTMLLIElement>) => {
-    if(e.key==="enter"){
-
-    }
-  }
 
   const {
     getRootProps,
