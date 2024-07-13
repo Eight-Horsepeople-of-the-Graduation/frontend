@@ -11,7 +11,6 @@ import { Button } from "@mui/material";
 import { useGetUserByUsernameQuery, useLogoutMutation } from "../../redux/services/usersApiSlice";
 import { Challenge } from "../../Types/readingChallenges.types";
 import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
-import { List } from "../../Types/lists.types";
 import { useGetUserReadingChallengesQuery } from "../../redux/services/readingChallengeApiSlice";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";

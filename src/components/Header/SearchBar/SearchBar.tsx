@@ -4,6 +4,8 @@ import classes from "./SearchBar.module.css";
 import { useGetAllListsQuery } from "../../../redux/services/listsApiSlice";
 import { useGetAllBooksQuery } from "../../../redux/services/booksApiSlice";
 import { useNavigate } from "react-router-dom";
+import { Book } from "../../../Types/books.types";
+import { List } from "../../../Types/lists.types";
 
 const Label = styled("label")({
   display: "block",
@@ -74,10 +76,9 @@ export default function SearchBar() {
     return 0;
   });
 
- 
 
-  const goToResult = (option: any) => {
-    if (option.isbn) {
+  const goToResult = (option: Book | List) => {
+    if ((option as Book).isbn) {
       navigate(`/books/${option.id}`)
     } else {
       navigate(`/lists/${option.id}`)
@@ -106,7 +107,7 @@ export default function SearchBar() {
     <div>
       <div {...getRootProps()}>
         <Label {...getInputLabelProps()}></Label>
-        <Input {...getInputProps()} placeholder="Search for books and lists"/>
+        <Input {...getInputProps()} placeholder="Search for books and lists" />
       </div>
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>

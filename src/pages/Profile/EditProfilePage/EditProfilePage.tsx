@@ -102,6 +102,7 @@ const EditProfilePage = () => {
     });
   };
 
+
   return (
     <SidePannelLayout>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.Form}>
@@ -200,7 +201,6 @@ const EditProfilePage = () => {
             </Select>
           </FormControl>
         </div>
-
         <div>
           <CountrySelector register={{ ...register("country") }} />
         </div>
