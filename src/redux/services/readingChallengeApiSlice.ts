@@ -5,6 +5,9 @@ import {
   CreateChallengePayload,
   UpdateChallengePayload,
 } from "../../Types/readingChallenges.types";
+import { startLoading, stopLoading } from "../features/modals/modalsSlice";
+import { BackendError } from "../../Types/types";
+import { showAlert } from "../features/alerts/alertsSlice";
 
 export const readingChallengeApi = createApi({
   reducerPath: "readingChallengeApi",
@@ -33,6 +36,29 @@ export const readingChallengeApi = createApi({
           };
         },
         invalidatesTags: ["challenges"],
+        onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
+          try {
+            dispatch(startLoading());
+            await queryFulfilled;
+            dispatch(
+              showAlert({
+                message: "Challenge created successfully",
+                severity: "success",
+              })
+            )
+            dispatch(stopLoading());
+
+          } catch (err) {
+            dispatch(stopLoading());
+            dispatch(
+              showAlert({
+                message: "Failed to create challenge",
+                severity: "error",
+              })
+            );
+            console.log((err as BackendError).error.data.message);
+          }
+        }
       }
     ),
     editReadingChallenge: builder.mutation<

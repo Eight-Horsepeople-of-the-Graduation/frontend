@@ -10,12 +10,9 @@ import {
   useGetBookByIdQuery,
   useGetBookReviewsQuery,
 } from "../../redux/services/booksApiSlice";
-import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import PageNotFoundPage from "../PageNotFound/PageNotFoundPage";
 import {
   openAddBookToListModal,
-  startLoading,
-  stopLoading,
 } from "../../redux/features/modals/modalsSlice";
 import ChatSection from "./ChatSection/ChatSection";
 import ReviewComponent from "../../components/Review/Review";
@@ -35,29 +32,17 @@ const SingleBookPage = () => {
     data: book,
     isSuccess,
     isError,
-    isLoading,
   } = useGetBookByIdQuery(Number(bookId), { skip: !bookId });
 
   const { data: reviews } = useGetBookReviewsQuery(+bookId!, { skip: !bookId });
 
   if (isError) {
-    dispatch(stopLoading());
-    dispatch(
-      showAlert({
-        message: "Book not found",
-        severity: "error",
-      })
-    );
-
     return <PageNotFoundPage />;
   }
 
-  if (isLoading) dispatch(startLoading());
 
   if (isSuccess) {
     document.title = `Readify | ${book.title}`;
-    dispatch(stopLoading());
-
     const reviewersIds = reviews?.map((review) => review.userId);
     const userReviewed = reviewersIds?.includes(user?.id ?? 0);
 

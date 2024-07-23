@@ -1,8 +1,4 @@
 import { useAppDispatch } from "../../redux/hooks";
-import {
-  startLoading,
-  stopLoading,
-} from "../../redux/features/modals/modalsSlice";
 import { showAlert } from "../../redux/features/alerts/alertsSlice";
 import BookComponent from "../BookComponent/BookComponent";
 import classes from "./ChallengeComponent.module.css";
@@ -50,7 +46,6 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
 
     if (title === challenge.title) return;
 
-    dispatch(startLoading());
 
     await editChallengeTitle({
       id: challenge.id,
@@ -74,8 +69,6 @@ const ChallengeComponent: React.FC<ChallengeProps> = ({ challenge }) => {
         })
       );
     }
-
-    dispatch(stopLoading());
   };
 
   titleRef.current?.addEventListener("keydown", async (e) => {

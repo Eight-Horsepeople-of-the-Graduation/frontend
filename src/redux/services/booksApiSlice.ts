@@ -9,6 +9,8 @@ import {
 } from "../../Types/books.types";
 import { showAlert } from "../features/alerts/alertsSlice";
 import { listsApi } from "./listsApiSlice";
+import { startLoading, stopLoading } from "../features/modals/modalsSlice";
+import { BackendError } from "../../Types/types";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
@@ -31,6 +33,16 @@ export const booksApi = createApi({
         return `books/${id}`;
       },
       providesTags: ["books"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        dispatch(startLoading())
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          const error = err as BackendError;
+          dispatch(showAlert({ message: error.error.data.message ?? "Book not found", severity: "error" }))
+        }
+        dispatch(stopLoading());
+      }
     }),
     createBook: builder.mutation<Book, FormData>({
       query(data) {

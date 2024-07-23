@@ -11,8 +11,6 @@ import { useForm } from "react-hook-form";
 import classes from "./Auth.module.css";
 import { useSignUpMutation } from "../../../redux/services/usersApiSlice";
 import { SignUpUserPayload } from "../../../Types/users.types";
-import { useAppDispatch } from "../../../redux/hooks";
-import { startLoading } from "../../../redux/features/modals/modalsSlice";
 import CountrySelector from "../../UI/CountrySelector/CountrySelector";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -27,7 +25,6 @@ const genders = [
 ];
 
 const SignupForm = () => {
-  const dispatch = useAppDispatch();
   const [password, setPassword] = useState<string>("");
   const [confirmPasword, setConfirmPassword] = useState<string>("");
   const [birthdate, setbirthdate] = useState<Dayjs | null>(null);
@@ -52,7 +49,6 @@ const SignupForm = () => {
 
 
   const onSubmit = async (data: SignUpUserPayload) => {
-    dispatch(startLoading());
 
     const newUserData: SignUpUserPayload = {
       ...data,

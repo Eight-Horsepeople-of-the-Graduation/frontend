@@ -45,6 +45,7 @@ export const usersApi = createApi({
       },
       invalidatesTags: ["users"],
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        dispatch(startLoading())
         try {
           const response = await queryFulfilled;
           localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
@@ -52,10 +53,20 @@ export const usersApi = createApi({
           document.cookie = `accessToken = ${response.data.tokens.accessToken}`;
           document.cookie = `refreshToken = ${response.data.tokens.refreshToken}`;
           dispatch(setLogedInUser(response.data.user));
-        } catch (error) {
+          dispatch(
+            showAlert({ message: "Logged in successfully", severity: "success" })
+          );
+        } catch (err) {
+          const error = err as BackendError;
+          const errorMessages = error.error.data.message
+          const firstErrorMessage = errorMessages.split(",")[0];
+          dispatch(
+            showAlert({ message: firstErrorMessage ? convertFirstLetterToUppercase(firstErrorMessage) : "Something went wrong", severity: "error" })
+          );
           localStorage.removeItem("user");
           localStorage.removeItem("tokens");
         }
+        dispatch(stopLoading());
       },
     }),
     signUp: builder.mutation<AuthResponse, SignUpUserPayload>({
@@ -74,15 +85,15 @@ export const usersApi = createApi({
           dispatch(setLogedInUser(data.user));
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("tokens", JSON.stringify(data.tokens));
-          dispatch(stopLoading());
         } catch (error) {
-          dispatch(stopLoading());
           const errorMessages = (error as BackendError).error.data.message
           const firstErrorMessage = errorMessages.split(",")[0];
           dispatch(
             showAlert({ message: firstErrorMessage ? convertFirstLetterToUppercase(firstErrorMessage) : "Something went wrong", severity: "error" })
           );
         }
+        dispatch(stopLoading());
+
       },
       invalidatesTags: ["users"],
     }),
