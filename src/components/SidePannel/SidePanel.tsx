@@ -1,4 +1,4 @@
-import classes from "./SidePannel.module.css";
+import classes from "./SidePanel.module.css";
 import CustomAvatar from "../UI/CustomAvatar/CustomAvatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,8 +18,8 @@ import { logout } from "../../redux/features/users/authSlice";
 import { useLogoutMutation } from "../../redux/services/usersApiSlice";
 import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 
-interface SidePannelProps {
-  isHiden?: boolean;
+interface SidePanelProps {
+  isHidden?: boolean;
 }
 
 const navItems = [
@@ -28,7 +28,7 @@ const navItems = [
   { icon: faCircleCheck, text: "Done reading", link: "/lists/done" },
 ];
 
-const SidePannel = ({ isHiden }: SidePannelProps) => {
+const SidePanel = ({ isHidden }: SidePanelProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authUser.user);
 
@@ -49,7 +49,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
   );
 
   return (
-    <aside className={[classes.SidePannel, isHiden && classes.Hiden].join(" ")}>
+    <aside className={[classes.SidePanel, isHidden && classes.Hidden].join(" ")}>
       {!user ? (
         <AuthSwitch />
       ) : (
@@ -71,7 +71,6 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
               title={"Log out"}
               area-label="logout"
               sx={{
-                fontSize: "24px",
                 width: "32px",
                 height: "32px",
                 borderRadius: "50%",
@@ -80,7 +79,9 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
               color="error"
               onClick={logoutUser}
             >
-              <LogoutIcon />
+              <LogoutIcon style={{
+                fontSize: "1rem",
+              }} />
             </Button>
           </div>
 
@@ -104,7 +105,6 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
               <p>My Lists</p>
               <button onClick={() => dispatch(openCreateListModal())}>+</button>
             </div>
-            <hr />
             <ul className={classes.lists}>
               {isSuccess &&
                 userLists?.map((list) => (
@@ -120,4 +120,4 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
   );
 };
 
-export default SidePannel;
+export default SidePanel;

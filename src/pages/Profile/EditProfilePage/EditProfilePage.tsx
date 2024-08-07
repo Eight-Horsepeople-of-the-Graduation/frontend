@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import classes from "./EditProfilePage.module.css";
-import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import CustomAvatar from "../../../components/UI/CustomAvatar/CustomAvatar";
 import { useEditUserMutation } from "../../../redux/services/usersApiSlice";
 import { EditUserPayload } from "../../../Types/users.types";
@@ -105,7 +105,7 @@ const EditProfilePage = () => {
 
 
   return (
-    <SidePannelLayout>
+    <SidePanelLayout>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.Form}>
         <div className={classes.Avatar}>
           <CustomAvatar user={user} size="l" />
@@ -273,7 +273,7 @@ const EditProfilePage = () => {
           </Button>
         </div>
       </form>
-    </SidePannelLayout>
+    </SidePanelLayout>
   );
 };
 

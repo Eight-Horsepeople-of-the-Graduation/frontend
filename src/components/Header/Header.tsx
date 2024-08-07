@@ -17,7 +17,7 @@ const Header = () => {
   ];
   return (
     <Grid className={classes.Header} role="heading" container>
-      <Grid item xs={4} paddingTop="16px">
+      <Grid item xs={4} paddingTop="8px">
         <SearchBar />
       </Grid>
 
@@ -31,9 +31,9 @@ const Header = () => {
               >
                 <Button
                   sx={{
-                    fontSize: "24px",
-                    width: "128px",
-                    height: "48px",
+                    fontSize: "20px",
+                    width: "64px",
+                    height: "32px",
                   }}
                   color="primary"
                   title={item.text}

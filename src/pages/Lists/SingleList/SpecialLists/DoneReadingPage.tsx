@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import SidePannelLayout from "../../../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../../../components/SidePannelLayout/SidePannelLayout";
 import SingleListComponent from "../../../../components/SingleList/SingleListComponent";
 import { showAlert } from "../../../../redux/features/alerts/alertsSlice";
 import { useAppSelector } from "../../../../redux/hooks";
@@ -29,7 +29,7 @@ const DoneReadingList = () => {
       return <Navigate to={"/"} />;
     }
     return (
-      <SidePannelLayout>
+      <SidePanelLayout>
         <SingleListComponent
           list={doneReadingList}
           isFetchingList={isFetchingList}
@@ -41,7 +41,7 @@ const DoneReadingList = () => {
             canDelete: false,
           }}
         />
-      </SidePannelLayout>
+      </SidePanelLayout>
     );
   }
 };

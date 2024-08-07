@@ -10,7 +10,7 @@ interface CustomAvatarProps {
 
 const avatarSizes = {
   s: "16px",
-  m: "64px",
+  m: "48px",
   l: "192px",
 };
 

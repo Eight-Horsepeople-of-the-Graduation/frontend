@@ -1,4 +1,4 @@
-import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import classes from "./AllChallengesPage.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import { openCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
@@ -23,7 +23,7 @@ const AllChallengesPage = () => {
   };
 
   return (
-    <SidePannelLayout>
+    <SidePanelLayout>
       <main style={{ width: "100%" }}>
         {currentUserId === 0 ? (
           <div className={classes.NotAuthMessage}>
@@ -73,7 +73,7 @@ const AllChallengesPage = () => {
           </>
         )}
       </main>
-    </SidePannelLayout>
+    </SidePanelLayout>
   );
 };
 

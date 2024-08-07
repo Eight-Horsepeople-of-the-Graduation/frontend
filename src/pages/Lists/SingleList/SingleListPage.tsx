@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import SidePannelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../../components/SidePannelLayout/SidePannelLayout";
 import { useGetListByIdQuery } from "../../../redux/services/listsApiSlice";
 import { useAppSelector } from "../../../redux/hooks";
 import SingleListComponent from "../../../components/SingleList/SingleListComponent";
@@ -19,7 +19,7 @@ const SingleListPage = () => {
     const isMyList = list.userId === currentUserId;
 
     return (
-      <SidePannelLayout>
+      <SidePanelLayout>
         <SingleListComponent
           list={list}
           isFetchingList={isFetchingList}
@@ -31,7 +31,7 @@ const SingleListPage = () => {
             canDelete: isMyList,
           }}
         />
-      </SidePannelLayout>
+      </SidePanelLayout>
     );
   }
 };

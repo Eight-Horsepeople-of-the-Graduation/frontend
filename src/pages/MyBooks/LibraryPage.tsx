@@ -1,4 +1,4 @@
-import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import BookComponent from "../../components/BookComponent/BookComponent";
 import classes from "./Library.module.css";
 import { useAppSelector } from "../../redux/hooks";
@@ -14,7 +14,7 @@ const LibraryPage = () => {
   });
 
   return (
-    <SidePannelLayout>
+    <SidePanelLayout>
       <main style={{ width: "100%" }}>
         {!userId ? (
           <div className={classes.NotAuthMessage}>
@@ -43,7 +43,7 @@ const LibraryPage = () => {
           )
         )}
       </main>
-    </SidePannelLayout>
+    </SidePanelLayout>
   );
 };
 

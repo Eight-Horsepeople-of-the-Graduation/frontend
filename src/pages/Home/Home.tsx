@@ -1,4 +1,4 @@
-import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import ListPreview from "../../components/ListPreview/ListPreview";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarosel";
 import { useGetAllListsQuery } from "../../redux/services/listsApiSlice";
@@ -10,11 +10,11 @@ const HomePage = () => {
   const { data: lists } = useGetAllListsQuery();
 
   return (
-    <SidePannelLayout>
+    <SidePanelLayout>
       <main
         style={{
           width: "100%",
-          margin: "48px 48px 0",
+          margin: "32px 32px 0",
         }}
       >
         <section
@@ -32,7 +32,7 @@ const HomePage = () => {
             <ListPreview key={idx} list={list} />
           ))}
       </main>
-    </SidePannelLayout>
+    </SidePanelLayout>
   );
 };
 

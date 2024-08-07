@@ -1,4 +1,4 @@
-import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 import classes from "./SingleBookPage.module.css";
 import { Button } from "@mui/material";
 import BookReader from "../../components/BookReader/BookReader";
@@ -51,7 +51,7 @@ const SingleBookPage = () => {
     const generes = book.genres?.map((genere) => genere.title).join(", ");
 
     return (
-      <SidePannelLayout hideSidePannelPoint={(screen.availHeight - 200) / 2}>
+      <SidePanelLayout hideSidePanelPoint={(screen.availHeight - 200) / 2}>
         <main style={{ width: "100%" }}>
           <section id="info" className={classes.Info}>
             <div className={classes.Content}>
@@ -138,7 +138,7 @@ const SingleBookPage = () => {
                 )}
           </section>
         </main>
-      </SidePannelLayout>
+      </SidePanelLayout>
     );
   }
 };

@@ -1,13 +1,13 @@
-import SidePannelLayout from "../../components/SidePannelLayout/SidePannelLayout";
+import SidePanelLayout from "../../components/SidePannelLayout/SidePannelLayout";
 
 const ListsPage = () => {
   document.title = `Readify | Lists`;
   return (
-    <SidePannelLayout>
+    <SidePanelLayout>
       <div>
         <h1>Lists Page</h1>
       </div>
-    </SidePannelLayout>
+    </SidePanelLayout>
   );
 };
 

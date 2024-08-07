@@ -1,27 +1,27 @@
 import React from "react";
-import SidePannel from "../SidePannel/SidePannel";
-import classes from "./SidePannelLayout.module.css";
+import SidePanel from "../SidePannel/SidePanel";
+import classes from "./SidePanelLayout.module.css";
 import Header from "../Header/Header";
 
-interface SidePannelLayoutProps {
+interface SidePanelLayoutProps {
   children: React.ReactNode;
-  hideSidePannelPoint?: number;
+  hideSidePanelPoint?: number;
 }
 
-const SidePannelLayout = ({
+const SidePanelLayout = ({
   children,
-  hideSidePannelPoint,
-}: SidePannelLayoutProps) => {
+  hideSidePanelPoint: hideSidePanelPoint,
+}: SidePanelLayoutProps) => {
   const layoutRef = React.useRef<HTMLDivElement>(null);
-  const [hideSidePannel, setHideSidePannel] = React.useState<boolean>(false);
+  const [hideSidePanel, setHideSidePanel] = React.useState<boolean>(false);
 
   window.addEventListener("scroll", () => {
-    if (!hideSidePannelPoint) return;
+    if (!hideSidePanelPoint) return;
 
-    if (window.scrollY > hideSidePannelPoint) {
-      setHideSidePannel(true);
+    if (window.scrollY > hideSidePanelPoint) {
+      setHideSidePanel(true);
     } else {
-      setHideSidePannel(false);
+      setHideSidePanel(false);
     }
   });
 
@@ -29,14 +29,14 @@ const SidePannelLayout = ({
     <>
       <Header />
       <div
-        className={[classes.layout, hideSidePannel && classes.full].join(" ")}
+        className={[classes.layout, hideSidePanel && classes.full].join(" ")}
         ref={layoutRef}
       >
         {children}
-        <SidePannel isHiden={hideSidePannel} />
+        <SidePanel isHidden={hideSidePanel} />
       </div>
     </>
   );
 };
 
-export default SidePannelLayout;
+export default SidePanelLayout;
