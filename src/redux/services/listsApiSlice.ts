@@ -32,6 +32,7 @@ export const listsApi = createApi({
           url: "bookshelves",
           method: "POST",
           body: data,
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
@@ -45,6 +46,7 @@ export const listsApi = createApi({
           url: `bookshelves/${id}`,
           method: "PATCH",
           body: listData,
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
@@ -54,6 +56,7 @@ export const listsApi = createApi({
         return {
           url: `bookshelves/${id}`,
           method: "DELETE",
+          //credentials: "include",
         };
       },
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
@@ -79,17 +82,23 @@ export const listsApi = createApi({
           url: `bookshelves/add-books/${listId}`,
           method: "PATCH",
           body: { bookIds },
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
-      onQueryStarted: async (_,{dispatch,queryFulfilled})=>{
-        try{
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
           await queryFulfilled;
           dispatch(readingChallengeApi.util.invalidateTags(["challenges"]));
-        }catch(e){
-          dispatch(showAlert({message:"Error adding book to list",severity: "error"}))
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error adding book to list",
+              severity: "error",
+            })
+          );
         }
-      }
+      },
     }),
     removeBookFromList: builder.mutation<
       null,
@@ -100,9 +109,23 @@ export const listsApi = createApi({
           url: `bookshelves/remove-books/${listId}`,
           method: "PATCH",
           body: { bookIds },
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(readingChallengeApi.util.invalidateTags(["challenges"]));
+        } catch (e) {
+          dispatch(
+            showAlert({
+              message: "Error removing book to list",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     getUserLists: builder.query<List[], number>({
       query(userId) {

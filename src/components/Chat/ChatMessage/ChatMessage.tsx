@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import { useAppSelector } from "../../../redux/hooks";
 import CustomAvatar from "../../UI/CustomAvatar/CustomAvatar";
 import AiUser from "../AiUser";
 import classes from "./ChatMessage.module.css";
 
 interface ChatMessageProps {
-  message: string;
+  message: ReactNode;
   fromAi: boolean;
 }
 
@@ -17,9 +18,7 @@ const ChatMessage = ({ message, fromAi }: ChatMessageProps) => {
         size="m"
         style={{ boxShadow: "var(--shadow-far)" }}
       />
-      <div className={classes.Message}>
-        <p>{message}</p>
-      </div>
+      <div className={classes.Message}>{message}</div>
     </div>
   );
 };

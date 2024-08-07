@@ -15,7 +15,7 @@ const RemoveChallengeModal = () => {
     skip: !challengeID,
   });
   const dispatch = useAppDispatch();
-  const [removeChallenge, { isSuccess, isError,isLoading }] =
+  const [removeChallenge, { isLoading }] =
     useDeleteReadingChallengeMutation();
 
   const closeModal = () => dispatch(closeRemoveChallengeModal());
@@ -23,16 +23,18 @@ const RemoveChallengeModal = () => {
   const onConfirm = async () => {
     if (!challengeID) return;
 
-    await removeChallenge(challengeID);
+    const { data: removedChallenge, error } = await removeChallenge(
+      challengeID
+    );
 
-    if (isSuccess) {
+    if (removedChallenge && !error) {
       dispatch(
         showAlert({ message: "Challenge removed", severity: "success" })
       );
       closeModal();
     }
 
-    if (isError) {
+    if (error) {
       dispatch(
         showAlert({ message: "Something went wrong", severity: "error" })
       );
