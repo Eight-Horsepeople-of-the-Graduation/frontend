@@ -11,6 +11,7 @@ import { Review } from "../../Types/books.types";
 import { formatISODateToDDMMYYYY } from "../../helperFuctions/formatISODateToDDMMYYYY";
 import { useAppSelector } from "../../redux/hooks";
 import { useDeleteReviewMutation } from "../../redux/services/booksApiSlice";
+import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 //import CheckIcon from "@mui/icons-material/Check";
 //import { useAppDispatch } from "../../../redux/hooks";
 //import { showAlert } from "../../../redux/features/alerts/alertsSlice";
@@ -39,7 +40,9 @@ const ReviewComponent: React.FC<ReviewProps> = ({ review, editReview }) => {
       <div className={classes.reviewContent}>
         <div className={classes.reviewHeader}>
           <div className={classes.info}>
-            <span className={classes.reviewName}>{review.user.name}</span>
+            <span className={classes.reviewName}>
+              {convertToTitleCase(review.user.name)}
+            </span>
             <div className={classes.reviewRating}>
               <Rating
                 name="read-only"

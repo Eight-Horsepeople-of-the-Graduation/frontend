@@ -141,7 +141,7 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
 
   if (!wantToReadList?.books.find((listBook) => listBook.id === book.id)) {
     menuOptions.push({
-      title: "Mark as want to read",
+      title: "Mark as Want to Read",
       action: () => handleChooseOption(markAsWantToRead),
     });
   }
@@ -149,14 +149,14 @@ const BookComponent: React.FC<BookProps> = ({ book, currentListId }) => {
     !currentlyReadingList?.books.find((listBook) => listBook.id === book.id)
   ) {
     menuOptions.push({
-      title: "Mark as reading",
+      title: "Mark as Reading",
       action: () => handleChooseOption(markAsReading),
     });
   }
 
   if (!doneReadingList?.books.find((listBook) => listBook.id === book.id)) {
     menuOptions.push({
-      title: "Mark as done",
+      title: "Mark as Done",
       action: () => handleChooseOption(markAsDoneReading),
     });
   }

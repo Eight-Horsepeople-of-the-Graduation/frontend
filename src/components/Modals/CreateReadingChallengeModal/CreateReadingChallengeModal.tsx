@@ -14,7 +14,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useCreateReadingChallengeMutation } from "../../../redux/services/readingChallengeApiSlice";
-import { ChallengeType, CreateChallengePayload } from "../../../Types/readingChallenges.types";
+import { showAlert } from "../../../redux/features/alerts/alertsSlice";
+import {
+  ChallengeType,
+  CreateChallengePayload,
+} from "../../../Types/readingChallenges.types";
 import { closeCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
 import convertFirstLetterToUppercase from "../../../helperFuctions/convertFirstLetterToUppercase";
 
@@ -25,7 +29,7 @@ const CreateReadingChallengeModal = () => {
     (state) => state.modals.createChallengeModalOpen
   );
 
-  const [createReadingChallenge, { isSuccess, isLoading }] =
+  const [createReadingChallenge, { isLoading }] =
     useCreateReadingChallengeMutation();
 
   const dispatch = useAppDispatch();
@@ -51,14 +55,29 @@ const CreateReadingChallengeModal = () => {
 
   const onSubmit = async (data: CreateChallengePayload) => {
     if (!userId) return;
-    await createReadingChallenge({
+    const { data: createdChallenge, error } = await createReadingChallenge({
       ...data,
       goal: Number(data.goal),
       userId,
     });
 
-    if (isSuccess) {
+    if (createdChallenge && !error) {
+      dispatch(
+        showAlert({
+          message: "Challenge created successfully",
+          severity: "success",
+        })
+      );
       closeModal();
+    }
+
+    if (error) {
+      dispatch(
+        showAlert({
+          message: "Failed to create challenge",
+          severity: "error",
+        })
+      );
     }
   };
 

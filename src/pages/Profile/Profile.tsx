@@ -14,6 +14,7 @@ import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
 import { useGetUserReadingChallengesQuery } from "../../redux/services/readingChallengeApiSlice";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
+import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 
 
 const ProfilePage = () => {
@@ -96,7 +97,7 @@ const ProfilePage = () => {
                   }}
                 />
                 <div className={classes.Info}>
-                  <h1>{user.name}</h1>
+                  <h1>{convertToTitleCase(user.name)}</h1>
                   <p>@{user.username}</p>
                 </div>
               </div>

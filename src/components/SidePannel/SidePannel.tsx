@@ -16,6 +16,7 @@ import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
 import { useLogoutMutation } from "../../redux/services/usersApiSlice";
+import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -59,7 +60,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
                 <CustomAvatar user={user} size="m" />
               </div>
               <div className={classes.info}>
-                <h2>{user.name}</h2>
+                <h2>{convertToTitleCase(user.name)}</h2>
                 <Link to={`/profile/${user.username}`} title="Go to profile">
                   @{user.username}
                 </Link>
@@ -89,10 +90,10 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
             <ul>
               {navItems.map((item, idx) => (
                 <li key={idx}>
-                  <a href={item.link}>
+                  <Link to={item.link}>
                     <FontAwesomeIcon icon={item.icon} />
                     <p>{item.text}</p>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

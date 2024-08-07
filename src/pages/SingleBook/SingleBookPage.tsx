@@ -120,7 +120,6 @@ const SingleBookPage = () => {
             {user && !userReviewed && <AddReviewComponent bookId={book.id} />}
             {reviews &&
               [...reviews]
-                .reverse()
                 .map((review) =>
                   reviewToEditId === review.id ? (
                     <AddReviewComponent
