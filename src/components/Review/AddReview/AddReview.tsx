@@ -20,7 +20,7 @@ import {
 } from "../../../redux/services/booksApiSlice";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-
+import capitalizeWords from "../../../helperFuctions/capitalizeWords";
 interface AddReviewProps {
   reviewToEdit?: Review;
   bookId: number;
@@ -117,7 +117,7 @@ const AddReviewComponent: React.FC<AddReviewProps> = ({
       >
         <div className={classes.reviewHeader}>
           <div className={classes.info}>
-            <span className={classes.reviewName}>{user!.name}</span>
+            <span className={classes.reviewName}>{capitalizeWords(user!.name)}</span>
             <div className={classes.reviewRating}>
               <Rating
                 name="rating"
