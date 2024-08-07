@@ -1,7 +1,7 @@
-const capitalizeWords = (str: string | undefined) => {
+const convertToTitleCase = (str: string | undefined) => {
   return str?.split(" ")
     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
 
-export default capitalizeWords;
+export default convertToTitleCase;

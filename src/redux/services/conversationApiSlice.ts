@@ -15,7 +15,7 @@ export const conversationsApi = createApi({
         return {
           url: `conversations/user/${data.userId}/book/${data.bookId}`,
           method: "GET",
-          credentials: "include",
+          //credentials: "include",
         };
       },
     }),
@@ -30,7 +30,7 @@ export const conversationsApi = createApi({
           body: {
             question: data.question,
           },
-          credentials: "include",
+          //credentials: "include",
         };
       },
     }),

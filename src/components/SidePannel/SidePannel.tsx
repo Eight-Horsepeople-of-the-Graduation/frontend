@@ -16,7 +16,7 @@ import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
 import { useLogoutMutation } from "../../redux/services/usersApiSlice";
-import capitalizeWords from "../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 
 interface SidePannelProps {
   isHiden?: boolean;
@@ -60,7 +60,7 @@ const SidePannel = ({ isHiden }: SidePannelProps) => {
                 <CustomAvatar user={user} size="m" />
               </div>
               <div className={classes.info}>
-                <h2>{capitalizeWords(user.name)}</h2>
+                <h2>{convertToTitleCase(user.name)}</h2>
                 <Link to={`/profile/${user.username}`} title="Go to profile">
                   @{user.username}
                 </Link>

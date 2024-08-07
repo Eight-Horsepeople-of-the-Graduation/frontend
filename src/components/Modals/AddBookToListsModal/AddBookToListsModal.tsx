@@ -12,7 +12,7 @@ import {
   useRemoveBookFromListMutation,
 } from "../../../redux/services/listsApiSlice";
 import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
-import capitalizeWords from "../../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../../helperFuctions/capitalizeWords";
 
 interface FormValues {
   lists: List[];
@@ -127,7 +127,7 @@ const AddBookToListsModal = () => {
                   multiple
                   id="lists-input"
                   options={userLists ?? []}
-                  getOptionLabel={(option) => capitalizeWords(option.title) as string}
+                  getOptionLabel={(option) => convertToTitleCase(option.title) as string}
                   filterSelectedOptions
                   renderInput={(params) => (
                     <TextField

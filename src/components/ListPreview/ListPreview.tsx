@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
 import { useAppSelector } from "../../redux/hooks";
-import capitalizeWords from "../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../helperFuctions/capitalizeWords";
 interface ListPreviewProps {
   list: list;
 }
@@ -21,7 +21,7 @@ const ListPreview: React.FC<ListPreviewProps> = ({ list }) => {
   return (
     <div className={classes.List}>
       <header>
-        <h1>{capitalizeWords(list.title)}</h1>
+        <h1>{convertToTitleCase(list.title)}</h1>
         {list.userId === currentUserId && <PrivacySwitch list={list} />}{" "}
       </header>
       <div className={classes.Books}>

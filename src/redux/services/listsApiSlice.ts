@@ -32,7 +32,7 @@ export const listsApi = createApi({
           url: "bookshelves",
           method: "POST",
           body: data,
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
@@ -46,7 +46,7 @@ export const listsApi = createApi({
           url: `bookshelves/${id}`,
           method: "PATCH",
           body: listData,
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
@@ -56,7 +56,7 @@ export const listsApi = createApi({
         return {
           url: `bookshelves/${id}`,
           method: "DELETE",
-          credentials: "include",
+          //credentials: "include",
         };
       },
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
@@ -82,7 +82,7 @@ export const listsApi = createApi({
           url: `bookshelves/add-books/${listId}`,
           method: "PATCH",
           body: { bookIds },
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],
@@ -109,7 +109,7 @@ export const listsApi = createApi({
           url: `bookshelves/remove-books/${listId}`,
           method: "PATCH",
           body: { bookIds },
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["lists"],

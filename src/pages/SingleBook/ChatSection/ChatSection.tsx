@@ -128,7 +128,7 @@ const ChatSection = ({ book, user }: ChatSectionProps) => {
             <ChatMessage
               message={
                 <div className={classes.spinnerContainer}>
-                  <BeatLoader color="#525FE1" />
+                  <BeatLoader color="var(--primary-color)" />
                 </div>
               }
               fromAi={true}

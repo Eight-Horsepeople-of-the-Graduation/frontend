@@ -23,7 +23,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import CountrySelector from "../../../components/UI/CountrySelector/CountrySelector";
 import dayjs, { Dayjs } from "dayjs";
-import capitalizeWords from "../../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../../helperFuctions/capitalizeWords";
 
 const genders = [
   { value: "MALE", title: "Male" },
@@ -47,7 +47,7 @@ const EditProfilePage = () => {
   } = useForm<EditUserPayload>({
     defaultValues: {
       // profilePicture: user?.profilePicture,
-      name: capitalizeWords(user?.name),
+      name: convertToTitleCase(user?.name),
       username: user?.username,
       email: user?.email,
       gender: "MALE",

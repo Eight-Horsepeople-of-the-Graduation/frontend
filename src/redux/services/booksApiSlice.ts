@@ -38,7 +38,7 @@ export const booksApi = createApi({
           url: "books",
           method: "POST",
           body: data,
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["books"],
@@ -49,7 +49,7 @@ export const booksApi = createApi({
           url: `books/${id}`,
           method: "PATCH",
           body: formData,
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["books"],
@@ -59,7 +59,7 @@ export const booksApi = createApi({
         return {
           url: `books/${id}`,
           method: "DELETE",
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["books"],
@@ -76,7 +76,7 @@ export const booksApi = createApi({
           url: `reviews`,
           method: "POST",
           body: data,
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["reviews", "books"],
@@ -97,7 +97,7 @@ export const booksApi = createApi({
           url: `reviews/${data.id}`,
           method: "PATCH",
           body: data,
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["reviews"],
@@ -108,7 +108,7 @@ export const booksApi = createApi({
           url: `reviews/${data.id}/rating`,
           method: "PATCH",
           body: data,
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["reviews", "books"],
@@ -131,7 +131,7 @@ export const booksApi = createApi({
         return {
           url: `reviews/${reviewId}`,
           method: "DELETE",
-          credentials: "include"
+          //credentials: "include"
         };
       },
       invalidatesTags: ["reviews", "books"],

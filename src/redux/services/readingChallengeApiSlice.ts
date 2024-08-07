@@ -22,7 +22,7 @@ export const readingChallengeApi = createApi({
         return {
           url: `reading-challenges/${id}`,
           method: "GET",
-          credentials: "include",
+          //credentials: "include",
         };
       },
       providesTags: ["challenges"],
@@ -34,7 +34,7 @@ export const readingChallengeApi = createApi({
             url: "reading-challenges",
             method: "POST",
             body: data,
-            credentials: "include",
+            //credentials: "include",
           };
         },
         invalidatesTags: ["challenges"],
@@ -49,7 +49,7 @@ export const readingChallengeApi = createApi({
           url: `reading-challenges/${id}`,
           method: "PATCH",
           body: challengeData,
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["challenges"],
@@ -59,7 +59,7 @@ export const readingChallengeApi = createApi({
         return {
           url: `reading-challenges/${id}`,
           method: "DELETE",
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["challenges"],
@@ -78,7 +78,7 @@ export const readingChallengeApi = createApi({
         return {
           url: `reading-challenges/${userId}/add-books/${bookId}`,
           method: "PATCH",
-          credentials: "include",
+          //credentials: "include",
         };
       },
       invalidatesTags: ["challenges"],

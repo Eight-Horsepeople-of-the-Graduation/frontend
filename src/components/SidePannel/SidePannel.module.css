@@ -5,7 +5,8 @@
   position: fixed;
   top: calc(64px + 32px);
   right: 48px;
-  width: 384px;
+  width: 18vw;
+  max-width: 384px;
   height: calc(90% - 64px);
   background-color: #fff;
   border: var(--border);
