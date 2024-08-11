@@ -29,6 +29,8 @@ const ReadingChallenge = () => {
           width: "calc(100% - 24px)",
           margin: "auto",
           border: "var(--border)",
+          borderRadius: "var(--small-border-radius)",
+          fontSize: "1rem",
         }}
         onClick={() => {
           dispatch(openCreateChallengeModal());

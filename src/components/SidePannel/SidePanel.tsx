@@ -16,7 +16,7 @@ import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
 import { useLogoutMutation } from "../../redux/services/usersApiSlice";
-import convertToTitleCase from "../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../helperFunctions/capitalizeWords";
 
 interface SidePanelProps {
   isHidden?: boolean;

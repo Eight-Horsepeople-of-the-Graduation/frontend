@@ -2,7 +2,7 @@ import { Alert, AlertTitle } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
 import { clearAlert } from "../../../redux/features/alerts/alertsSlice";
-import convertFirstLetterToUppercase from "../../../helperFuctions/convertFirstLetterToUppercase";
+import convertFirstLetterToUppercase from "../../../helperFunctions/convertFirstLetterToUppercase";
 
 const CustomAlert = () => {
   const dispatch = useAppDispatch();

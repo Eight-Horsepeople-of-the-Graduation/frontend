@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrivacySwitch from "../PrivacySwitch/PrivacySwitch";
 import { useAppSelector } from "../../redux/hooks";
-import convertToTitleCase from "../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../helperFunctions/capitalizeWords";
 interface ListPreviewProps {
   list: list;
 }

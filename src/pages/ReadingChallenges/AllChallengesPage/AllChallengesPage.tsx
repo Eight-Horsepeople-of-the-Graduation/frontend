@@ -5,7 +5,7 @@ import { openCreateChallengeModal } from "../../../redux/features/modals/modalsS
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ChallengeComponent from "../../../components/ChallengeComponent/ChallengeComponent";
 import { IconButton } from "@mui/material";
-import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
+import { formatISODateToDDMMYYYY } from "../../../helperFunctions/formatISODateToDDMMYYYY";
 import { useGetUserReadingChallengesQuery } from "../../../redux/services/readingChallengeApiSlice";
 import signupVector from "../../../assets/images/singupVector.png"
 

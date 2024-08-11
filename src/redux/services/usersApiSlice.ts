@@ -11,7 +11,7 @@ import { setLogedInUser } from "../features/users/authSlice";
 import { startLoading, stopLoading } from "../features/modals/modalsSlice";
 import { showAlert } from "../features/alerts/alertsSlice";
 import { BackendError } from "../../Types/types";
-import convertFirstLetterToUppercase from "../../helperFuctions/convertFirstLetterToUppercase";
+import convertFirstLetterToUppercase from "../../helperFunctions/convertFirstLetterToUppercase";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",

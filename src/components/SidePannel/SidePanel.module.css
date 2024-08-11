@@ -4,7 +4,7 @@
   justify-content: start;
   position: fixed;
   top: calc(48px + 32px);
-  right: 48px;
+  right: 2vw;
   min-width: 256px;
   width: 18vw;
   max-width: 384px;

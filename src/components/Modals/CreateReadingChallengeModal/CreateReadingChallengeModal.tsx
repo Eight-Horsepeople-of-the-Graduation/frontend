@@ -20,7 +20,7 @@ import {
   CreateChallengePayload,
 } from "../../../Types/readingChallenges.types";
 import { closeCreateChallengeModal } from "../../../redux/features/modals/modalsSlice";
-import convertFirstLetterToUppercase from "../../../helperFuctions/convertFirstLetterToUppercase";
+import convertFirstLetterToUppercase from "../../../helperFunctions/convertFirstLetterToUppercase";
 
 const CreateReadingChallengeModal = () => {
   const userId = useAppSelector((state) => state.authUser).user?.id;

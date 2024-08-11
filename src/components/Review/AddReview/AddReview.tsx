@@ -9,7 +9,7 @@ import {
 } from "../../../Types/books.types";
 import CustomAvatar from "../../UI/CustomAvatar/CustomAvatar";
 import { useAppSelector } from "../../../redux/hooks";
-import { formatISODateToDDMMYYYY } from "../../../helperFuctions/formatISODateToDDMMYYYY";
+import { formatISODateToDDMMYYYY } from "../../../helperFunctions/formatISODateToDDMMYYYY";
 import CheckIcon from "@mui/icons-material/Check";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -20,7 +20,7 @@ import {
 } from "../../../redux/services/booksApiSlice";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../redux/features/alerts/alertsSlice";
-import convertToTitleCase from "../../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../../helperFunctions/capitalizeWords";
 interface AddReviewProps {
   reviewToEdit?: Review;
   bookId: number;

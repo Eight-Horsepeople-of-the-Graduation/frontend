@@ -11,27 +11,20 @@ const HomePage = () => {
 
   return (
     <SidePanelLayout>
-      <main
+      <section
         style={{
           width: "100%",
-          margin: "32px 32px 0",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        <section
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <ImageCarousel />
-        </section>
-        {(lists ?? ([] as List[]))
-          .filter((list) => list.books.length)
-          .map((list, idx) => (
-            <ListPreview key={idx} list={list} />
-          ))}
-      </main>
+        <ImageCarousel />
+      </section>
+      {(lists ?? ([] as List[]))
+        .filter((list) => list.books.length)
+        .map((list, idx) => (
+          <ListPreview key={idx} list={list} />
+        ))}
     </SidePanelLayout>
   );
 };

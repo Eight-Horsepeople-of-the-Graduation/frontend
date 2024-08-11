@@ -32,7 +32,7 @@ const SidePanelLayout = ({
         className={[classes.layout, hideSidePanel && classes.full].join(" ")}
         ref={layoutRef}
       >
-        {children}
+        <main>{children}</main>
         <SidePanel isHidden={hideSidePanel} />
       </div>
     </>

@@ -1,9 +1,9 @@
 import classes from "./ReadingChallengeCard.module.css";
 import ProgressBar from "../../../UI/ProgressBar/ProgressBar";
 import { Link } from "react-router-dom";
-import convertFirstLetterToUppercase from "../../../../helperFuctions/convertFirstLetterToUppercase";
+import convertFirstLetterToUppercase from "../../../../helperFunctions/convertFirstLetterToUppercase";
 import { Challenge } from "../../../../Types/readingChallenges.types";
-import checkDatePassed from "../../../../helperFuctions/checkDatePassed";
+import checkDatePassed from "../../../../helperFunctions/checkDatePassed";
 
 interface ChallengeCardProps {
   challenge: Challenge;

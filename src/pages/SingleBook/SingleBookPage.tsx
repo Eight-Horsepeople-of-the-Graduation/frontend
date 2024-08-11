@@ -53,7 +53,7 @@ const SingleBookPage = () => {
     return (
       <SidePanelLayout hideSidePanelPoint={(screen.availHeight - 200) / 2}>
         <main style={{ width: "100%" }}>
-          <section id="info" className={classes.Info}>
+          <section id="info" className={classes.BookInfo}>
             <div className={classes.Content}>
               {book.coverPicture ? (
                 <img src={book.coverPicture} title={book.title} />
@@ -62,7 +62,7 @@ const SingleBookPage = () => {
                   <FontAwesomeIcon icon={faBookOpen} />
                 </div>
               )}
-              <div>
+              <div className={classes.Info}>
                 <div className={classes.Title}>
                   <h1>{book.title}</h1>
                   <Button

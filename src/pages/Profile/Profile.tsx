@@ -14,7 +14,7 @@ import { useGetUserListsQuery } from "../../redux/services/listsApiSlice";
 import { useGetUserReadingChallengesQuery } from "../../redux/services/readingChallengeApiSlice";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../redux/features/users/authSlice";
-import convertToTitleCase from "../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../helperFunctions/capitalizeWords";
 
 
 const ProfilePage = () => {

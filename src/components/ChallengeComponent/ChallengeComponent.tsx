@@ -11,8 +11,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ProgressBar from "../UI/ProgressBar/ProgressBar";
 import { openRemoveChallengeModel } from "../../redux/features/modals/modalsSlice";
-import { formatISODateToDDMMYYYY } from "../../helperFuctions/formatISODateToDDMMYYYY";
-import { toProperCase } from "../../helperFuctions/properCase";
+import { formatISODateToDDMMYYYY } from "../../helperFunctions/formatISODateToDDMMYYYY";
+import { toProperCase } from "../../helperFunctions/properCase";
 interface ChallengeProps {
   challenge: Challenge;
   formatISODateToDDMMYYYY?: (dateString: string) => string; // Optional formatting function

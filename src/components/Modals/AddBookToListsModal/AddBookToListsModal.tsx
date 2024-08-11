@@ -12,7 +12,7 @@ import {
   useRemoveBookFromListMutation,
 } from "../../../redux/services/listsApiSlice";
 import { useGetBookByIdQuery } from "../../../redux/services/booksApiSlice";
-import convertToTitleCase from "../../../helperFuctions/capitalizeWords";
+import convertToTitleCase from "../../../helperFunctions/capitalizeWords";
 
 interface FormValues {
   lists: List[];
