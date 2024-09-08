@@ -51,6 +51,7 @@ const ReadingChallengeSelector = (props: ReadingChallengeSelectorProps) => {
             sx={{
               width: "calc(100% - 24px)",
               marginLeft: "12px",
+              fontSize: "1rem",
             }}
           >
             Create new challenge

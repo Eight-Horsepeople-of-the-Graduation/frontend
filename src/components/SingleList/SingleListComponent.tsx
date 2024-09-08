@@ -38,15 +38,15 @@ const SingleListComponent: React.FC<ListProps> = ({
   isEditable,
 }) => {
   const dispatch = useAppDispatch();
-  const [isEditingName, setISEditngName] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [editList, { isSuccess, isError }] = useEditListMutation();
 
   const startEditName = () => {
-    setISEditngName(true);
+    setIsEditingName(true);
   };
   const finishEditName = async () => {
-    setISEditngName(false);
+    setIsEditingName(false);
     if (!list) return;
 
     const title = titleRef.current?.innerText;
@@ -92,7 +92,7 @@ const SingleListComponent: React.FC<ListProps> = ({
     if (e.key === "Escape") {
       e.preventDefault();
       titleRef.current!.innerText = list?.title ?? "Untitled";
-      setISEditngName(false);
+      setIsEditingName(false);
     }
   });
 
@@ -132,7 +132,6 @@ const SingleListComponent: React.FC<ListProps> = ({
                     title={isEditingName ? "Save" : "Edit list name"}
                     aria-label="edit"
                     sx={{
-                      fontSize: "24px",
                       width: "32px",
                       height: "32px",
                       borderRadius: "50%",
@@ -141,7 +140,11 @@ const SingleListComponent: React.FC<ListProps> = ({
                     color="primary"
                     onClick={isEditingName ? finishEditName : startEditName}
                   >
-                    {isEditingName ? <CheckIcon /> : <EditIcon />}
+                    {isEditingName ? (
+                      <CheckIcon />
+                    ) : (
+                      <EditIcon sx={{ fontSize: "1.2rem" }} />
+                    )}
                   </Button>
                 )}
                 {isEditable.canEditPrivacy && <PrivacySwitch list={list} />}

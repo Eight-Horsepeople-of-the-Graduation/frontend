@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-.layout main {
+.layout > main {
   width: calc(100% - 300px);
 }
 .layout.full main{

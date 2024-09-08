@@ -52,7 +52,6 @@ const SingleBookPage = () => {
 
     return (
       <SidePanelLayout hideSidePanelPoint={(screen.availHeight - 200) / 2}>
-        <main style={{ width: "100%" }}>
           <section id="info" className={classes.BookInfo}>
             <div className={classes.Content}>
               {book.coverPicture ? (
@@ -137,7 +136,6 @@ const SingleBookPage = () => {
                   )
                 )}
           </section>
-        </main>
       </SidePanelLayout>
     );
   }

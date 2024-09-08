@@ -1,61 +1,27 @@
 .ProfilePage {
   width: 100vw;
-  display: flex;
+  height: calc(100vh - 48px);
 }
-.ProfilePage main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  width: calc(100vw - 392px);
+.ProfilePage > main {
+  width: 80vw;
 }
-.ProfilePage aside {
-  width: 384px;
-  height: calc(100vh - 64px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  border-left: var(--border);
+.ProfilePage > aside {
   position: fixed;
-  top: 64px;
+  top: 48px;
   right: 0;
-}
-
-.ProfileHeader {
-  height: 283px;
-  border-bottom: var(--border);
-  width: 100%;
+  width: 20vw;
+  max-width: 300px;
+  border-left: var(--border);
+  padding: 1rem;
+  height: calc(100vh - 48px);
+  background-color: white;
   display: flex;
-  align-items: end;
-  padding: 0 96px;
+  flex-direction: column;
   justify-content: space-between;
-}
-.ProfileHeader button {
-  margin-bottom: 32px;
-}
-.ProfileInfo {
-  display: flex;
-  align-items: center;
-  transform: translateY(32px);
-}
-
-.Info {
-  margin-left: 32px;
-}
-
-.Info h1 {
-  font-size: 32px;
-  color: var(--dark-primary-color);
-}
-.Info p {
-  font-size: 24px;
-  color: var(--primary-color);
 }
 
 .Challenges {
   width: 100%;
-  padding: 24px;
 }
 
 .ChallengesHeader {
@@ -95,6 +61,42 @@
 .ChallengesList > * {
   width: 100%;
   margin-bottom: 12px;
+}
+
+.LogoutButton {
+  width: 100%;
+  height: 48px;
+}
+
+.ProfileHeader {
+  height: 283px;
+  border-bottom: var(--border);
+  width: 100%;
+  display: flex;
+  align-items: end;
+  padding: 0 96px;
+  justify-content: space-between;
+}
+.ProfileHeader button {
+  margin-bottom: 32px;
+}
+.ProfileInfo {
+  display: flex;
+  align-items: center;
+  transform: translateY(32px);
+}
+
+.Info {
+  margin-left: 32px;
+}
+
+.Info h1 {
+  font-size: 32px;
+  color: var(--dark-primary-color);
+}
+.Info p {
+  font-size: 24px;
+  color: var(--primary-color);
 }
 
 .PageContent {
